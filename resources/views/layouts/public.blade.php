@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SD Negeri 3 Krasak Bangsri - Berkarakter, Berprestasi, Berakhlak Mulia</title>
+    <title>@yield('title', 'SD Negeri 3 Krasak Bangsri - Berkarakter, Berprestasi, Berakhlak Mulia')</title>
 
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -57,6 +56,65 @@
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2) translateY(-3px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .social-links a:hover::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            animation: pulse 0.6s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .social-links a.instagram:hover {
+            background: var(--secondary-blue);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .social-links a.youtube:hover {
+            background: var(--secondary-blue);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .social-links a.tiktok:hover {
+            background: var(--secondary-blue);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
         }
 
         .main-header {
@@ -141,7 +199,8 @@
             position: relative;
         }
 
-        nav a:hover {
+        nav a:hover,
+        nav a.active {
             color: var(--secondary-blue);
         }
 
@@ -156,16 +215,48 @@
             transition: width 0.3s;
         }
 
-        nav a:hover::after {
+        nav a:hover::after,
+        nav a.active::after {
             width: 100%;
+        }
+
+        /* Sections */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            font-size: 18px;
+            color: var(--text-light);
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            background: linear-gradient(rgba(30, 64, 175, 0.6), rgba(30, 64, 175, 0.6)), url('{{ asset('images/test.jpeg') }}') center/cover no-repeat;
             color: var(--white);
-            padding: 60px 20px;
+            padding: 100px 20px;
             text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero-content {
@@ -221,33 +312,6 @@
         .btn-secondary:hover {
             background: var(--white);
             color: var(--primary-blue);
-        }
-
-        /* Sections */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section {
-            padding: 80px 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 36px;
-            color: var(--primary-blue);
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            font-size: 18px;
-            color: var(--text-light);
         }
 
         /* Principal's Greeting Section */
@@ -645,9 +709,10 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
             gap: 40px;
             margin-bottom: 40px;
+            align-items: flex-start;
         }
 
         .footer-about h3 {
@@ -686,12 +751,31 @@
             text-decoration: underline;
         }
 
+        .footer-maps {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .footer-maps iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
         .footer-bottom {
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            background: var(--dark-blue);
             opacity: 0.8;
         }
 
@@ -732,7 +816,7 @@
             }
 
             nav.active {
-                max-height: 300px;
+                max-height: 450px;
             }
 
             nav ul {
@@ -760,12 +844,6 @@
                 display: none;
             }
 
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-
             .hero h2 {
                 font-size: 36px;
             }
@@ -788,6 +866,10 @@
 
             .footer-content {
                 grid-template-columns: 1fr;
+            }
+
+            .footer-maps iframe {
+                height: 300px;
             }
         }
 
@@ -831,8 +913,10 @@
                 <span>📧 sdn3krasak@email.com</span>
                 <span>📞 (0295) 123-4567</span>
             </div>
-            <div>
-                <span>🕐 Senin - Jumat: 07.00 - 14.00 WIB</span>
+            <div class="social-links">
+                <a href="https://www.instagram.com/sdn3krasakbangsri?igsh=MTM0bzhrM2dxbHBnYQ==" target="_blank" class="instagram" title="Instagram"><i class="bi bi-instagram"></i></a>
+                <a href="https://youtube.com/@sdnegeri3krasakbangsri786?si=7C0VrY-oPj4Wb8wr" target="_blank" class="youtube" title="YouTube"><i class="bi bi-youtube"></i></a>
+                <a href="https://www.tiktok.com/@sdn3krasakbangsri?is_from_webapp=1&sender_device=pc" target="_blank" class="tiktok" title="TikTok"><i class="bi bi-tiktok"></i></a>
             </div>
         </div>
     </div>
@@ -850,286 +934,19 @@
             </button>
             <nav id="navbar">
                 <ul>
-                    <li><a href="#beranda">Beranda</a></li>
-                    <li><a href="#tentang">Tentang</a></li>
-                    <li><a href="#program">Program</a></li>
-                    <li><a href="#berita">Berita</a></li>
-                    <li><a href="#galeri">Galeri</a></li>
-                    <li><a href="#kontak">Kontak</a></li>
+                    <li><a href="/" class="@if(request()->is('/')) active @endif">Beranda</a></li>
+                    <li><a href="/tentang" class="@if(request()->is('tentang')) active @endif">Tentang</a></li>
+                    <li><a href="/program" class="@if(request()->is('program')) active @endif">Program</a></li>
+                    <li><a href="/berita" class="@if(request()->is('berita')) active @endif">Berita</a></li>
+                    <li><a href="/galeri" class="@if(request()->is('galeri')) active @endif">Galeri</a></li>
+                    <li><a href="/kontak" class="@if(request()->is('kontak')) active @endif">Kontak</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="beranda" class="hero">
-        <div class="hero-content">
-            <h2>Selamat Datang di SD Negeri 3 Krasak</h2>
-            <p>Membentuk Generasi Berkarakter, Berprestasi, dan Berakhlak Mulia</p>
-            <div class="cta-buttons">
-                <a href="#tentang" class="btn btn-primary">Pelajari Selengkapnya</a>
-                <a href="#kontak" class="btn btn-secondary">PPDB</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">👨‍🎓</div>
-                    <div class="stat-number">350+</div>
-                    <div class="stat-label">Siswa Aktif</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">👨‍🏫</div>
-                    <div class="stat-number">25</div>
-                    <div class="stat-label">Guru & Staff</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🏆</div>
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Prestasi</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📚</div>
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Kelas</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Principal's Greeting Section -->
-    <section class="principal-greeting">
-        <div class="container">
-            <div class="section-title">
-                <h2>Sambutan Kepala Sekolah</h2>
-                <p>Pesan dari pimpinan sekolah kami</p>
-            </div>
-            <div class="greeting-content">
-                <div class="principal-image">👨‍💼</div>
-                <div class="greeting-text">
-                    <h3>Assalamu'alaikum Warahmatullahi Wabarakatuh</h3>
-                    <p class="title">Bapak Drs. Sutrisno, M.Pd</p>
-                    <p>Dengan penuh kerendahan hati, kami menyambut kehadiran Anda di SD Negeri 3 Krasak. Sekolah kami berkomitmen untuk menjadi institusi pendidikan yang tidak hanya mengembangkan potensi akademik siswa, tetapi juga membentuk karakter yang kuat dan berakhlak mulia sesuai dengan nilai-nilai Pancasila dan ajaran agama.</p>
-                    
-                    <p>Kami percaya bahwa pendidikan yang berkualitas adalah hasil dari kerjasama sinergis antara guru, siswa, orang tua, dan masyarakat. Oleh karena itu, kami mengundang seluruh pihak untuk bersama-sama mendukung proses pembelajaran yang menyenangkan, bermakna, dan mempersiapkan siswa menjadi generasi penerus bangsa yang kompeten dan berintegritas.</p>
-                    
-                    <p>Terima kasih atas kepercayaan dan dukungan Anda. Semoga SD Negeri 3 Krasak terus berkembang dan menjadi sekolah pilihan yang menghasilkan lulusan berkarakter, berprestasi, dan berakhlak mulia.</p>
-
-                    <div class="principal-signature">
-                        <div class="principal-name">Drs. Sutrisno, M.Pd</div>
-                        <div class="principal-position">Kepala Sekolah</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="tentang" class="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>Tentang SD Negeri 3 Krasak</h2>
-                <p>Mengenal lebih dekat sekolah kami</p>
-            </div>
-            <div class="about-content">
-                <div class="about-image">🏫</div>
-                <div class="about-text">
-                    <h3>Visi Sekolah</h3>
-                    <p>"Terwujudnya peserta didik yang beriman, bertaqwa, berakhlak mulia, cerdas, terampil, dan berwawasan lingkungan."</p>
-                    
-                    <h3 style="margin-top: 30px;">Misi Sekolah</h3>
-                    <p>✓ Menyelenggarakan pendidikan yang berkualitas dan berkarakter</p>
-                    <p>✓ Mengembangkan potensi akademik dan non-akademik siswa</p>
-                    <p>✓ Menciptakan lingkungan belajar yang kondusif dan menyenangkan</p>
-                    <p>✓ Membangun kerjasama dengan orang tua dan masyarakat</p>
-                    <p>✓ Menanamkan nilai-nilai religius dan budaya lokal</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Programs Section -->
-    <section id="program" class="programs">
-        <div class="container">
-            <div class="section-title">
-                <h2>Program Unggulan</h2>
-                <p>Program-program terbaik untuk pengembangan siswa</p>
-            </div>
-            <div class="programs-grid">
-                <div class="program-card">
-                    <div class="program-icon">📖</div>
-                    <div class="program-content">
-                        <h3>Literasi Digital</h3>
-                        <p>Program peningkatan kemampuan membaca, menulis, dan penggunaan teknologi digital untuk pembelajaran yang lebih efektif.</p>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon">🎨</div>
-                    <div class="program-content">
-                        <h3>Ekstrakurikuler</h3>
-                        <p>Berbagai kegiatan ekstrakurikuler seperti pramuka, seni tari, musik, olahraga, dan komputer untuk mengembangkan bakat siswa.</p>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon">🕌</div>
-                    <div class="program-content">
-                        <h3>Pendidikan Karakter</h3>
-                        <p>Pembiasaan nilai-nilai religius, kejujuran, kedisiplinan, dan tanggung jawab melalui kegiatan rutin harian.</p>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon">🔬</div>
-                    <div class="program-content">
-                        <h3>STEM Learning</h3>
-                        <p>Pembelajaran berbasis Science, Technology, Engineering, dan Mathematics untuk meningkatkan kemampuan berpikir kritis.</p>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon">🌱</div>
-                    <div class="program-content">
-                        <h3>Adiwiyata</h3>
-                        <p>Program sekolah peduli lingkungan dengan kegiatan penghijauan, pengelolaan sampah, dan edukasi lingkungan hidup.</p>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon">🏅</div>
-                    <div class="program-content">
-                        <h3>Olimpiade & Kompetisi</h3>
-                        <p>Pembinaan khusus untuk siswa berprestasi dalam berbagai kompetisi akademik dan non-akademik tingkat kabupaten hingga nasional.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- News Section -->
-    <section id="berita" class="news">
-        <div class="container">
-            <div class="section-title">
-                <h2>Berita & Kegiatan</h2>
-                <p>Informasi terkini seputar kegiatan sekolah</p>
-            </div>
-            <div class="news-grid">
-                <div class="news-card">
-                    <div class="news-image">📰</div>
-                    <div class="news-content">
-                        <div class="news-date">5 Februari 2026</div>
-                        <h3>Penerimaan Peserta Didik Baru 2026/2027</h3>
-                        <p>Pendaftaran siswa baru tahun ajaran 2026/2027 dibuka mulai tanggal 1 Maret 2026. Info lengkap kunjungi sekolah.</p>
-                        <a href="#" class="read-more">Baca Selengkapnya →</a>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-image">🏆</div>
-                    <div class="news-content">
-                        <div class="news-date">28 Januari 2026</div>
-                        <h3>Juara 1 Olimpiade Matematika Tingkat Kabupaten</h3>
-                        <p>Selamat kepada Ananda Rizki Ramadan meraih juara 1 Olimpiade Matematika SD tingkat Kabupaten Jepara.</p>
-                        <a href="#" class="read-more">Baca Selengkapnya →</a>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-image">🎭</div>
-                    <div class="news-content">
-                        <div class="news-date">15 Januari 2026</div>
-                        <h3>Pentas Seni dan Budaya Semester Ganjil</h3>
-                        <p>Kegiatan pentas seni menampilkan berbagai pertunjukan tari, musik, dan drama dari siswa-siswi SD N 3 Krasak.</p>
-                        <a href="#" class="read-more">Baca Selengkapnya →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="galeri" class="gallery">
-        <div class="container">
-            <div class="section-title">
-                <h2>Galeri Foto</h2>
-                <p>Dokumentasi kegiatan sekolah</p>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item">📸</div>
-                <div class="gallery-item">🎓</div>
-                <div class="gallery-item">⚽</div>
-                <div class="gallery-item">🎨</div>
-                <div class="gallery-item">🏃</div>
-                <div class="gallery-item">🎪</div>
-                <div class="gallery-item">📚</div>
-                <div class="gallery-item">🌳</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="kontak" class="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Hubungi Kami</h2>
-                <p>Silakan hubungi kami untuk informasi lebih lanjut</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info-box">
-                    <h3>Informasi Kontak</h3>
-                    <div class="info-item">
-                        <div class="info-icon">📍</div>
-                        <div class="info-text">
-                            <h4>Alamat</h4>
-                            <p>Jl. Raya Krasak No. 45<br>Desa Krasak, Kec. Bangsri<br>Kabupaten Jepara, Jawa Tengah 59453</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">📞</div>
-                        <div class="info-text">
-                            <h4>Telepon</h4>
-                            <p>(0295) 123-4567<br>0812-3456-7890 (WhatsApp)</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">📧</div>
-                        <div class="info-text">
-                            <h4>Email</h4>
-                            <p>sdn3krasak@email.com<br>info.sdn3krasak@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">🕐</div>
-                        <div class="info-text">
-                            <h4>Jam Operasional</h4>
-                            <p>Senin - Jumat: 07.00 - 14.00 WIB<br>Sabtu: 07.00 - 11.00 WIB</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact-form">
-                    <h3>Kirim Pesan</h3>
-                    <form>
-                        <div class="form-group">
-                            <label for="nama">Nama Lengkap</label>
-                            <input type="text" id="nama" name="nama" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subjek">Subjek</label>
-                            <input type="text" id="subjek" name="subjek" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pesan">Pesan</label>
-                            <textarea id="pesan" name="pesan" required></textarea>
-                        </div>
-                        <button type="submit" class="btn-submit">Kirim Pesan</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Main Content -->
+    @yield('content')
 
     <!-- Footer -->
     <footer>
@@ -1142,10 +959,10 @@
             <div class="footer-section">
                 <h4>Menu Cepat</h4>
                 <ul>
-                    <li><a href="#beranda">Beranda</a></li>
-                    <li><a href="#tentang">Tentang Kami</a></li>
-                    <li><a href="#program">Program</a></li>
-                    <li><a href="#berita">Berita</a></li>
+                    <li><a href="/">Beranda</a></li>
+                    <li><a href="/tentang">Tentang Kami</a></li>
+                    <li><a href="/program">Program</a></li>
+                    <li><a href="/berita">Berita</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -1165,6 +982,9 @@
                     <li><a href="#">Download</a></li>
                     <li><a href="#">FAQ</a></li>
                 </ul>
+            </div>
+            <div class="footer-maps">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d966.4909233539345!2d110.75661872444648!3d-6.528301821181524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e71189725f32787%3A0x9d13f4409aad6ce8!2sSD%20Negeri%201%2C%202%20dan%203%20Krasak%20Bangsri!5e0!3m2!1sen!2sid!4v1770783795120" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1197,7 +1017,6 @@
                 navbar.classList.remove('active');
             }
         });
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </script>
 </body>
 </html>
