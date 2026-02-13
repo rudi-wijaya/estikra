@@ -15,7 +15,23 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <!-- Card Pesan -->
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold">💬 Pesan</h3>
+                            <span class="text-3xl font-bold text-orange-600">{{ \App\Models\Message::where('status', 'belum dibaca')->count() }}</span>
+                        </div>
+                        <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">Pesan yang belum dibaca</p>
+                        <div class="mt-4 flex gap-2">
+                            <a href="{{ route('messages.index') }}" class="inline-flex items-center px-4 py-2 bg-orange-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-700 transition">
+                                Lihat Pesan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Card Berita -->
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg hover:shadow-lg transition-shadow">
                     <div class="p-6 text-gray-900 dark:text-gray-100">

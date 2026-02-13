@@ -145,6 +145,9 @@
                     </div>
                 </div>
             </div>
+            <div class="program-cta" style="text-align: center; margin-top: 40px;">
+                <a href="{{ url('/program') }}" class="btn btn-primary">Pelajari Lebih Lanjut →</a>
+            </div>
         </div>
     </section>
 
@@ -184,6 +187,9 @@
                     </div>
                 </div>
             </div>
+            <div class="news-cta" style="text-align: center; margin-top: 40px;">
+                <a href="{{ url('/berita') }}" class="btn btn-primary">Lihat Semua Berita →</a>
+            </div>
         </div>
     </section>
 
@@ -203,6 +209,9 @@
                 <div class="gallery-item">🎪</div>
                 <div class="gallery-item">📚</div>
                 <div class="gallery-item">🌳</div>
+            </div>
+            <div class="gallery-cta" style="text-align: center; margin-top: 40px;">
+                <a href="{{ url('/galeri') }}" class="btn btn-primary">Lihat Galeri Lengkap →</a>
             </div>
         </div>
     </section>
@@ -249,22 +258,37 @@
 
                 <div class="contact-form">
                     <h3>Kirim Pesan</h3>
-                    <form>
+                    @if ($errors->any())
+                        <div style="background-color: #fee; color: #c33; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
+                            <ul style="margin: 0; padding-left: 20px;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div style="background-color: #efe; color: #3c3; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <form action="/kirim-pesan" method="POST">
+                        @csrf
                         <div class="form-group">
                             <label for="nama">Nama Lengkap</label>
-                            <input type="text" id="nama" name="nama" required>
+                            <input type="text" id="nama" name="nama" value="{{ old('nama') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="subjek">Subjek</label>
-                            <input type="text" id="subjek" name="subjek" required>
+                            <input type="text" id="subjek" name="subjek" value="{{ old('subjek') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="pesan">Pesan</label>
-                            <textarea id="pesan" name="pesan" required></textarea>
+                            <textarea id="pesan" name="pesan" required>{{ old('pesan') }}</textarea>
                         </div>
                         <button type="submit" class="btn-submit">Kirim Pesan</button>
                     </form>
