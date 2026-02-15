@@ -54,14 +54,23 @@
                 <div class="about-image">🏫</div>
                 <div class="about-text">
                     <h3>Visi Sekolah</h3>
-                    <p>"Terwujudnya peserta didik yang beriman, bertaqwa, berakhlak mulia, cerdas, terampil, dan berwawasan lingkungan."</p>
+                    <ul style="list-style-type: disc; margin-left: 20px;">
+                        <li>Terwujudnya lulusan yang unggul dalam iman dan taqwa.</li>
+                        <li>Terwujudnya lulusan yang kompeten dan berprestasi yang membanggakan.</li>
+                        <li>Terwujudnya Kurikulum berwawasan karakter Profil Pelajar Pancasila dan lingkungan.</li>
+                        <li>Terwujudnya PBM yang efektif, efisien, dan inovatif.</li>
+                        <li>Terwujudnya warga sekolah yang berkarakter jujur, mandiri, gotong royong, percaya diri, bernalar kritis, kreatif, dan menghargai kebhinekaan.</li>
+                        <li>Terwujudnya standar pengelolaan dan manajemen sekolah sesuai ketentuan.</li>
+                        <li>Terwujudnya budaya sekolah sahabat keluarga dan lingkungan yang nyaman, aman, rindang, asri dan bersih dalam penyelenggaraan pendidikan yang berkualitas.</li>
+                    </ul>
                     
                     <h3 style="margin-top: 30px;">Misi Sekolah</h3>
-                    <p>✓ Menyelenggarakan pendidikan yang berkualitas dan berkarakter</p>
-                    <p>✓ Mengembangkan potensi akademik dan non-akademik siswa</p>
-                    <p>✓ Menciptakan lingkungan belajar yang kondusif dan menyenangkan</p>
-                    <p>✓ Membangun kerjasama dengan orang tua dan masyarakat</p>
-                    <p>✓ Menanamkan nilai-nilai religius dan budaya lokal</p>
+                    <ul style="list-style-type: disc; margin-left: 20px;">
+                        <li>Menumbuhkembangkan pengamalan ajaran agama sesuai dengan agama dan kepercayaan masing-masing.</li>
+                        <li>Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing.</li>
+                        <li>Melaksanakan pembelajaran yang aktif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri.</li>
+                        <li>Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaan dalam bertindak.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -78,7 +87,7 @@
                 <div class="principal-image">👨‍💼</div>
                 <div class="greeting-text">
                     <h3>Assalamu'alaikum Warahmatullahi Wabarakatuh</h3>
-                    <p class="title">Bapak Drs. Sutrisno, M.Pd</p>
+                    <p class="title">Ibu Sutanti</p>
                     <p>Dengan penuh kerendahan hati, kami menyambut kehadiran Anda di SD Negeri 3 Krasak. Sekolah kami berkomitmen untuk menjadi institusi pendidikan yang tidak hanya mengembangkan potensi akademik siswa, tetapi juga membentuk karakter yang kuat dan berakhlak mulia sesuai dengan nilai-nilai Pancasila dan ajaran agama.</p>
                     
                     <p>Kami percaya bahwa pendidikan yang berkualitas adalah hasil dari kerjasama sinergis antara guru, siswa, orang tua, dan masyarakat. Oleh karena itu, kami mengundang seluruh pihak untuk bersama-sama mendukung proses pembelajaran yang menyenangkan, bermakna, dan mempersiapkan siswa menjadi generasi penerus bangsa yang kompeten dan berintegritas.</p>
@@ -86,7 +95,7 @@
                     <p>Terima kasih atas kepercayaan dan dukungan Anda. Semoga SD Negeri 3 Krasak terus berkembang dan menjadi sekolah pilihan yang menghasilkan lulusan berkarakter, berprestasi, dan berakhlak mulia.</p>
 
                     <div class="principal-signature">
-                        <div class="principal-name">Drs. Sutrisno, M.Pd</div>
+                        <div class="principal-name">Ibu Sutanti</div>
                         <div class="principal-position">Kepala Sekolah</div>
                     </div>
                 </div>
@@ -237,14 +246,14 @@
                         <div class="info-icon">📞</div>
                         <div class="info-text">
                             <h4>Telepon</h4>
-                            <p>(0295) 123-4567<br>0812-3456-7890 (WhatsApp)</p>
+                            <p>(0291) 771380<br>0812-3456-7890 (WhatsApp)</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">📧</div>
                         <div class="info-text">
                             <h4>Email</h4>
-                            <p>sdn3krasak@email.com<br>info.sdn3krasak@gmail.com</p>
+                            <p>sdn3krasakbangsri@gmail.com<br></p>
                         </div>
                     </div>
                     <div class="info-item">

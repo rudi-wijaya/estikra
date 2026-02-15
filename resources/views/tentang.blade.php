@@ -38,7 +38,7 @@
                 <div class="principal-image">👨‍💼</div>
                 <div class="greeting-text">
                     <h3>Assalamu'alaikum Warahmatullahi Wabarakatuh</h3>
-                    <p class="title">Bapak Drs. Sutrisno, M.Pd</p>
+                    <p class="title">Ibu Sutanti</p>
                     <p>Dengan penuh kerendahan hati, kami menyambut kehadiran Anda di SD Negeri 3 Krasak. Sekolah kami berkomitmen untuk menjadi institusi pendidikan yang tidak hanya mengembangkan potensi akademik siswa, tetapi juga membentuk karakter yang kuat dan berakhlak mulia sesuai dengan nilai-nilai Pancasila dan ajaran agama.</p>
                     
                     <p>Kami percaya bahwa pendidikan yang berkualitas adalah hasil dari kerjasama sinergis antara guru, siswa, orang tua, dan masyarakat. Oleh karena itu, kami mengundang seluruh pihak untuk bersama-sama mendukung proses pembelajaran yang menyenangkan, bermakna, dan mempersiapkan siswa menjadi generasi penerus bangsa yang kompeten dan berintegritas.</p>
@@ -46,7 +46,7 @@
                     <p>Terima kasih atas kepercayaan dan dukungan Anda. Semoga SD Negeri 3 Krasak terus berkembang dan menjadi sekolah pilihan yang menghasilkan lulusan berkarakter, berprestasi, dan berakhlak mulia.</p>
 
                     <div class="principal-signature">
-                        <div class="principal-name">Drs. Sutrisno, M.Pd</div>
+                        <div class="principal-name">Ibu Sutanti</div>
                         <div class="principal-position">Kepala Sekolah</div>
                     </div>
                 </div>

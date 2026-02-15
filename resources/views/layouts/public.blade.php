@@ -910,8 +910,8 @@
     <div class="top-header">
         <div class="container">
             <div class="contact-info">
-                <span>📧 sdn3krasak@email.com</span>
-                <span>📞 (0295) 123-4567</span>
+                <span>📧 sdn3krasakbangsri@gmail.com</span>
+                <span>📞 (0291) 771380</span>
             </div>
             <div class="social-links">
                 <a href="https://www.instagram.com/sdn3krasakbangsri?igsh=MTM0bzhrM2dxbHBnYQ==" target="_blank" class="instagram" title="Instagram"><i class="bi bi-instagram"></i></a>
