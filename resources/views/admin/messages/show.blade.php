@@ -1,92 +1,185 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Detail Pesan
-            </h2>
-            <a href="{{ route('messages.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition">
-                ← Kembali
+@extends('layouts.admin')
+
+@section('page_title', 'Detail Pesan')
+
+@section('content')
+    <div class="page-header mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="page-title">{{ $message->nama ?? $message->name ?? 'Pesan dari Kontak' }}</h1>
+                <p class="page-subtitle">Detail pesan kontak</p>
+            </div>
+            <a href="{{ route('admin.messages.index') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-2"></i>Kembali
             </a>
         </div>
-    </x-slot>
+    </div>
 
-    <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            @if (session('success'))
-                <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <p class="text-green-800">{{ session('success') }}</p>
-                </div>
-            @endif
-
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-8 text-gray-900 dark:text-gray-100">
-                    <!-- Status Badge -->
-                    <div class="mb-8 flex items-center justify-between">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Message Card -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>
+                            <i class="bi bi-chat-dots me-2"></i>Konten Pesan
+                        </span>
                         <div>
-                            <span class="inline-flex px-4 py-2 text-sm font-semibold rounded-full {{ $message->status === 'belum dibaca' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' }}">
-                                ✓ {{ ucfirst($message->status) }}
-                            </span>
-                        </div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">
-                            Diterima: {{ $message->created_at->format('d/m/Y pukul H:i') }}
+                            @if(!$message->read_at)
+                                <span class="badge bg-warning">
+                                    <i class="bi bi-exclamation-circle me-1"></i>Belum Dibaca
+                                </span>
+                            @else
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle me-1"></i>Sudah Dibaca
+                                </span>
+                            @endif
                         </div>
                     </div>
-
+                </div>
+                <div class="card-body">
                     <!-- Sender Info -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
-                        <div>
-                            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">👤 Nama Pengirim</h3>
-                            <p class="text-xl font-semibold">{{ $message->nama }}</p>
+                    <div class="row mb-4 pb-4 border-bottom">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Nama Pengirim</label>
+                            <p class="fw-semibold" style="font-size: 16px;">
+                                <i class="bi bi-person-circle me-2"></i>{{ $message->nama ?? $message->name ?? 'Anonymous' }}
+                            </p>
                         </div>
-                        <div>
-                            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">📧 Email</h3>
-                            <p class="text-lg">
-                                <a href="mailto:{{ $message->email }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 break-all">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Email</label>
+                            <p class="fw-semibold" style="font-size: 16px;">
+                                <a href="mailto:{{ $message->email }}" style="color: var(--primary-color);">
                                     {{ $message->email }}
                                 </a>
                             </p>
                         </div>
                     </div>
 
-                    <!-- Subject -->
-                    <div class="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
-                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3">📌 Subjek</h3>
-                        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $message->subjek }}</h2>
-                    </div>
-
                     <!-- Message Content -->
-                    <div class="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
-                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-4">💬 Pesan</h3>
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg whitespace-pre-wrap text-gray-700 dark:text-gray-300 leading-relaxed">
-                            {{ $message->pesan }}
+                    <div class="mb-4 pb-4 border-bottom">
+                        <label class="form-label text-muted">Pesan</label>
+                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; line-height: 1.6;">
+                            {{ $message->pesan ?? $message->message }}
                         </div>
                     </div>
 
-                    <!-- Actions -->
-                    <div class="flex gap-3 flex-wrap">
-                        @if ($message->status === 'belum dibaca')
-                            <form action="{{ route('messages.mark-as-read', $message) }}" method="POST" class="inline">
+                    <!-- Message Date -->
+                    <div>
+                        <label class="form-label text-muted">Diterima</label>
+                        <p class="text-muted">
+                            <i class="bi bi-calendar-event me-2"></i>
+                            {{ $message->created_at->format('d F Y') }} 
+                            <strong>Pukul {{ $message->created_at->format('H:i') }}</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-lightning me-2"></i>Aksi Cepat
+                </div>
+                <div class="card-body">
+                    <div class="d-flex gap-2 flex-wrap">
+                        @if(!$message->read_at)
+                            <form action="{{ route('admin.messages.markAsRead', $message->id) }}" method="POST" style="display: inline;">
                                 @csrf
-                                <button type="submit" class="inline-flex items-center px-6 py-3 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-green-700 active:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                                    ✓ Tandai Sudah Dibaca
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-check-circle me-2"></i>Tandai Sudah Dibaca
                                 </button>
                             </form>
                         @endif
-                        
-                        <form action="{{ route('messages.delete', $message) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pesan ini? Tindakan ini tidak dapat dikembalikan.');">
+
+                        <a href="mailto:{{ $message->email }}" class="btn btn-primary">
+                            <i class="bi bi-envelope me-2"></i>Balas Email
+                        </a>
+
+                        <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="inline-flex items-center px-6 py-3 bg-red-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                                🗑️ Hapus Pesan
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete(event, '{{ $message->nama ?? $message->name ?? 'Pesan' }}')">
+                                <i class="bi bi-trash me-2"></i>Hapus Pesan
                             </button>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <a href="mailto:{{ $message->email }}" class="inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                            ✉️ Balas Email
+        <!-- Sidebar Info -->
+        <div class="col-lg-4">
+            <!-- Sender Card -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="bi bi-person me-2"></i>Informasi Pengirim
+                </div>
+                <div class="card-body text-center">
+                    <div class="user-avatar mx-auto" style="width: 60px; height: 60px; font-size: 24px; margin-bottom: 15px;">
+                        {{ substr($message->nama ?? $message->name ?? 'A', 0, 1) }}
+                    </div>
+                    <h5 class="card-title">{{ $message->nama ?? $message->name ?? 'Anonymous' }}</h5>
+                    <p class="text-muted mb-3">
+                        <i class="bi bi-envelope me-1"></i>
+                        <a href="mailto:{{ $message->email }}" style="color: var(--primary-color);">
+                            {{ $message->email }}
                         </a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Status Card -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="bi bi-info-circle me-2"></i>Status
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-2">Status Baca</small>
+                        @if($message->read_at)
+                            <span class="badge bg-success p-2">
+                                <i class="bi bi-check-circle me-1"></i>Sudah Dibaca
+                            </span>
+                            <p class="text-muted mt-2">
+                                <small>{{ $message->read_at->format('d/m/Y H:i') }}</small>
+                            </p>
+                        @else
+                            <span class="badge bg-warning p-2">
+                                <i class="bi bi-exclamation-circle me-1"></i>Belum Dibaca
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meta Info -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-calendar-event me-2"></i>Waktu
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <small class="text-muted">Diterima</small>
+                        <p class="fw-semibold">
+                            {{ $message->created_at->format('d/m/Y') }}
+                            <br>
+                            <small>{{ $message->created_at->diffForHumans() }}</small>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection
+
+@section('scripts')
+    <script>
+        function confirmDelete(e, messageName) {
+            e.preventDefault();
+            if (confirm(`Apakah Anda yakin ingin menghapus pesan dari "${messageName}"? Tindakan ini tidak dapat dibatalkan.`)) {
+                e.target.closest('form').submit();
+            }
+        }
+    </script>
+@endsection

@@ -209,15 +209,136 @@
                 <h2>Galeri Foto</h2>
                 <p>Dokumentasi kegiatan sekolah</p>
             </div>
-            <div class="gallery-grid">
-                <div class="gallery-item">📸</div>
-                <div class="gallery-item">🎓</div>
-                <div class="gallery-item">⚽</div>
-                <div class="gallery-item">🎨</div>
-                <div class="gallery-item">🏃</div>
-                <div class="gallery-item">🎪</div>
-                <div class="gallery-item">📚</div>
-                <div class="gallery-item">🌳</div>
+            <style>
+                .gallery-grid-beranda {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 30px;
+                    margin: 40px 0;
+                }
+
+                .gallery-card-beranda {
+                    background: white;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                    transition: all 0.3s ease;
+                }
+
+                .gallery-card-beranda:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+                }
+
+                .gallery-image-wrapper-beranda {
+                    width: 100%;
+                    height: 280px;
+                    overflow: hidden;
+                    position: relative;
+                }
+
+                .gallery-image-wrapper-beranda img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.3s ease;
+                }
+
+                .gallery-card-beranda:hover .gallery-image-wrapper-beranda img {
+                    transform: scale(1.1);
+                }
+
+                .gallery-info-overlay-beranda {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(135deg, rgba(44, 62, 80, 0.9) 0%, rgba(52, 73, 94, 0.9) 100%);
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    padding: 30px 20px;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    color: white;
+                }
+
+                .gallery-card-beranda:hover .gallery-info-overlay-beranda {
+                    opacity: 1;
+                }
+
+                .gallery-info-overlay-beranda h5 {
+                    font-size: 18px;
+                    font-weight: 700;
+                    margin: 0 0 10px 0;
+                    line-height: 1.4;
+                }
+
+                .gallery-info-overlay-beranda p {
+                    font-size: 13px;
+                    margin: 0 0 15px 0;
+                    line-height: 1.5;
+                }
+
+                .gallery-date-badge-beranda {
+                    display: inline-block;
+                    background: rgba(255, 255, 255, 0.2);
+                    color: white;
+                    padding: 4px 12px;
+                    border-radius: 20px;
+                    font-size: 12px;
+                    margin-bottom: 15px;
+                }
+
+                @media (max-width: 1024px) {
+                    .gallery-grid-beranda {
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 20px;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .gallery-grid-beranda {
+                        grid-template-columns: 1fr;
+                        gap: 20px;
+                    }
+
+                    .gallery-image-wrapper-beranda {
+                        height: 250px;
+                    }
+
+                    .gallery-info-overlay-beranda {
+                        opacity: 1;
+                        background: linear-gradient(180deg, rgba(44, 62, 80, 0.5) 0%, rgba(44, 62, 80, 0.95) 100%);
+                    }
+                }
+            </style>
+            <div class="gallery-grid-beranda">
+                @forelse ($galeris as $galeri)
+                    <div class="gallery-card-beranda">
+                        <div class="gallery-image-wrapper-beranda">
+                            @if ($galeri->gambar)
+                                <img src="{{ asset('storage/' . $galeri->gambar) }}" alt="{{ $galeri->judul }}">
+                            @else
+                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 60px;">
+                                    📸
+                                </div>
+                            @endif
+                            <div class="gallery-info-overlay-beranda">
+                                <div class="gallery-date-badge-beranda">📅 {{ $galeri->tanggal_upload->format('d M Y') }}</div>
+                                <h5>{{ $galeri->judul }}</h5>
+                                @if ($galeri->deskripsi)
+                                    <p>{{ Str::limit($galeri->deskripsi, 120) }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+                        <p style="color: #666; font-size: 16px;">📷 Belum ada foto galeri</p>
+                    </div>
+                @endforelse
             </div>
             <div class="gallery-cta" style="text-align: center; margin-top: 40px;">
                 <a href="{{ url('/galeri') }}" class="btn btn-primary">Lihat Galeri Lengkap →</a>

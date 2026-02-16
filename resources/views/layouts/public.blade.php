@@ -937,6 +937,7 @@
                     <li><a href="/" class="@if(request()->is('/')) active @endif">Beranda</a></li>
                     <li><a href="/tentang" class="@if(request()->is('tentang')) active @endif">Tentang</a></li>
                     <li><a href="/program" class="@if(request()->is('program')) active @endif">Program</a></li>
+                    <li><a href="/guru-staff" class="@if(request()->is('guru-staff')) active @endif">Guru & Staff</a></li>
                     <li><a href="/berita" class="@if(request()->is('berita')) active @endif">Berita</a></li>
                     <li><a href="/galeri" class="@if(request()->is('galeri')) active @endif">Galeri</a></li>
                     <li><a href="/kontak" class="@if(request()->is('kontak')) active @endif">Kontak</a></li>
@@ -962,6 +963,7 @@
                     <li><a href="/">Beranda</a></li>
                     <li><a href="/tentang">Tentang Kami</a></li>
                     <li><a href="/program">Program</a></li>
+                    <li><a href="/guru-staff">Guru & Staff</a></li>
                     <li><a href="/berita">Berita</a></li>
                 </ul>
             </div>

@@ -41,6 +41,16 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        $inputEmail = trim(strtolower($this->input('email')));
+        $allowedEmail = strtolower(config('admin.allowed_email', 'admin@estikra.local'));
+        
+        // Check if email is allowed
+        if ($inputEmail !== $allowedEmail) {
+            throw ValidationException::withMessages([
+                'email' => 'Email tidak diizinkan untuk login.',
+            ]);
+        }
+
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
