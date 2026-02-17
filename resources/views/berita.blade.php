@@ -3,166 +3,52 @@
 @section('title', 'Berita & Kegiatan - SD Negeri 3 Krasak Bangsri')
 
 @section('content')
-    <style>
-        .news {
-            padding: 60px 0;
-            background: #f8f9fa;
-        }
-
-        .news-grid-custom {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .news-card-custom {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .news-card-custom:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .news-image-wrapper {
-            width: 100%;
-            height: 280px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .news-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .news-card-custom:hover .news-image-wrapper img {
-            transform: scale(1.1);
-        }
-
-        .news-info-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(44, 62, 80, 0.9) 0%, rgba(52, 73, 94, 0.9) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 30px 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            color: white;
-        }
-
-        .news-card-custom:hover .news-info-overlay {
-            opacity: 1;
-        }
-
-        .news-info-overlay h5 {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 0 0 10px 0;
-            line-height: 1.4;
-        }
-
-        .news-info-overlay p {
-            font-size: 13px;
-            margin: 0 0 15px 0;
-            line-height: 1.5;
-        }
-
-        .news-read-more {
-            display: inline-block;
-            color: #3498db;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-
-        .news-read-more:hover {
-            color: #2980b9;
-        }
-
-        .news-date-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-bottom: 15px;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .news-grid-custom {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .news-grid-custom {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .news-image-wrapper {
-                height: 250px;
-            }
-
-            .news-info-overlay {
-                opacity: 1;
-                background: linear-gradient(180deg, rgba(44, 62, 80, 0.5) 0%, rgba(44, 62, 80, 0.95) 100%);
-            }
-        }
-    </style>
-
-    <!-- News Section -->
-    <section class="news">
-        <div class="container">
-            <div class="section-title">
-                <h2>Berita & Kegiatan</h2>
-                <p>Informasi terkini seputar kegiatan sekolah</p>
+    <!-- Berita Section -->
+    <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12">
+            <!-- Section Header -->
+            <div class="text-center mb-16 animate-fadeInUp">
+                
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Berita Terkini</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Informasi dan update terbaru seputar kegiatan sekolah kami</p>
             </div>
-            <div class="news-grid-custom">
+
+            <!-- Berita Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 @forelse ($beritas as $berita)
-                    <div class="news-card-custom">
-                        <div class="news-image-wrapper">
+                    <div class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl">
+                        <!-- Image -->
+                        <div class="h-64 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 relative">
                             @if ($berita->gambar)
-                                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}">
+                                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                             @else
-                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 60px;">
-                                    📰
-                                </div>
+                                <div class="w-full h-full flex items-center justify-center text-6xl"></div>
                             @endif
-                            <div class="news-info-overlay">
-                                <div class="news-date-badge">{{ $berita->tanggal_terbit->format('d M Y') }}</div>
-                                <h5>{{ $berita->judul }}</h5>
-                                <p>{{ Str::limit(strip_tags($berita->konten), 120) }}</p>
-                                <a href="#" class="news-read-more">Baca Selengkapnya →</a>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-6">
+                            <div class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold mb-3">
+                                {{ $berita->tanggal_terbit->format('d M Y') }}
                             </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2">{{ $berita->judul }}</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">{{ Str::limit(strip_tags($berita->konten), 150) }}</p>
+                            <a href="#" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300">
+                                Baca Selengkapnya
+                            </a>
                         </div>
                     </div>
                 @empty
-                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                        <p style="color: #666; font-size: 16px;">📢 Belum ada berita yang dipublikasikan</p>
+                    <div class="col-span-full text-center py-16">
+                        <p class="text-2xl text-gray-600 font-semibold mb-2">Belum ada berita</p>
+                        <p class="text-gray-500">Berita terbaru akan ditampilkan di sini</p>
                     </div>
                 @endforelse
             </div>
 
+            <!-- Pagination -->
             @if ($beritas->hasPages())
-                <div style="text-align: center; margin-top: 40px;">
+                <div class="flex justify-center mt-12">
                     {{ $beritas->links() }}
                 </div>
             @endif

@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Route;
 
 // Halaman Publik
 Route::get('/', function () {
-    $galeris = \App\Models\Galeri::where('status', 'aktif')->orderBy('tanggal_upload', 'desc')->limit(6)->get();
-    return view('beranda', compact('galeris'));
+    $beritas = \App\Models\Berita::where('status', 'published')->orderBy('tanggal_terbit', 'desc')->limit(3)->get();
+    $galeris = \App\Models\Galeri::where('status', 'aktif')->orderBy('tanggal_upload', 'desc')->limit(3)->get();
+    return view('beranda', compact('beritas', 'galeris'));
 });
 
 Route::get('/tentang', function () {

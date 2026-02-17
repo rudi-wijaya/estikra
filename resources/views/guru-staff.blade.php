@@ -114,16 +114,19 @@
     </style>
 
     <!-- Guru & Staff Section -->
-    <section class="staff-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Guru & Staff</h2>
-                <p>Tim profesional yang berdedikasi untuk pendidikan berkualitas</p>
+    <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12">
+            <div class="text-center mb-16 animate-fadeInUp">
+                
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Tim Pendidik Kami</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Tim profesional yang berdedikasi untuk pendidikan berkualitas dan pembentukan karakter siswa</p>
             </div>
 
             <!-- Kepala Sekolah -->
-            <div class="section-subtitle">Kepala Sekolah</div>
-            <div class="staff-grid" style="max-width: 400px; margin-left: auto; margin-right: auto;">
+            <div class="mt-12 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 text-center mb-8 pb-4 border-b-2 border-blue-400">Kepala Sekolah</h3>
+            </div>
+            <div class="staff-grid" style="max-width: 400px; margin-left: auto; margin-right: auto; margin-bottom: 40px;">
                 <div class="staff-card">
                     <div class="staff-avatar">👨‍💼</div>
                     <div class="staff-info">
@@ -135,8 +138,10 @@
             </div>
 
             <!-- Guru Kelas -->
-            <div class="section-subtitle">Guru Kelas</div>
-            <div class="staff-grid">
+            <div class="mt-12 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 text-center mb-8 pb-4 border-b-2 border-blue-400">Guru Kelas</h3>
+            </div>
+            <div class="staff-grid mb-12">
                 <div class="staff-card">
                     <div class="staff-avatar">👩‍🏫</div>
                     <div class="staff-info">
@@ -188,8 +193,10 @@
             </div>
 
             <!-- Guru Mata Pelajaran -->
-            <div class="section-subtitle">Guru Mata Pelajaran</div>
-            <div class="staff-grid">
+            <div class="mt-12 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 text-center mb-8 pb-4 border-b-2 border-blue-400">Guru Mata Pelajaran</h3>
+            </div>
+            <div class="staff-grid mb-12">
                 <div class="staff-card">
                     <div class="staff-avatar">👨‍🏫</div>
                     <div class="staff-info">
@@ -241,7 +248,9 @@
             </div>
 
             <!-- Staff Administrasi -->
-            <div class="section-subtitle">Staff Administrasi & Pendukung</div>
+            <div class="mt-12 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 text-center mb-8 pb-4 border-b-2 border-blue-400">Staff Administrasi & Pendukung</h3>
+            </div>
             <div class="staff-grid" style="max-width: 600px;">
                 <div class="staff-card">
                     <div class="staff-avatar">👨‍💼</div>
