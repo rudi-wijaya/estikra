@@ -11,7 +11,7 @@ class MessageController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'nomor_hp' => 'required|string|max:20',
             'subjek' => 'required|string|max:255',
             'pesan' => 'required|string',
         ]);

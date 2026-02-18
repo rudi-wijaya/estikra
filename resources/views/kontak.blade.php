@@ -37,14 +37,14 @@
                     </p>
                 </div>
 
-                <!-- Email -->
+                <!-- WhatsApp -->
                 <div class="border border-gray-200 rounded-lg p-6 hover:border-blue-300 transition-colors">
                     <div class="text-2xl mb-3"></div>
-                    <h3 class="text-base font-semibold text-gray-900 mb-2">Email</h3>
+                    <h3 class="text-base font-semibold text-gray-900 mb-2">WhatsApp</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">
-                        <strong class="text-gray-900 break-words">sdn3krasakbangsri@gmail.com</strong><br>
-                        <span class="text-xs text-gray-500">Email Utama</span><br><br>
-                        
+                        <strong class="text-gray-900">0812-3456-7890</strong><br>
+                        <span class="text-xs text-gray-500">Chat via WhatsApp</span><br><br>
+                        <a href="https://wa.me/6281234567890" target="_blank" class="text-blue-600 hover:text-blue-700 text-xs font-medium mt-2 inline-block">Hubungi via WhatsApp →</a>
                     </p>
                 </div>
             </div>
@@ -84,10 +84,10 @@
                                 placeholder="Nama Anda">
                         </div>
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-900 mb-1">Email</label>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}" required 
+                            <label for="nomor_hp" class="block text-sm font-medium text-gray-900 mb-1">Nomor HP / WhatsApp</label>
+                            <input type="tel" id="nomor_hp" name="nomor_hp" value="{{ old('nomor_hp') }}" required 
                                 class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400 transition-colors text-sm" 
-                                placeholder="Email Anda">
+                                placeholder="Contoh: 0812-3456-7890">
                         </div>
                         <div>
                             <label for="subjek" class="block text-sm font-medium text-gray-900 mb-1">Subjek</label>
@@ -104,6 +104,10 @@
                         <button type="submit" class="w-full bg-blue-600 text-white font-medium py-2 rounded hover:bg-blue-700 transition-colors text-sm">
                             <i class="bi bi-send mr-2"></i> Kirim Pesan
                         </button>
+                        <p class="text-xs text-gray-500 text-center mt-3">
+                            <i class="bi bi-info-circle mr-1"></i> 
+                            Kami akan merespon melalui WhatsApp atau nomor telepon sekolah
+                        </p>
                     </form>
                 </div>
 

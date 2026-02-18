@@ -9,16 +9,21 @@ class Message extends Model
     protected $fillable = [
         'nama',
         'name',
+        'nomor_hp',
         'email',
         'subjek',
         'message',
         'pesan',
         'status',
         'read_at',
+        'admin_reply',
+        'replied_at',
+       
     ];
 
     protected $casts = [
         'read_at' => 'datetime',
+        'replied_at' => 'datetime',
     ];
 
     // Accessor untuk 'name' yang compatible dengan 'nama'

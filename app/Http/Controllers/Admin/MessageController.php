@@ -15,11 +15,11 @@ class MessageController extends Controller
     {
         $query = Message::query();
 
-        // Search by name or email
+        // Search by name or nomor_hp
         if ($request->filled('search')) {
             $search = $request->input('search');
-            $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
+            $query->where('nama', 'like', "%{$search}%")
+                  ->orWhere('nomor_hp', 'like', "%{$search}%");
         }
 
         // Filter by read status
@@ -68,5 +68,55 @@ class MessageController extends Controller
 
         return redirect()->route('admin.messages.index')
                        ->with('success', 'Pesan berhasil dihapus');
+    }
+
+    /**
+     * Save reply to message
+     */
+    public function reply(Request $request, Message $message)
+    {
+        $validated = $request->validate([
+            'reply_text' => 'required|string|min:10',
+        ], [
+            'reply_text.required' => 'Isi balasan tidak boleh kosong',
+            'reply_text.min' => 'Balasan minimal 10 karakter',
+        ]);
+
+        try {
+            // Save reply to database
+            $message->update([
+                'admin_reply' => $validated['reply_text'],
+                'replied_at' => now(),
+            ]);
+
+            return back()->with('success', '✓ Balasan berhasil disimpan! Anda bisa mengeditnya atau langsung kirim ke WhatsApp.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menyimpan balasan: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Update existing reply
+     */
+    public function updateReply(Request $request, Message $message)
+    {
+        $validated = $request->validate([
+            'reply_text' => 'required|string|min:10',
+        ], [
+            'reply_text.required' => 'Isi balasan tidak boleh kosong',
+            'reply_text.min' => 'Balasan minimal 10 karakter',
+        ]);
+
+        try {
+            // Update reply in database
+            $message->update([
+                'admin_reply' => $validated['reply_text'],
+                'replied_at' => now(),
+            ]);
+
+            return back()->with('success', '✓ Balasan berhasil diperbarui!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal memperbarui balasan: ' . $e->getMessage());
+        }
     }
 }

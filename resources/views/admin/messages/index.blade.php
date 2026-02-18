@@ -17,7 +17,7 @@
         <div class="card-body">
             <form method="GET" action="{{ route('admin.messages.index') }}" class="row g-3">
                 <div class="col-md-6">
-                    <input type="text" name="search" class="form-control" placeholder="Cari nama atau email..." value="{{ request('search') }}">
+                    <input type="text" name="search" class="form-control" placeholder="Cari nama atau nomor HP..." value="{{ request('search') }}">
                 </div>
                 <div class="col-md-4">
                     <select name="status" class="form-select">
@@ -46,10 +46,12 @@
                     <tr>
                         <th style="width: 50px">#</th>
                         <th>Pengirim</th>
-                        <th>Email</th>
+                        <th>Nomor HP</th>
+                        <th>Subjek</th>
                         <th>Pesan</th>
                         <th>Tanggal</th>
-                        <th>Status</th>
+                        <th>Status Baca</th>
+                        <th>Status Balas</th>
                         <th style="width: 120px">Aksi</th>
                     </tr>
                 </thead>
@@ -61,7 +63,10 @@
                                 <i class="bi bi-person-circle me-2"></i>{{ $message->nama ?? $message->name ?? 'Anonymous' }}
                             </td>
                             <td>
-                                <a href="mailto:{{ $message->email }}">{{ $message->email }}</a>
+                                <a href="https://wa.me/62{{ ltrim($message->nomor_hp, '0') }}" target="_blank" title="Chat via WhatsApp">{{ $message->nomor_hp }}</a>
+                            </td>
+                            <td>
+                                <small class="text-primary fw-semibold">{{ $message->subjek ?? 'Tanpa Subjek' }}</small>
                             </td>
                             <td>
                                 <small>{{ Str::limit($message->pesan ?? $message->message, 50) }}</small>
@@ -81,6 +86,17 @@
                                 @endif
                             </td>
                             <td>
+                                @if($message->replied_at)
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-check2-circle me-1"></i>Dibalas
+                                    </span>
+                                @else
+                                    <span class="badge bg-secondary">
+                                        <i class="bi bi-clock me-1"></i>Belum Dibalas
+                                    </span>
+                                @endif
+                            </td>
+                            <td>
                                 <a href="{{ route('admin.messages.show', $message->id) }}" class="btn btn-sm btn-outline-info" title="Lihat">
                                     <i class="bi bi-eye"></i>
                                 </a>
@@ -95,7 +111,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-5">
+                            <td colspan="9" class="text-center text-muted py-5">
                                 <i class="bi bi-inbox" style="font-size: 48px; opacity: 0.5;"></i>
                                 <p class="mt-3">Belum ada pesan</p>
                             </td>

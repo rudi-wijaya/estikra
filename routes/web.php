@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/messages/{message}', [\App\Http\Controllers\Admin\MessageController::class, 'show'])->name('messages.show');
         Route::delete('/messages/{message}', [\App\Http\Controllers\Admin\MessageController::class, 'destroy'])->name('messages.destroy');
         Route::post('/messages/{message}/mark-as-read', [\App\Http\Controllers\Admin\MessageController::class, 'markAsRead'])->name('messages.markAsRead');
+        Route::post('/messages/{message}/reply', [\App\Http\Controllers\Admin\MessageController::class, 'reply'])->name('messages.reply');
+        Route::put('/messages/{message}/reply', [\App\Http\Controllers\Admin\MessageController::class, 'updateReply'])->name('messages.updateReply');
 
         // Beritas
         Route::resource('beritas', \App\Http\Controllers\Admin\BeritaController::class);
