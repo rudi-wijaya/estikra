@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'SD Negeri 3 Krasak Bangsri - Berkarakter, Berprestasi, Berakhlak Mulia')</title>
+    <title><?php echo $__env->yieldContent('title', 'SD Negeri 3 Krasak Bangsri - Berkarakter, Berprestasi, Berakhlak Mulia'); ?></title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -199,7 +199,7 @@
 </head>
 <body class="bg-gradient-to-b from-slate-50 to-white text-gray-700">
     <!-- Fixed Top Bar + Navigation -->
-    <div id="navbar-header" class="fixed top-0 left-0 right-0 w-full z-50 backdrop-blur-sm" @if(request()->is('/')) data-transparent="true" @endif>
+    <div id="navbar-header" class="fixed top-0 left-0 right-0 w-full z-50 backdrop-blur-sm" <?php if(request()->is('/')): ?> data-transparent="true" <?php endif; ?>>
 
         <!-- Top Header -->
         <div class="top-bar bg-gradient-to-r from-blue-900 to-blue-800 text-white border-b border-blue-700 py-2.5 text-xs">
@@ -244,13 +244,13 @@
                 <!-- Desktop Navigation -->
                 <nav class="hidden lg:flex">
                     <ul class="flex gap-1">
-                        <li><a href="/" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 @if(request()->is('/')) active @endif">Beranda</a></li>
-                        <li><a href="/tentang" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 @if(request()->is('tentang')) active @endif">Tentang</a></li>
-                        <li><a href="/program" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 @if(request()->is('program')) active @endif">Program</a></li>
-                        <li><a href="/guru-staff" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 @if(request()->is('guru-staff')) active @endif">Guru &amp; Staff</a></li>
-                        <li><a href="/berita" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 @if(request()->is('berita')) active @endif">Berita</a></li>
-                        <li><a href="/galeri" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 @if(request()->is('galeri')) active @endif">Galeri</a></li>
-                        <li><a href="/kontak" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 @if(request()->is('kontak')) active @endif">Kontak</a></li>
+                        <li><a href="/" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('/')): ?> active <?php endif; ?>">Beranda</a></li>
+                        <li><a href="/tentang" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('tentang')): ?> active <?php endif; ?>">Tentang</a></li>
+                        <li><a href="/program" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('program')): ?> active <?php endif; ?>">Program</a></li>
+                        <li><a href="/guru-staff" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('guru-staff')): ?> active <?php endif; ?>">Guru &amp; Staff</a></li>
+                        <li><a href="/berita" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('berita')): ?> active <?php endif; ?>">Berita</a></li>
+                        <li><a href="/galeri" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('galeri')): ?> active <?php endif; ?>">Galeri</a></li>
+                        <li><a href="/kontak" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('kontak')): ?> active <?php endif; ?>">Kontak</a></li>
                     </ul>
                 </nav>
 
@@ -266,13 +266,13 @@
             <nav id="navbar" class="hidden lg:hidden nav-mobile">
                 <div class="border-t border-gray-100 py-4 px-2">
                     <ul class="flex flex-col gap-2">
-                        <li><a href="/" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('/')) active bg-blue-50 text-blue-600 @endif">Beranda</a></li>
-                        <li><a href="/tentang" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('tentang')) active bg-blue-50 text-blue-600 @endif">Tentang</a></li>
-                        <li><a href="/program" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('program')) active bg-blue-50 text-blue-600 @endif">Program</a></li>
-                        <li><a href="/guru-staff" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('guru-staff')) active bg-blue-50 text-blue-600 @endif">Guru & Staff</a></li>
-                        <li><a href="/berita" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('berita')) active bg-blue-50 text-blue-600 @endif">Berita</a></li>
-                        <li><a href="/galeri" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('galeri')) active bg-blue-50 text-blue-600 @endif">Galeri</a></li>
-                        <li><a href="/kontak" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('kontak')) active bg-blue-50 text-blue-600 @endif">Kontak</a></li>
+                        <li><a href="/" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 <?php if(request()->is('/')): ?> active bg-blue-50 text-blue-600 <?php endif; ?>">Beranda</a></li>
+                        <li><a href="/tentang" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 <?php if(request()->is('tentang')): ?> active bg-blue-50 text-blue-600 <?php endif; ?>">Tentang</a></li>
+                        <li><a href="/program" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 <?php if(request()->is('program')): ?> active bg-blue-50 text-blue-600 <?php endif; ?>">Program</a></li>
+                        <li><a href="/guru-staff" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 <?php if(request()->is('guru-staff')): ?> active bg-blue-50 text-blue-600 <?php endif; ?>">Guru & Staff</a></li>
+                        <li><a href="/berita" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 <?php if(request()->is('berita')): ?> active bg-blue-50 text-blue-600 <?php endif; ?>">Berita</a></li>
+                        <li><a href="/galeri" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 <?php if(request()->is('galeri')): ?> active bg-blue-50 text-blue-600 <?php endif; ?>">Galeri</a></li>
+                        <li><a href="/kontak" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 <?php if(request()->is('kontak')): ?> active bg-blue-50 text-blue-600 <?php endif; ?>">Kontak</a></li>
                     </ul>
                 </div>
             </nav>
@@ -281,8 +281,8 @@
     </div><!-- end #navbar-header -->
 
     <!-- Main Content -->
-    <main class="min-h-screen @if(!request()->is('/')) pt-32 @endif">
-        @yield('content')
+    <main class="min-h-screen <?php if(!request()->is('/')): ?> pt-32 <?php endif; ?>">
+        <?php echo $__env->yieldContent('content'); ?>
     </main>
 
     <!-- Footer -->
@@ -439,3 +439,4 @@
     </script>
 </body>
 </html>
+<?php /**PATH C:\laragon\www\estikra\resources\views/layouts/public.blade.php ENDPATH**/ ?>

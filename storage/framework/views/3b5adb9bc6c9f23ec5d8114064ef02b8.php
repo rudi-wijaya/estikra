@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }} - Admin</title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo e(config('app.name', 'Laravel')); ?> - Admin</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -465,39 +465,39 @@
 
             <ul class="sidebar-menu">
                 <li>
-                    <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <a href="<?php echo e(route('admin.dashboard')); ?>" class="<?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
                         <i class="bi bi-house-door"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                    <a href="<?php echo e(route('admin.users.index')); ?>" class="<?php echo e(request()->routeIs('admin.users.*') ? 'active' : ''); ?>">
                         <i class="bi bi-people"></i>
                         <span>User</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.beritas.index') }}" class="{{ request()->routeIs('admin.beritas.*') ? 'active' : '' }}">
+                    <a href="<?php echo e(route('admin.beritas.index')); ?>" class="<?php echo e(request()->routeIs('admin.beritas.*') ? 'active' : ''); ?>">
                         <i class="bi bi-newspaper"></i>
                         <span>Berita</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.galeris.index') }}" class="{{ request()->routeIs('admin.galeris.*') ? 'active' : '' }}">
+                    <a href="<?php echo e(route('admin.galeris.index')); ?>" class="<?php echo e(request()->routeIs('admin.galeris.*') ? 'active' : ''); ?>">
                         <i class="bi bi-images"></i>
                         <span>Galeri</span>
                     </a>
                 </li>
                 <div class="sidebar-divider"></div>
                 <li>
-                    <a href="{{ route('profile.edit') }}">
+                    <a href="<?php echo e(route('profile.edit')); ?>">
                         <i class="bi bi-person-circle"></i>
                         <span>Profil</span>
                     </a>
                 </li>
                 <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
+                    <form method="POST" action="<?php echo e(route('logout')); ?>">
+                        <?php echo csrf_field(); ?>
                         <a href="javascript:void(0)" onclick="event.currentTarget.closest('form').submit()">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Logout</span>
@@ -516,7 +516,7 @@
                         <i class="bi bi-list"></i>
                     </button>
                     <div class="navbar-brand">
-                        @yield('page_title', 'Dashboard')
+                        <?php echo $__env->yieldContent('page_title', 'Dashboard'); ?>
                     </div>
                 </div>
                 <div class="navbar-right">
@@ -525,37 +525,39 @@
                     </div>
                     <div class="user-profile">
                         <div class="user-avatar">
-                            {{ substr(auth()->user()->name, 0, 1) }}
+                            <?php echo e(substr(auth()->user()->name, 0, 1)); ?>
+
                         </div>
-                        <div class="user-name">{{ auth()->user()->name }}</div>
+                        <div class="user-name"><?php echo e(auth()->user()->name); ?></div>
                     </div>
                 </div>
             </nav>
 
             <!-- Page Content -->
             <div class="page-content">
-                @if ($errors->any())
+                <?php if($errors->any()): ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="bi bi-exclamation-circle me-2"></i>
                         <strong>Terjadi Kesalahan!</strong>
                         <ul class="mb-0 mt-2">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
+                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <li><?php echo e($error); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @endif
+                <?php endif; ?>
 
-                @if (session('success'))
+                <?php if(session('success')): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle me-2"></i>
-                        {{ session('success') }}
+                        <?php echo e(session('success')); ?>
+
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @endif
+                <?php endif; ?>
 
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </div>
         </div>
     </div>
@@ -575,6 +577,7 @@
         });
     </script>
 
-    @yield('scripts')
+    <?php echo $__env->yieldContent('scripts'); ?>
 </body>
 </html>
+<?php /**PATH C:\laragon\www\estikra\resources\views/layouts/admin.blade.php ENDPATH**/ ?>

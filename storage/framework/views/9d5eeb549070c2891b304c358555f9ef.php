@@ -1,8 +1,8 @@
-@extends('layouts.public')
 
-@section('title', 'Hubungi Kami - SD Negeri 3 Krasak Bangsri')
 
-@section('content')
+<?php $__env->startSection('title', 'Hubungi Kami - SD Negeri 3 Krasak Bangsri'); ?>
+
+<?php $__env->startSection('content'); ?>
     <!-- Contact Section -->
     <section class="py-12 bg-white">
         <div class="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
@@ -61,4 +61,6 @@
             </div>
         </div>
     </section>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\estikra\resources\views/kontak.blade.php ENDPATH**/ ?>

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\MessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,9 +37,6 @@ Route::get('/kontak', function () {
     return view('kontak');
 });
 
-// Message Routes
-Route::post('/kirim-pesan', [MessageController::class, 'store'])->name('messages.store');
-
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
     // Admin Routes
@@ -51,14 +47,6 @@ Route::middleware('auth')->group(function () {
         // Users
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         
-        // Messages
-        Route::get('/messages', [\App\Http\Controllers\Admin\MessageController::class, 'index'])->name('messages.index');
-        Route::get('/messages/{message}', [\App\Http\Controllers\Admin\MessageController::class, 'show'])->name('messages.show');
-        Route::delete('/messages/{message}', [\App\Http\Controllers\Admin\MessageController::class, 'destroy'])->name('messages.destroy');
-        Route::post('/messages/{message}/mark-as-read', [\App\Http\Controllers\Admin\MessageController::class, 'markAsRead'])->name('messages.markAsRead');
-        Route::post('/messages/{message}/reply', [\App\Http\Controllers\Admin\MessageController::class, 'reply'])->name('messages.reply');
-        Route::put('/messages/{message}/reply', [\App\Http\Controllers\Admin\MessageController::class, 'updateReply'])->name('messages.updateReply');
-
         // Beritas
         Route::resource('beritas', \App\Http\Controllers\Admin\BeritaController::class);
 
