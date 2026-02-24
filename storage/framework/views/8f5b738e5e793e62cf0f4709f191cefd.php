@@ -5,7 +5,7 @@
 <?php $__env->startSection('content'); ?>
     <!-- Hero Section -->
     <section class="relative flex flex-col justify-between -mt-32" style="min-height: calc(820px + 8rem); background-image: url('<?php echo e(asset('images/homepage.jpg')); ?>'); background-size: cover; background-position: center top;" >
-        <div class="absolute inset-0 bg-white/50"></div>
+        <div class="absolute inset-0 bg-black/40"></div>
         <!-- Decorative Elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
@@ -21,12 +21,12 @@
             </div>
 
             <!-- Heading -->
-            <h1 class="text-5xl md:text-6xl font-black text-gray-900 leading-tight mb-4 animate-fadeInUp" style="animation-delay: 0.1s;">
-                SD Negeri 3 <span class="text-blue-600">Krasak Bangsri</span>
+            <h1 class="text-5xl md:text-6xl font-black text-white leading-tight mb-4 animate-fadeInUp" style="animation-delay: 0.1s; text-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+                SD Negeri 3 <span class="text-blue-300">Krasak Bangsri</span>
             </h1>
 
             <!-- Subheading -->
-            <p class="text-gray-700 text-lg mb-8 max-w-xl animate-fadeInUp" style="animation-delay: 0.2s;">
+            <p class="text-white/90 text-lg mb-8 max-w-xl animate-fadeInUp" style="animation-delay: 0.2s; text-shadow: 0 1px 6px rgba(0,0,0,0.4);">
                 Membentuk Generasi Berkarakter, Berprestasi, dan Berakhlak Mulia
             </p>
 
@@ -37,7 +37,7 @@
                     <span>Pelajari Lebih Lanjut</span>
                 </a>
                 <a href="/kontak"
-                   class="card-hover group inline-flex items-center gap-2 border-2 border-blue-500 text-blue-600 hover:bg-blue-50 font-semibold px-7 py-3 rounded-xl transition-all duration-200 bg-white/60 backdrop-blur-sm">
+                   class="card-hover group inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white/20 font-semibold px-7 py-3 rounded-xl transition-all duration-200 backdrop-blur-sm">
                     <i class=""></i>
                     <span>PPDB 2026</span>
                 </a>
@@ -176,7 +176,7 @@
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12 animate-fadeInUp" data-animate>
             <div class="text-center mb-8">
             
-                <h2 class="section-title">Pesan dari Pimpinan Sekolah</h2>
+                <h2 class="section-title">Sambutan dari Pimpinan Sekolah</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

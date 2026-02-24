@@ -11,7 +11,6 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard', [
             'totalUsers' => User::count(),
-            'recentUsers' => User::latest()->take(5)->get(),
         ]);
     }
 }

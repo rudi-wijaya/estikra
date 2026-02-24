@@ -364,19 +364,25 @@
             margin-bottom: 8px;
         }
 
+        /* Overlay for mobile sidebar */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
-                width: 250px;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .sidebar {
+                width: 260px;
                 position: fixed;
-                left: -250px;
+                left: -260px;
                 z-index: 1000;
                 transition: left 0.3s ease;
             }
@@ -385,12 +391,16 @@
                 left: 0;
             }
 
+            .main-content {
+                margin-left: 0;
+            }
+
             .page-content {
                 padding: 15px;
             }
 
             .top-navbar {
-                padding: 15px 20px;
+                padding: 12px 16px;
             }
 
             .navbar-brand {
@@ -399,6 +409,22 @@
 
             .page-title {
                 font-size: 20px;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .stat-value {
+                font-size: 24px;
+            }
+
+            .table-responsive {
+                font-size: 13px;
+            }
+
+            #sidebarToggle {
+                display: inline-flex !important;
             }
         }
 
@@ -453,6 +479,9 @@
     </style>
 </head>
 <body>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="admin-wrapper">
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
@@ -512,7 +541,7 @@
             <!-- Top Navigation -->
             <nav class="top-navbar">
                 <div class="navbar-left">
-                    <button class="btn btn-link" id="sidebarToggle" style="display: none; color: #2c3e50;">
+                    <button class="btn btn-link" id="sidebarToggle" style="color: #2c3e50; padding: 4px 8px;">
                         <i class="bi bi-list"></i>
                     </button>
                     <div class="navbar-brand">
@@ -565,16 +594,47 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('show');
-        });
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-        // Hide sidebar on larger screens
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                document.getElementById('sidebar').classList.remove('show');
+        function openSidebar() {
+            sidebar.classList.add('show');
+            sidebarOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('show');
+            sidebarOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        sidebarToggle?.addEventListener('click', function() {
+            if (sidebar.classList.contains('show')) {
+                closeSidebar();
+            } else {
+                openSidebar();
             }
         });
+
+        sidebarOverlay?.addEventListener('click', closeSidebar);
+
+        // Close sidebar on larger screens
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeSidebar();
+            }
+        });
+
+        // Hide toggle on desktop, show on mobile
+        function updateToggleVisibility() {
+            if (sidebarToggle) {
+                sidebarToggle.style.display = window.innerWidth <= 768 ? 'inline-flex' : 'none';
+            }
+        }
+        updateToggleVisibility();
+        window.addEventListener('resize', updateToggleVisibility);
     </script>
 
     <?php echo $__env->yieldContent('scripts'); ?>
