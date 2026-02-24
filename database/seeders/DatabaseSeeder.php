@@ -23,7 +23,5 @@ class DatabaseSeeder extends Seeder
 
         // Create test user
         User::factory()->count(3)->create();
-
-        $this->call(MessageSeeder::class);
     }
 }

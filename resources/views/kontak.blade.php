@@ -53,8 +53,8 @@
                     <div class="text-3xl mb-3 text-blue-600">✉️</div>
                     <h3 class="text-base font-semibold text-gray-900 mb-2">Email</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">
-                        <a href="mailto:sdnegeri3krasak@gmail.com" class="text-blue-600 hover:text-blue-700 font-medium">
-                            sdnegeri3krasak@gmail.com
+                        <a href="mailto:sdn3krasakbangsri@gmail.com" class="text-blue-600 hover:text-blue-700 font-medium">
+                            sdn3krasakbangsri@gmail.com
                         </a>
                     </p>
                 </div>
