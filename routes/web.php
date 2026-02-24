@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 // Halaman Publik
@@ -52,6 +53,10 @@ Route::middleware('auth')->group(function () {
 
         // Galeris
         Route::resource('galeris', \App\Http\Controllers\Admin\GaleriController::class);
+
+        // Settings
+        Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
     });
 
     // Also create alias for home redirect

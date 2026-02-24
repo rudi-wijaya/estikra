@@ -4,7 +4,7 @@
 
 <?php $__env->startSection('content'); ?>
     <!-- Hero Section -->
-    <section class="relative flex flex-col justify-between -mt-32" style="min-height: calc(820px + 8rem); background-image: url('<?php echo e(asset('images/homepage.jpg')); ?>'); background-size: cover; background-position: center top;" >
+    <section class="relative flex flex-col justify-between -mt-32" style="min-height: calc(820px + 8rem); background-image: url('<?php echo e(asset(\App\Models\Setting::get('hero_background', 'images/homepage.jpg'))); ?>'); background-size: cover; background-position: center top;">
         <div class="absolute inset-0 bg-black/40"></div>
         <!-- Decorative Elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -22,12 +22,14 @@
 
             <!-- Heading -->
             <h1 class="text-5xl md:text-6xl font-black text-white leading-tight mb-4 animate-fadeInUp" style="animation-delay: 0.1s; text-shadow: 0 2px 12px rgba(0,0,0,0.5);">
-                SD Negeri 3 <span class="text-blue-300">Krasak Bangsri</span>
+                <?php echo e(\App\Models\Setting::get('hero_judul', 'SD Negeri 3 Krasak Bangsri')); ?>
+
             </h1>
 
             <!-- Subheading -->
             <p class="text-white/90 text-lg mb-8 max-w-xl animate-fadeInUp" style="animation-delay: 0.2s; text-shadow: 0 1px 6px rgba(0,0,0,0.4);">
-                Membentuk Generasi Berkarakter, Berprestasi, dan Berakhlak Mulia
+                <?php echo e(\App\Models\Setting::get('hero_subjudul', 'Membentuk Generasi Berkarakter, Berprestasi, dan Berakhlak Mulia')); ?>
+
             </p>
 
             <!-- CTA Buttons -->
@@ -108,32 +110,8 @@
                             </h4>
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
-                                    <span>Terwujudnya lulusan yang unggul dalam iman dan taqwa</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
-                                    <span>Terwujudnya lulusan yang kompeten dan berprestasi yang membanggakan</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
-                                    <span>Terwujudnya Kurikulum berwawasan karakter Profil Pelajar Pancasila dan lingkungan</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
-                                    <span>Terwujudnya PBM yang efektif, efisien, dan inovatif</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
-                                    <span>Terwujudnya warga sekolah yang berkarakter jujur, mandiri, gotong royong, percaya diri, bernalar kritis, kreatif, dan menghargai kebhinekaan</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
-                                    <span>Terwujudnya standar pengelolaan dan manajemen sekolah sesuai ketentuan</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
-                                    <span>Merwujudnya budaya sekolah sahabat keluarga dan lingkungan yang nyaman, aman, rindang, asri dan bersih dalam penyelengaraan pendidikan yang berkualitas</span>
+                                    <span class="text-gray-400 mt-1"></span>
+                                    <span>Mewujudkan lulusan yang beriman dan bertakwa, kompeten, berprestasi, berkarakter Profil Pelajar Pancasila, serta didukung pembelajaran inovatif dan lingkungan sekolah yang nyaman, aman, dan tertata.</span>
                                 </li>
                             </ul>
                         </div>
@@ -145,19 +123,19 @@
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-start gap-2">
                                     <span class="text-gray-400 mt-1">•</span>
-                                    <span>Menumbuh kembangkkan pengamalam ajaran agama sesuai dengan agama dan kepercayaan masing-masing</span>
+                                    <span>Menumbuh kembangkkan pengamalam ajaran agama sesuai dengan agama dan kepercayaan masing-masing.</span>
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-gray-400 mt-1">•</span>
-                                    <span>Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing</span>
+                                    <span>Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing.</span>
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-gray-400 mt-1">•</span>
-                                    <span>Melaksanakan pembelajaran yang aktiif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri</span>
+                                    <span>Melaksanakan pembelajaran yang aktiif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri.</span>
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-gray-400 mt-1">•</span>
-                                    <span>Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaya dalam bertindak</span>
+                                    <span>Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaan dalam bertindak.</span>
                                 </li>
                             </ul>
                         </div>

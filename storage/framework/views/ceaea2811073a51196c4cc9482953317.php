@@ -19,17 +19,17 @@
     <div class="card mb-4">
         <div class="card-body">
             <form method="GET" action="<?php echo e(route('admin.users.index')); ?>" class="row g-3">
-                <div class="col-md-6">
+                <div class="col-12 col-md-6">
                     <input type="text" name="search" class="form-control" placeholder="Cari nama atau email..." value="<?php echo e(request('search')); ?>">
                 </div>
-                <div class="col-md-4">
+                <div class="col-7 col-md-4">
                     <select name="role" class="form-select">
                         <option value="">Semua Role</option>
                         <option value="user" <?php echo e(request('role') == 'user' ? 'selected' : ''); ?>>User</option>
                         <option value="admin" <?php echo e(request('role') == 'admin' ? 'selected' : ''); ?>>Admin</option>
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-5 col-md-2">
                     <button type="submit" class="btn btn-outline-primary w-100">
                         <i class="bi bi-search me-2"></i>Cari
                     </button>
@@ -88,19 +88,21 @@
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a href="<?php echo e(route('admin.users.show', $user->id)); ?>" class="btn btn-sm btn-outline-info" title="Lihat">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                                <a href="<?php echo e(route('admin.users.edit', $user->id)); ?>" class="btn btn-sm btn-outline-warning" title="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <form method="POST" action="<?php echo e(route('admin.users.destroy', $user->id)); ?>" style="display: inline;">
-                                    <?php echo csrf_field(); ?>
-                                    <?php echo method_field('DELETE'); ?>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete(event, '<?php echo e($user->name); ?>')" title="Hapus">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
+                                <div class="d-flex gap-1">
+                                    <a href="<?php echo e(route('admin.users.show', $user->id)); ?>" class="btn btn-sm btn-outline-secondary" title="Lihat">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="<?php echo e(route('admin.users.edit', $user->id)); ?>" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form method="POST" action="<?php echo e(route('admin.users.destroy', $user->id)); ?>" style="display: inline;">
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('DELETE'); ?>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="confirmDelete(event, '<?php echo e($user->name); ?>')" title="Hapus">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

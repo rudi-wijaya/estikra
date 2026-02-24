@@ -506,6 +506,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('admin.settings.index') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                        <i class="bi bi-gear"></i>
+                        <span>Profil</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('admin.beritas.index') }}" class="{{ request()->routeIs('admin.beritas.*') ? 'active' : '' }}">
                         <i class="bi bi-newspaper"></i>
                         <span>Berita</span>
@@ -518,12 +524,6 @@
                     </a>
                 </li>
                 <div class="sidebar-divider"></div>
-                <li>
-                    <a href="{{ route('profile.edit') }}">
-                        <i class="bi bi-person-circle"></i>
-                        <span>Profil</span>
-                    </a>
-                </li>
                 <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

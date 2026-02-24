@@ -207,20 +207,20 @@
                 <div class="flex justify-between items-center">
                     <!-- Email & Phone: hanya desktop -->
                     <div class="hidden sm:flex gap-6">
-                        <a href="mailto:sdn3krasakbangsri@gmail.com" class="flex items-center gap-2 hover:text-blue-200 transition-colors duration-300">
+                        <a href="mailto:{{ \App\Models\Setting::get('sekolah_email', 'sdn3krasakbangsri@gmail.com') }}" class="flex items-center gap-2 hover:text-blue-200 transition-colors duration-300">
                             <i class="bi bi-envelope-fill"></i>
-                            <span>sdn3krasakbangsri@gmail.com</span>
+                            <span>{{ \App\Models\Setting::get('sekolah_email', 'sdn3krasakbangsri@gmail.com') }}</span>
                         </a>
-                        <a href="tel:+6291771380" class="flex items-center gap-2 hover:text-blue-200 transition-colors duration-300">
+                        <a href="tel:{{ \App\Models\Setting::get('sekolah_telepon', '(0291) 771380') }}" class="flex items-center gap-2 hover:text-blue-200 transition-colors duration-300">
                             <i class="bi bi-telephone-fill"></i>
-                            <span>(0291) 771380</span>
+                            <span>{{ \App\Models\Setting::get('sekolah_telepon', '(0291) 771380') }}</span>
                         </a>
                     </div>
                     <!-- Sosmed: selalu tampil, di mobile center -->
                     <div class="flex gap-4 sm:ml-auto mx-auto sm:mx-0">
-                        <a href="https://www.instagram.com/sdn3krasakbangsri" target="_blank" class="w-8 h-8 flex items-center justify-center transition-all duration-300 transform hover:scale-110 opacity-90 hover:opacity-100" title="Instagram"><i class="bi bi-instagram text-sm"></i></a>
-                        <a href="https://youtube.com/@sdnegeri3krasakbangsri786" target="_blank" class="w-8 h-8 flex items-center justify-center transition-all duration-300 transform hover:scale-110 opacity-90 hover:opacity-100" title="YouTube"><i class="bi bi-youtube text-sm"></i></a>
-                        <a href="https://www.tiktok.com/@sdn3krasakbangsri" target="_blank" class="w-8 h-8 flex items-center justify-center transition-all duration-300 transform hover:scale-110 opacity-90 hover:opacity-100" title="TikTok"><i class="bi bi-tiktok text-sm"></i></a>
+                        <a href="{{ \App\Models\Setting::get('sekolah_instagram', 'https://www.instagram.com/sdn3krasakbangsri') }}" target="_blank" class="w-8 h-8 flex items-center justify-center transition-all duration-300 transform hover:scale-110 opacity-90 hover:opacity-100" title="Instagram"><i class="bi bi-instagram text-sm"></i></a>
+                        <a href="{{ \App\Models\Setting::get('sekolah_youtube', 'https://youtube.com/@sdnegeri3krasakbangsri786') }}" target="_blank" class="w-8 h-8 flex items-center justify-center transition-all duration-300 transform hover:scale-110 opacity-90 hover:opacity-100" title="YouTube"><i class="bi bi-youtube text-sm"></i></a>
+                        <a href="{{ \App\Models\Setting::get('sekolah_tiktok', 'https://www.tiktok.com/@sdn3krasakbangsri') }}" target="_blank" class="w-8 h-8 flex items-center justify-center transition-all duration-300 transform hover:scale-110 opacity-90 hover:opacity-100" title="TikTok"><i class="bi bi-tiktok text-sm"></i></a>
                     </div>
                 </div>
             </div>
@@ -301,17 +301,17 @@
                             <p class="text-xs text-gray-400">Krasak Bangsri</p>
                         </div>
                     </div>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-4">Jl. Raya Krasak No. 45 Desa Krasak, Kec. Bangsri Kabupaten Jepara, Jawa Tengah 59453</p>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">{{ \App\Models\Setting::get('sekolah_alamat', 'Jl. Raya Krasak No. 45 Desa Krasak, Kec. Bangsri Kabupaten Jepara, Jawa Tengah 59453') }}</p>
                     <p class="text-xs font-semibold text-gray-300 mb-3">No Telp</p>
-                    <p class="text-sm font-bold text-blue-400 mb-4">(0291) 771380</p>
+                    <p class="text-sm font-bold text-blue-400 mb-4">{{ \App\Models\Setting::get('sekolah_telepon', '(0291) 771380') }}</p>
                     <div class="flex gap-3">
-                        <a href="https://www.instagram.com/sdn3krasakbangsri" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
+                        <a href="{{ \App\Models\Setting::get('sekolah_instagram', 'https://www.instagram.com/sdn3krasakbangsri') }}" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
                             <i class="bi bi-instagram text-sm"></i>
                         </a>
-                        <a href="https://youtube.com/@sdnegeri3krasakbangsri786" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
+                        <a href="{{ \App\Models\Setting::get('sekolah_youtube', 'https://youtube.com/@sdnegeri3krasakbangsri786') }}" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
                             <i class="bi bi-youtube text-sm"></i>
                         </a>
-                        <a href="https://www.tiktok.com/@sdn3krasakbangsri" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
+                        <a href="{{ \App\Models\Setting::get('sekolah_tiktok', 'https://www.tiktok.com/@sdn3krasakbangsri') }}" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
                             <i class="bi bi-tiktok text-sm"></i>
                         </a>
                     </div>

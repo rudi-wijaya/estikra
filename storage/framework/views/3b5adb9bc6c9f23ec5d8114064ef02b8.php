@@ -506,6 +506,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="<?php echo e(route('admin.settings.index')); ?>" class="<?php echo e(request()->routeIs('admin.settings.*') ? 'active' : ''); ?>">
+                        <i class="bi bi-gear"></i>
+                        <span>Profil</span>
+                    </a>
+                </li>
+                <li>
                     <a href="<?php echo e(route('admin.beritas.index')); ?>" class="<?php echo e(request()->routeIs('admin.beritas.*') ? 'active' : ''); ?>">
                         <i class="bi bi-newspaper"></i>
                         <span>Berita</span>
@@ -518,12 +524,6 @@
                     </a>
                 </li>
                 <div class="sidebar-divider"></div>
-                <li>
-                    <a href="<?php echo e(route('profile.edit')); ?>">
-                        <i class="bi bi-person-circle"></i>
-                        <span>Profil</span>
-                    </a>
-                </li>
                 <li>
                     <form method="POST" action="<?php echo e(route('logout')); ?>">
                         <?php echo csrf_field(); ?>

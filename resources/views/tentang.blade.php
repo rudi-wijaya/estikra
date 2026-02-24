@@ -33,34 +33,12 @@
                             <i class="text-blue-600 text-2xl"></i> Visi Kami
                         </h3>
                         <ul class="space-y-3">
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Terwujudnya lulusan yang unggul dalam iman dan taqwa</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Terwujudnya lulusan yang kompeten dan berprestasi yang membanggakan</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Terwujudnya Kurikulum berwawasan karakter Profil Pelajar Pancasila dan lingkungan</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Terwujudnya PBM yang efektif, efisien, dan inovatif</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Terwujudnya warga sekolah yang berkarakter jujur, mandiri, gotong royong, percaya diri, bernalar kritis, kreatif, dan menghargai kebhinekaan</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Terwujudnya standar pengelolaan dan manajemen sekolah sesuai ketentuan</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Merwujudnya budaya sekolah sahabat keluarga dan lingkungan yang nyaman, aman, rindang, asri dan bersih dalam penyelengaraan pendidikan yang berkualitas</span>
-                            </li>
+                            @foreach (array_filter(explode("\n", \App\Models\Setting::get('tentang_visi', ''))) as $poin)
+                                <li class="flex items-start gap-3 text-gray-600">
+                                    <span class="text-gray-400 mt-1">•</span>
+                                    <span>{{ trim($poin) }}</span>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
 
@@ -70,22 +48,12 @@
                             <i class="text-blue-600 text-2xl"></i> Misi Kami
                         </h3>
                         <ul class="space-y-3">
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Menumbuh kembangkkan pengamalam ajaran agama sesuai dengan agama dan kepercayaan masing-masing</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Melaksanakan pembelajaran yang aktiif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-gray-600">
-                                <span class="text-gray-400 mt-1">•</span>
-                                <span>Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaya dalam bertindak</span>
-                            </li>
+                            @foreach (array_filter(explode("\n", \App\Models\Setting::get('tentang_misi', ''))) as $poin)
+                                <li class="flex items-start gap-3 text-gray-600">
+                                    <span class="text-gray-400 mt-1">•</span>
+                                    <span>{{ trim($poin) }}</span>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
