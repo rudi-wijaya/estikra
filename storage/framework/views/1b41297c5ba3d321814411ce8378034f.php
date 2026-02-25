@@ -4,15 +4,33 @@
 
 <?php $__env->startSection('content'); ?>
     <style>
-        .staff-section {
-            padding: 60px 0;
-            background: #f8f9fa;
+        /* Org chart */
+        .org-tree { display: flex; flex-direction: column; align-items: center; }
+        .org-node {
+            background: white;
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            padding: 10px 22px;
+            text-align: center;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(59,130,246,0.15);
+        }
+        .org-node.head { background: #1e40af; color: white; border-color: #1e40af; }
+        .org-node .node-name { font-weight: 700; font-size: 14px; }
+        .org-node .node-jabatan { font-size: 11px; opacity: 0.75; margin-top: 2px; }
+        .org-connector { width: 2px; height: 28px; background: #3b82f6; margin: 0 auto; }
+        .org-children { display: flex; align-items: flex-start; justify-content: center; gap: 0; width: 100%; }
+        .org-child-col { display: flex; flex-direction: column; align-items: center; flex: 1; padding: 0 8px; }
+        @media (max-width: 640px) {
+            .org-children { flex-direction: column; align-items: center; }
+            .org-child-col { width: 100%; }
         }
 
+        /* Staff cards */
         .staff-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
             margin: 40px 0;
         }
 
@@ -115,168 +133,96 @@
 
     <!-- Guru & Staff Section -->
     <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12">
+        <div class="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16">
             <div class="text-center mb-16 animate-fadeInUp">
-                
                 <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Tim Pendidik Kami</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Tim profesional yang berdedikasi untuk pendidikan berkualitas dan pembentukan karakter siswa</p>
             </div>
 
-            <!-- Kepala Sekolah -->
-            <div class="mt-12 mb-8">
-                <h3 class="text-2xl font-bold text-gray-900 text-center mb-8 pb-4 border-b-2 border-blue-400">Kepala Sekolah</h3>
-            </div>
-            <div class="staff-grid" style="max-width: 400px; margin-left: auto; margin-right: auto; margin-bottom: 40px;">
-                <div class="staff-card">
-                    <div class="staff-avatar">👨‍💼</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Ibu Sutanti</div>
-                        <div class="staff-position">Kepala Sekolah</div>
-                        <p class="staff-description">Memimpin dengan visi pendidikan berkualitas dan karakter yang kuat</p>
-                    </div>
-                </div>
-            </div>
+            <?php
+                $kategoriLabels = \App\Models\GuruStaff::$kategoriLabels;
+                $urutan = ['kepala_sekolah', 'guru_kelas', 'guru_mapel', 'staff'];
+                $isEmpty = $guruStaffs->isEmpty();
+            ?>
 
-            <!-- Guru Kelas -->
-            <div class="mt-12 mb-8">
-                <h3 class="text-2xl font-bold text-gray-900 text-center mb-8 pb-4 border-b-2 border-blue-400">Guru Kelas</h3>
-            </div>
-            <div class="staff-grid mb-12">
-                <div class="staff-card">
-                    <div class="staff-avatar">👩‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Ibu Siti Nur</div>
-                        <div class="staff-position">Guru Kelas I A</div>
-                        <p class="staff-description">Berpengalaman dalam pembelajaran aktif dan kreatif</p>
-                    </div>
+            <?php if($isEmpty): ?>
+                <div class="text-center py-16 text-gray-400">
+                    <div class="text-6xl mb-4">👥</div>
+                    <p class="text-lg">Data guru &amp; staff belum tersedia.</p>
+                    <p class="text-sm mt-2">Silakan tambahkan data melalui halaman admin.</p>
                 </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👩‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Ibu Dwi Ratna</div>
-                        <div class="staff-position">Guru Kelas I B</div>
-                        <p class="staff-description">Fokus pada pengembangan karakter peserta didik</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👨‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Bapak Ahmad</div>
-                        <div class="staff-position">Guru Kelas II A</div>
-                        <p class="staff-description">Spesialis pembelajaran berbasis STEM</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👩‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Ibu Rina Saputri</div>
-                        <div class="staff-position">Guru Kelas II B</div>
-                        <p class="staff-description">Ahli dalam literasi dan numerasi</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👨‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Bapak Hendra</div>
-                        <div class="staff-position">Guru Kelas III A</div>
-                        <p class="staff-description">Pengalaman mengajar lebih dari 10 tahun</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👩‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Ibu Eka Wijaya</div>
-                        <div class="staff-position">Guru Kelas III B</div>
-                        <p class="staff-description">Fokus pada pembelajaran berdiferensiasi</p>
-                    </div>
-                </div>
-            </div>
+            <?php else: ?>
 
-            <!-- Guru Mata Pelajaran -->
-            <div class="mt-12 mb-8">
-                <h3 class="text-2xl font-bold text-gray-900 text-center mb-8 pb-4 border-b-2 border-blue-400">Guru Mata Pelajaran</h3>
-            </div>
-            <div class="staff-grid mb-12">
-                <div class="staff-card">
-                    <div class="staff-avatar">👨‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Bapak Suryanto</div>
-                        <div class="staff-position">Guru Olahraga</div>
-                        <p class="staff-description">Mengembangkan bakat olahraga siswa</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👩‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Ibu Sari Lestari</div>
-                        <div class="staff-position">Guru Seni Budaya</div>
-                        <p class="staff-description">Membina siswa dalam seni dan budaya</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👨‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Bapak Riyan</div>
-                        <div class="staff-position">Guru TIK</div>
-                        <p class="staff-description">Ahli teknologi informasi dan literasi digital</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👩‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Ibu Nurul Azizah</div>
-                        <div class="staff-position">Guru Bahasa Inggris</div>
-                        <p class="staff-description">Mengembangkan kemampuan bahasa internasional</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👨‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Bapak Irwanto</div>
-                        <div class="staff-position">Guru Agama Islam</div>
-                        <p class="staff-description">Membina akhlak dan karakter Islami</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👩‍🏫</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Ibu Christiana</div>
-                        <div class="staff-position">Guru Agama Katolik</div>
-                        <p class="staff-description">Mendampingi siswa dalam pendidikan spiritual</p>
-                    </div>
-                </div>
-            </div>
+                
+                <div class="mb-16 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 text-center mb-10 pb-4 border-b-2 border-blue-400">
+                        Struktur Organisasi
+                    </h3>
+                    <div class="org-tree">
+                        
+                        <?php $__currentLoopData = $guruStaffs->get('kepala_sekolah', collect()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ks): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="org-node head">
+                                <div class="node-name"><?php echo e($ks->nama); ?></div>
+                                <div class="node-jabatan"><?php echo e($ks->jabatan); ?></div>
+                            </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($guruStaffs->get('kepala_sekolah', collect())->isEmpty()): ?>
+                            <div class="org-node head">
+                                <div class="node-name">Kepala Sekolah</div>
+                                <div class="node-jabatan">—</div>
+                            </div>
+                        <?php endif; ?>
 
-            <!-- Staff Administrasi -->
-            <div class="mt-12 mb-8">
-                <h3 class="text-2xl font-bold text-gray-900 text-center mb-8 pb-4 border-b-2 border-blue-400">Staff Administrasi & Pendukung</h3>
-            </div>
-            <div class="staff-grid" style="max-width: 600px;">
-                <div class="staff-card">
-                    <div class="staff-avatar">👨‍💼</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Bapak Utomo</div>
-                        <div class="staff-position">Tata Usaha</div>
-                        <p class="staff-description">Mengelola administrasi sekolah</p>
+                        <div class="org-connector"></div>
+
+                        
+                        <div class="org-children w-full">
+                            <?php $__currentLoopData = ['guru_kelas', 'guru_mapel', 'staff']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($guruStaffs->has($kat) && $guruStaffs[$kat]->count()): ?>
+                                    <div class="org-child-col">
+                                        <div class="org-connector"></div>
+                                        <div class="org-node">
+                                            <div class="node-name"><?php echo e($kategoriLabels[$kat]); ?></div>
+                                            <div class="node-jabatan"><?php echo e($guruStaffs[$kat]->count()); ?> orang</div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
                     </div>
                 </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👨‍🔧</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Pak Dani</div>
-                        <div class="staff-position">Petugas Kebersihan</div>
-                        <p class="staff-description">Menjaga kebersihan dan kenyamanan sekolah</p>
-                    </div>
-                </div>
-                <div class="staff-card">
-                    <div class="staff-avatar">👨‍⚕️</div>
-                    <div class="staff-info">
-                        <div class="staff-name">Ibu Eka Setiawati</div>
-                        <div class="staff-position">Tenaga Kesehatan</div>
-                        <p class="staff-description">Menjaga kesehatan siswa dan daya saing</p>
-                    </div>
-                </div>
-            </div>
+
+                
+                <?php $__currentLoopData = $urutan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $list = $guruStaffs->get($kat, collect()); ?>
+                    <?php if($list->count()): ?>
+                        <div class="mt-14">
+                            <h3 class="text-2xl font-bold text-gray-900 text-center mb-8 pb-4 border-b-2 border-blue-400">
+                                <?php echo e($kategoriLabels[$kat]); ?>
+
+                            </h3>
+                        </div>
+                        <div class="staff-grid mb-10 <?php echo e($kat === 'kepala_sekolah' ? 'max-w-xs mx-auto' : ''); ?>">
+                            <?php $__currentLoopData = $list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <div class="staff-card">
+                                    <?php if($gs->foto): ?>
+                                        <img src="<?php echo e(asset('storage/' . $gs->foto)); ?>" alt="<?php echo e($gs->nama); ?>" class="staff-avatar">
+                                    <?php else: ?>
+                                        <div class="staff-avatar">👤</div>
+                                    <?php endif; ?>
+                                    <div class="staff-info">
+                                        <div class="staff-name"><?php echo e($gs->nama); ?></div>
+                                        <div class="staff-position"><?php echo e($gs->jabatan); ?></div>
+                                        <?php if($gs->deskripsi): ?>
+                                            <p class="staff-description"><?php echo e($gs->deskripsi); ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
         </div>
     </section>
 <?php $__env->stopSection(); ?>

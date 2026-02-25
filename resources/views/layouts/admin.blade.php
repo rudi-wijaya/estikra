@@ -523,6 +523,12 @@
                         <span>Galeri</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.guru-staffs.index') }}" class="{{ request()->routeIs('admin.guru-staffs.*') ? 'active' : '' }}">
+                        <i class="bi bi-people-fill"></i>
+                        <span>Guru & Staff</span>
+                    </a>
+                </li>
                 <div class="sidebar-divider"></div>
                 <li>
                     <form method="POST" action="{{ route('logout') }}">

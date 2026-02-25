@@ -3,13 +3,15 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\GuruStaffController;
 use Illuminate\Support\Facades\Route;
 
 // Halaman Publik
 Route::get('/', function () {
     $beritas = \App\Models\Berita::where('status', 'published')->orderBy('tanggal_terbit', 'desc')->limit(3)->get();
     $galeris = \App\Models\Galeri::where('status', 'aktif')->orderBy('tanggal_upload', 'desc')->limit(3)->get();
-    return view('beranda', compact('beritas', 'galeris'));
+    $guruStaffs = \App\Models\GuruStaff::aktif()->orderBy('urutan')->orderBy('nama')->limit(3)->get();
+    return view('beranda', compact('beritas', 'galeris', 'guruStaffs'));
 });
 
 Route::get('/tentang', function () {
@@ -21,7 +23,8 @@ Route::get('/program', function () {
 });
 
 Route::get('/guru-staff', function () {
-    return view('guru-staff');
+    $guruStaffs = \App\Models\GuruStaff::aktif()->orderBy('urutan')->orderBy('nama')->get()->groupBy('kategori');
+    return view('guru-staff', compact('guruStaffs'));
 });
 
 Route::get('/berita', function () {
@@ -53,6 +56,9 @@ Route::middleware('auth')->group(function () {
 
         // Galeris
         Route::resource('galeris', \App\Http\Controllers\Admin\GaleriController::class);
+
+        // Guru Staffs
+        Route::resource('guru-staffs', GuruStaffController::class);
 
         // Settings
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');

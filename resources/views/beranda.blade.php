@@ -248,41 +248,29 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-                <!-- Guru 1 -->
-                <div class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200">
-                    <div class="w-full h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                        <i class="bi bi-person-fill text-white text-6xl opacity-40"></i>
+                @forelse ($guruStaffs as $gs)
+                    <div class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200">
+                        @if ($gs->foto)
+                            <img src="{{ asset('storage/' . $gs->foto) }}" alt="{{ $gs->nama }}" class="w-full h-64 object-cover">
+                        @else
+                            <div class="w-full h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                <i class="bi bi-person-fill text-white text-6xl opacity-40"></i>
+                            </div>
+                        @endif
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">{{ $gs->nama }}</h3>
+                            <p class="text-blue-600 text-sm font-semibold mb-4">{{ $gs->jabatan }}</p>
+                            @if ($gs->deskripsi)
+                                <p class="text-gray-600 text-sm">{{ $gs->deskripsi }}</p>
+                            @endif
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-1">Ibu Siti Nurhayati</h3>
-                        <p class="text-blue-600 text-sm font-semibold mb-4">Guru Kelas 6</p>
-                        <p class="text-gray-600 text-sm">Berpengalaman lebih dari 15 tahun dalam bidang pendidikan</p>
+                @empty
+                    <div class="col-span-3 text-center text-gray-400 py-8">
+                        <i class="bi bi-people text-5xl"></i>
+                        <p class="mt-2">Belum ada data guru &amp; staff.</p>
                     </div>
-                </div>
-
-                <!-- Guru 2 -->
-                <div class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200">
-                    <div class="w-full h-64 bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center">
-                        <i class="bi bi-person-fill text-white text-6xl opacity-40"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-1">Bapak Bambang Sutrisno</h3>
-                        <p class="text-blue-600 text-sm font-semibold mb-4">Guru Matematika</p>
-                        <p class="text-gray-600 text-sm">Spesialis pembelajaran matematika dengan metode interaktif</p>
-                    </div>
-                </div>
-
-                <!-- Guru 3 -->
-                <div class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200">
-                    <div class="w-full h-64 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
-                        <i class="bi bi-person-fill text-white text-6xl opacity-40"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-1">Ibu Rina Sukarno</h3>
-                        <p class="text-blue-600 text-sm font-semibold mb-4">Guru Bahasa Indonesia</p>
-                        <p class="text-gray-600 text-sm">Pengajar berbakat dengan fokus pada literasi dan komunikasi</p>
-                    </div>
-                </div>
+                @endforelse
             </div>
 
             <div class="text-center">
