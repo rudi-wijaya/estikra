@@ -19,7 +19,7 @@
                 </div>
                 <h3 class="text-3xl font-bold mb-3">Hubungi Kami via WhatsApp</h3>
                 <p class="text-blue-100 mb-8 leading-relaxed">Hubungi kami untuk mendapatkan informasi lebih lanjut tentang pendaftaran, program, atau pertanyaan lainnya.</p>
-                <a href="https://wa.me/6281234567890" target="_blank" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-3 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg">
+                <a href="https://wa.me/<?php echo e(\App\Models\Setting::get('sekolah_whatsapp', '6281234567890')); ?>" target="_blank" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-3 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg">
                     <i class="bi bi-whatsapp text-xl"></i>
                     <span>Buka WhatsApp</span>
                 </a>
@@ -32,9 +32,8 @@
                     <div class="text-3xl mb-3 text-blue-600">📍</div>
                     <h3 class="text-base font-semibold text-gray-900 mb-2">Alamat</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">
-                        Jl. Raya Krasak No. 45<br>
-                        Desa Krasak, Kec. Bangsri<br>
-                        Kabupaten Jepara, Jawa Tengah 59453
+                        <?php echo e(\App\Models\Setting::get('sekolah_alamat', 'Jl. Raya Krasak No. 45, Desa Krasak, Kec. Bangsri, Kabupaten Jepara, Jawa Tengah 59453')); ?>
+
                     </p>
                 </div>
 
@@ -43,7 +42,7 @@
                     <div class="text-3xl mb-3 text-blue-600">📞</div>
                     <h3 class="text-base font-semibold text-gray-900 mb-2">Telepon</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">
-                        <strong class="text-gray-900">(0291) 771380</strong><br>
+                        <strong class="text-gray-900"><?php echo e(\App\Models\Setting::get('sekolah_telepon', '(0291) 771380')); ?></strong><br>
                         <span class="text-xs text-gray-500">Telepon Sekolah</span>
                     </p>
                 </div>
@@ -53,8 +52,9 @@
                     <div class="text-3xl mb-3 text-blue-600">✉️</div>
                     <h3 class="text-base font-semibold text-gray-900 mb-2">Email</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">
-                        <a href="mailto:sdn3krasakbangsri@gmail.com" class="text-blue-600 hover:text-blue-700 font-medium">
-                            sdn3krasakbangsri@gmail.com
+                        <a href="mailto:<?php echo e(\App\Models\Setting::get('sekolah_email', 'sdn3krasakbangsri@gmail.com')); ?>" class="text-blue-600 hover:text-blue-700 font-medium">
+                            <?php echo e(\App\Models\Setting::get('sekolah_email', 'sdn3krasakbangsri@gmail.com')); ?>
+
                         </a>
                     </p>
                 </div>

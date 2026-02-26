@@ -5,7 +5,7 @@
 @section('content')
     <!-- Berita Section -->
     <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
             <!-- Section Header -->
             <div class="text-center mb-16 animate-fadeInUp">
                 

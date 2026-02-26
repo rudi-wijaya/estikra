@@ -63,7 +63,7 @@
             left: 0;
             width: 0;
             height: 3px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            background: #5a74e8;
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -73,23 +73,69 @@
         }
 
         .hamburger span {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background-color 0.3s ease;
         }
 
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(12px, 12px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .nav-mobile {
-            animation: slideInRight 0.3s ease-out;
+            animation: slideInDown 0.25s ease-out;
+        }
+
+        /* Mobile nav — default (white navbar / all pages except beranda hero) */
+        .mobile-nav-link {
+            display: block;
+            padding: 12px 16px;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            background: rgba(90, 116, 232, 0.08);
+            color: #374151;
+            border: 1px solid rgba(90, 116, 232, 0.2);
+            text-shadow: none;
+        }
+
+        .mobile-nav-link:hover {
+            background: #5a74e8;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(90,116,232,0.25);
+            border-color: transparent;
+        }
+
+        .mobile-nav-link.active {
+            background: #5a74e8;
+            color: #ffffff;
+            border-color: transparent;
+        }
+
+        /* Mobile nav — beranda hero (transparan, belum scroll) */
+        #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link {
+            background: rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link:hover {
+            background: #ffffff;
+            color: #5a74e8;
+            text-shadow: none;
+        }
+
+        #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link.active {
+            background: #5a74e8;
+            color: #ffffff;
+            text-shadow: none;
         }
 
 
@@ -144,26 +190,29 @@
             transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        #navbar-header .hamburger span {
-            background-color: #1f2937;
-            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        #navbar-header #hamburger-icon {
+            color: #1f2937;
+            transition: color 0.5s ease;
         }
 
         /* Warna teks di beranda: putih saat transparan */
         #navbar-header[data-transparent]:not(.scrolled) .nav-link {
             color: #ffffff;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.5);
         }
 
         #navbar-header[data-transparent]:not(.scrolled) .nav-logo-text h1 {
             color: #ffffff;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.5);
         }
 
         #navbar-header[data-transparent]:not(.scrolled) .nav-logo-text p {
             color: rgba(255,255,255,0.7);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
         }
 
-        #navbar-header[data-transparent]:not(.scrolled) .hamburger span {
-            background-color: #ffffff;
+        #navbar-header[data-transparent]:not(.scrolled) #hamburger-icon {
+            color: #ffffff;
         }
 
         /* Setelah scroll di beranda: warna gelap */
@@ -179,8 +228,8 @@
             color: #6b7280;
         }
 
-        #navbar-header[data-transparent].scrolled .hamburger span {
-            background-color: #1f2937;
+        #navbar-header[data-transparent].scrolled #hamburger-icon {
+            color: #1f2937;
         }
 
         #navbar-header .top-bar {
@@ -202,7 +251,7 @@
     <div id="navbar-header" class="fixed top-0 left-0 right-0 w-full z-50 backdrop-blur-sm" @if(request()->is('/')) data-transparent="true" @endif>
 
         <!-- Top Header -->
-        <div class="top-bar bg-gradient-to-r from-blue-900 to-blue-800 text-white border-b border-blue-700 py-2.5 text-xs">
+        <div class="top-bar text-white py-2.5 text-xs" style="background-color: #5a74e8;">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center">
                     <!-- Email & Phone: hanya desktop -->
@@ -232,7 +281,7 @@
             <div class="flex justify-between items-center py-3">
                 <!-- Logo -->
                 <div class="flex items-center gap-3">
-                    <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-300" style="background-color: #5a74e8;">
                         <span class="text-white font-bold text-lg">SD</span>
                     </div>
                     <div class="nav-logo-text hidden sm:block">
@@ -255,24 +304,22 @@
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <button class="hamburger lg:hidden flex flex-col bg-transparent border-none cursor-pointer p-2 gap-1.5 hover:opacity-75 transition-opacity" id="hamburger">
-                    <span class="w-6 h-0.5 bg-gray-900 rounded-full"></span>
-                    <span class="w-6 h-0.5 bg-gray-900 rounded-full"></span>
-                    <span class="w-6 h-0.5 bg-gray-900 rounded-full"></span>
+                <button class="hamburger lg:hidden flex items-center justify-center bg-transparent border-none cursor-pointer p-2 hover:opacity-75 transition-opacity" id="hamburger">
+                    <i id="hamburger-icon" class="bi bi-list text-2xl"></i>
                 </button>
             </div>
 
             <!-- Mobile Navigation -->
-            <nav id="navbar" class="hidden lg:hidden nav-mobile">
-                <div class="border-t border-gray-100 py-4 px-2">
+            <nav id="navbar" class="hidden lg:hidden nav-mobile rounded-b-3xl overflow-hidden">
+                <div class="py-4 px-4 pb-5">
                     <ul class="flex flex-col gap-2">
-                        <li><a href="/" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('/')) active bg-blue-50 text-blue-600 @endif">Beranda</a></li>
-                        <li><a href="/tentang" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('tentang')) active bg-blue-50 text-blue-600 @endif">Tentang</a></li>
-                        <li><a href="/program" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('program')) active bg-blue-50 text-blue-600 @endif">Program</a></li>
-                        <li><a href="/guru-staff" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('guru-staff')) active bg-blue-50 text-blue-600 @endif">Guru & Staff</a></li>
-                        <li><a href="/berita" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('berita')) active bg-blue-50 text-blue-600 @endif">Berita</a></li>
-                        <li><a href="/galeri" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('galeri')) active bg-blue-50 text-blue-600 @endif">Galeri</a></li>
-                        <li><a href="/kontak" class="block px-4 py-2 no-underline text-gray-700 font-medium rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 @if(request()->is('kontak')) active bg-blue-50 text-blue-600 @endif">Kontak</a></li>
+                        <li><a href="/" class="mobile-nav-link @if(request()->is('/')) active @endif">Beranda</a></li>
+                        <li><a href="/tentang" class="mobile-nav-link @if(request()->is('tentang')) active @endif">Tentang</a></li>
+                        <li><a href="/program" class="mobile-nav-link @if(request()->is('program')) active @endif">Program</a></li>
+                        <li><a href="/guru-staff" class="mobile-nav-link @if(request()->is('guru-staff')) active @endif">Guru & Staff</a></li>
+                        <li><a href="/berita" class="mobile-nav-link @if(request()->is('berita')) active @endif">Berita</a></li>
+                        <li><a href="/galeri" class="mobile-nav-link @if(request()->is('galeri')) active @endif">Galeri</a></li>
+                        <li><a href="/kontak" class="mobile-nav-link @if(request()->is('kontak')) active @endif">Kontak</a></li>
                     </ul>
                 </div>
             </nav>
@@ -376,28 +423,32 @@
 
         // Hamburger menu
         const hamburger = document.getElementById('hamburger');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
         const navbar = document.getElementById('navbar');
         const navLinks = navbar.querySelectorAll('a');
 
         hamburger.addEventListener('click', (e) => {
             e.stopPropagation();
-            hamburger.classList.toggle('active');
+            const isOpen = !navbar.classList.contains('hidden');
             navbar.classList.toggle('hidden');
+            hamburgerIcon.className = isOpen
+                ? 'bi bi-list text-2xl'
+                : 'bi bi-x-lg text-2xl';
         });
 
         // Close menu when clicking on a link
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
                 navbar.classList.add('hidden');
+                hamburgerIcon.className = 'bi bi-list text-2xl';
             });
         });
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('header')) {
-                hamburger.classList.remove('active');
                 navbar.classList.add('hidden');
+                hamburgerIcon.className = 'bi bi-list text-2xl';
             }
         });
 

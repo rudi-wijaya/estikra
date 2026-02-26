@@ -13,7 +13,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="max-w-7xl mx-auto px-6 pb-16 w-full relative z-10" style="padding-top: 19rem;">
+        <div class="max-w-7xl mx-auto px-6 pb-16 w-full relative z-10" style="padding-top: 22rem;">
             <!-- Badge -->
             <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-blue-100 text-blue-700 text-sm font-semibold px-4 py-1.5 rounded-full shadow-sm mb-6 animate-fadeInUp">
                 <span></span>
@@ -44,29 +44,29 @@
             </div>
         </div>
 
-        <!-- Stats Strip (langsung menempel di bawah hero, tanpa gap) -->
-        <div class="relative z-10 border-t-2 border-white/40 bg-white/50">
-            <div class="relative z-10 max-w-7xl mx-auto px-6">
-                <div class="grid grid-cols-4 divide-x divide-white/30">
+        <!-- Stats Cards (langsung menempel di bawah hero, tanpa gap) -->
+        <div class="relative z-10 py-8">
+            <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 
-                    <div class="flex flex-col items-center py-8 animate-fadeInUp" style="animation-delay: 0.4s;">
-                        <span class="font-black text-blue-600 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-none">150<span class="text-blue-500">+</span></span>
-                        <span class="text-gray-700 text-xs sm:text-sm md:text-base mt-2 font-medium">Siswa Aktif</span>
+                    <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.4s;">
+                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #c5deff">150<span>+</span></span>
+                        <p class="text-blue-100 text-sm mt-2 font-medium drop-shadow">Siswa Aktif</p>
                     </div>
 
-                    <div class="flex flex-col items-center py-8 animate-fadeInUp" style="animation-delay: 0.5s;">
-                        <span class="font-black text-blue-600 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-none">10<span class="text-blue-500">+</span></span>
-                        <span class="text-gray-700 text-xs sm:text-sm md:text-base mt-2 font-medium">Guru &amp; Staff</span>
+                    <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.5s;">
+                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #c5deff">10<span>+</span></span>
+                        <p class="text-blue-100 text-sm mt-2 font-medium drop-shadow">Guru &amp; Staff</p>
                     </div>
 
-                    <div class="flex flex-col items-center py-8 animate-fadeInUp" style="animation-delay: 0.6s;">
-                        <span class="font-black text-blue-600 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-none">6</span>
-                        <span class="text-gray-700 text-xs sm:text-sm md:text-base mt-2 font-medium">Kelas</span>
+                    <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.6s;">
+                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #c5deff">6</span>
+                        <p class="text-blue-100 text-sm mt-2 font-medium drop-shadow">Kelas</p>
                     </div>
 
-                    <div class="flex flex-col items-center py-8 animate-fadeInUp" style="animation-delay: 0.7s;">
-                        <span class="font-black text-blue-600 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-none">50<span class="text-blue-500">+</span></span>
-                        <span class="text-gray-700 text-xs sm:text-sm md:text-base mt-2 font-medium">Prestasi</span>
+                    <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.7s;">
+                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #c5deff">50<span>+</span></span>
+                        <p class="text-blue-100 text-sm mt-2 font-medium drop-shadow">Prestasi</p>
                     </div>
 
                 </div>
@@ -78,7 +78,7 @@
 
     <!-- Tentang Sekolah Section -->
     <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12 animate-fadeInUp" data-animate>
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12 animate-fadeInUp" data-animate>
             <div class="space-y-12">
                 <!-- Image First -->
                 <div>
@@ -101,38 +101,34 @@
             
                     <h2 class="text-4xl font-bold text-gray-900 mb-6">Tentang SD Negeri 3 Krasak Bangsri</h2>
                     
-                    <div class="space-y-6 text-gray-600">
-                        <div>
-                            <h4 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-3">
-                                <i class=" text-blue-600"></i> Visi Kami
-                            </h4>
+                    <div class="space-y-4 text-gray-600">
+                        <div class="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm">
+                            <h4 class="text-lg font-bold text-gray-900 mb-3">Visi Kami</h4>
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1"></span>
+                                    <span class=""></span>
                                     <span>Mewujudkan lulusan yang beriman dan bertakwa, kompeten, berprestasi, berkarakter Profil Pelajar Pancasila, serta didukung pembelajaran inovatif dan lingkungan sekolah yang nyaman, aman, dan tertata.</span>
                                 </li>
                             </ul>
                         </div>
 
-                        <div>
-                            <h4 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-3">
-                                <i class="text-blue-600"></i> Misi Kami
-                            </h4>
+                        <div class="bg-white rounded-2xl p-6 border border-indigo-100 shadow-sm">
+                            <h4 class="text-lg font-bold text-gray-900 mb-3">Misi Kami</h4>
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
+                                    <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
                                     <span>Menumbuh kembangkkan pengamalam ajaran agama sesuai dengan agama dan kepercayaan masing-masing.</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
+                                    <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
                                     <span>Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing.</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
+                                    <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
                                     <span>Melaksanakan pembelajaran yang aktiif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri.</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-gray-400 mt-1">•</span>
+                                    <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
                                     <span>Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaan dalam bertindak.</span>
                                 </li>
                             </ul>
@@ -149,7 +145,7 @@
 
     <!-- Sambutan Kepala Sekolah Section -->
     <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12 animate-fadeInUp" data-animate>
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12 animate-fadeInUp" data-animate>
             <div class="text-center mb-8">
             
                 <h2 class="section-title">Sambutan dari Pimpinan Sekolah</h2>
@@ -194,45 +190,37 @@
     </section>
 
     <!-- Program Section -->
-    <section class="py-8 bg-gradient-to-b from-gray-50 to-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12 animate-fadeInUp" data-animate>
+    <section class="py-8 bg-white">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12 animate-fadeInUp" data-animate>
             <div class="text-center mb-8">
             
-                <h2 class="section-title">Program Pembelajaran</h2>
-                <p class="section-subtitle text-gray-600">Berbagai program pendidikan yang dirancang untuk mengoptimalkan potensi siswa</p>
+                <h2 class="section-title">Program Unggulan</h2>
+                <p class="section-subtitle text-gray-600">Berbagai program unggulan yang dirancang untuk mengoptimalkan potensi siswa</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="card-hover bg-white rounded-xl p-6 border border-gray-100 text-center hover:shadow-xl">
                     <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i class="bi bi-pencil-square text-blue-600 text-2xl"></i>
+                        <i class="bi bi-book text-blue-600 text-2xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Akademik</h3>
-                    <p class="text-sm text-gray-600">Fokus pada pengembangan kemampuan akademik siswa dalam mata pelajaran inti.</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Literasi</h3>
+                    <p class="text-sm text-gray-600">Pembiasaan membaca dan menulis setiap hari untuk meningkatkan kemampuan literasi siswa sejak dini.</p>
                 </div>
 
                 <div class="card-hover bg-white rounded-xl p-6 border border-gray-100 text-center hover:shadow-xl">
                     <div class="w-14 h-14 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i class="bi bi-music-note-beamed text-indigo-600 text-2xl"></i>
+                        <i class="bi bi-moon-stars text-indigo-600 text-2xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Seni & Budaya</h3>
-                    <p class="text-sm text-gray-600">Program pengembangan seni dan apresiasi budaya lokal dan nasional.</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Sholat Dhuha</h3>
+                    <p class="text-sm text-gray-600">Pembiasaan sholat dhuha berjamaah setiap pagi untuk penguatan karakter spiritual dan kedisiplinan siswa.</p>
                 </div>
 
                 <div class="card-hover bg-white rounded-xl p-6 border border-gray-100 text-center hover:shadow-xl">
-                    <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i class="bi bi-football text-green-600 text-2xl"></i>
+                    <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="bi bi-bullseye text-purple-600 text-2xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Olahraga</h3>
-                    <p class="text-sm text-gray-600">Program pengembangan kemampuan olahraga dan kesehatan siswa.</p>
-                </div>
-
-                <div class="card-hover bg-white rounded-xl p-6 border border-gray-100 text-center hover:shadow-xl">
-                    <div class="w-14 h-14 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i class="bi bi-translate text-orange-600 text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Bahasa & IT</h3>
-                    <p class="text-sm text-gray-600">Program belajar bahasa Inggris dan literasi digital untuk abad ke-21.</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Pentaque</h3>
+                    <p class="text-sm text-gray-600">Olahraga pentaque untuk melatih konsentrasi, strategi, dan sportivitas siswa dalam kompetisi.</p>
                 </div>
             </div>
         </div>
@@ -240,7 +228,7 @@
 
     <!-- Guru & Staff Section -->
     <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12 animate-fadeInUp" data-animate>
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12 animate-fadeInUp" data-animate>
             <div class="text-center mb-8">
             
                 <h2 class="section-title">Guru & Staff Kami</h2>
@@ -282,8 +270,8 @@
     </section>
 
     <!-- Berita Terbaru Section -->
-    <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12">
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
             <!-- Section Header -->
             <div class="text-center mb-16 animate-fadeInUp">
                
@@ -333,8 +321,8 @@
     </section>
 
     <!-- Galeri Section -->
-    <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 border-2 border-gray-300 rounded-3xl p-12">
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
             <!-- Section Header -->
             <div class="text-center mb-16 animate-fadeInUp">
                 
@@ -405,5 +393,5 @@
         </div>
     </section>
 
-    
+
 @endsection
