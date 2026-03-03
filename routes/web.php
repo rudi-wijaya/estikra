@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $beritas = \App\Models\Berita::where('status', 'published')->orderBy('tanggal_terbit', 'desc')->limit(3)->get();
     $galeris = \App\Models\Galeri::where('status', 'aktif')->orderBy('tanggal_upload', 'desc')->limit(3)->get();
-    $guruStaffs = \App\Models\GuruStaff::aktif()->orderBy('urutan')->orderBy('nama')->limit(3)->get();
+    $guruStaffs = \App\Models\GuruStaff::aktif()->whereIn('kategori', ['guru_kelas', 'staff'])->inRandomOrder()->limit(3)->get();
     return view('beranda', compact('beritas', 'galeris', 'guruStaffs'));
 });
 

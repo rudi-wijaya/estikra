@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class SettingController extends Controller
 {
     // Keys yang berupa file upload
-    protected array $fileKeys = ['hero_background'];
+    protected array $fileKeys = ['hero_background', 'sekolah_logo', 'sambutan_foto'];
 
     public function index()
     {

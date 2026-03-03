@@ -63,8 +63,8 @@
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center shrink-0">
-                            <i class="bi bi-telephone-fill text-indigo-600 text-xl"></i>
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="bi bi-telephone-fill text-blue-600 text-xl"></i>
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900 mb-1">Telepon</h4>
@@ -72,8 +72,8 @@
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center shrink-0">
-                            <i class="bi bi-envelope-fill text-purple-600 text-xl"></i>
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="bi bi-envelope-fill text-blue-600 text-xl"></i>
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900 mb-1">Email</h4>
@@ -82,8 +82,8 @@
                     </div>
                 </div>
                 <div class="flex items-start gap-4">
-                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shrink-0 mt-1">
-                        <i class="bi bi-map-fill text-green-600 text-xl"></i>
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0 mt-1">
+                        <i class="bi bi-map-fill text-blue-600 text-xl"></i>
                     </div>
                     <div>
                         <h4 class="font-bold text-gray-900 mb-1">Kode Pos</h4>
@@ -91,7 +91,7 @@
                         <h4 class="font-bold text-gray-900 mt-4 mb-1">NPSN</h4>
                         <p class="text-gray-600"><?php echo e(\App\Models\Setting::get('npsn', '-')); ?></p>
                         <h4 class="font-bold text-gray-900 mt-4 mb-1">Akreditasi</h4>
-                        <p class="text-gray-600"><?php echo e(\App\Models\Setting::get('akreditasi', '-')); ?></p>
+                        <p class="text-gray-600"><?php echo e(\App\Models\Setting::get('akreditasi', 'A')); ?></p>
                     </div>
                 </div>
             </div>
@@ -109,12 +109,12 @@
                 <?php
                     $fasilitas = [
                         ['icon' => 'bi-building', 'color' => 'blue', 'nama' => 'Ruang Kelas'],
-                        ['icon' => 'bi-pc-display', 'color' => 'indigo', 'nama' => 'Lab Komputer'],
-                        ['icon' => 'bi-book-half', 'color' => 'purple', 'nama' => 'Perpustakaan'],
-                        ['icon' => 'bi-cup-hot', 'color' => 'orange', 'nama' => 'Kantin'],
-                        ['icon' => 'bi-activity', 'color' => 'green', 'nama' => 'Lapangan Olahraga'],
-                        ['icon' => 'bi-heart-pulse', 'color' => 'red', 'nama' => 'UKS'],
-                        ['icon' => 'bi-people-fill', 'color' => 'teal', 'nama' => 'Aula'],
+                        ['icon' => 'bi-pc-display', 'color' => 'blue', 'nama' => 'Lab Komputer'],
+                        ['icon' => 'bi-book-half', 'color' => 'blue', 'nama' => 'Perpustakaan'],
+                        ['icon' => 'bi-cup-hot', 'color' => 'blue', 'nama' => 'Kantin'],
+                        ['icon' => 'bi-activity', 'color' => 'slate', 'nama' => 'Lapangan Olahraga'],
+                        ['icon' => 'bi-heart-pulse', 'color' => 'slate', 'nama' => 'UKS'],
+                        ['icon' => 'bi-people-fill', 'color' => 'slate', 'nama' => 'Aula'],
                         ['icon' => 'bi-shield-check', 'color' => 'slate', 'nama' => 'Mushola'],
                     ];
                 ?>

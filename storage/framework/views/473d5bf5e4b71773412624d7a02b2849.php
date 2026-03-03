@@ -42,10 +42,12 @@
                         <?php $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="col-12 <?php echo e(!in_array($setting->key, ['tentang_visi', 'tentang_misi', 'sekolah_alamat', 'tentang_deskripsi']) ? 'col-md-6' : ''); ?>">
                                 <label class="form-label" for="<?php echo e($setting->key); ?>"><?php echo e($setting->label); ?></label>
-                                <?php if($setting->key === 'hero_background'): ?>
+                                <?php if(in_array($setting->key, ['hero_background', 'sekolah_logo', 'sambutan_foto'])): ?>
                                     <?php if($setting->value): ?>
                                         <div class="mb-2">
-                                            <img src="<?php echo e(asset($setting->value)); ?>" alt="Background saat ini" class="img-thumbnail" style="height: 100px; object-fit: cover;">
+                                            <img src="<?php echo e(asset($setting->value)); ?>" alt="Gambar saat ini"
+                                                class="img-thumbnail"
+                                                style="height: 100px; width: <?php echo e($setting->key === 'sekolah_logo' ? '100px' : 'auto'); ?>; object-fit: cover;">
                                             <small class="d-block text-muted mt-1">Gambar saat ini</small>
                                         </div>
                                     <?php endif; ?>

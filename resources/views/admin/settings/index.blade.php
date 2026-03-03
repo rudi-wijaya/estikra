@@ -41,10 +41,12 @@
                         @foreach ($items as $setting)
                             <div class="col-12 {{ !in_array($setting->key, ['tentang_visi', 'tentang_misi', 'sekolah_alamat', 'tentang_deskripsi']) ? 'col-md-6' : '' }}">
                                 <label class="form-label" for="{{ $setting->key }}">{{ $setting->label }}</label>
-                                @if ($setting->key === 'hero_background')
+                                @if (in_array($setting->key, ['hero_background', 'sekolah_logo', 'sambutan_foto']))
                                     @if ($setting->value)
                                         <div class="mb-2">
-                                            <img src="{{ asset($setting->value) }}" alt="Background saat ini" class="img-thumbnail" style="height: 100px; object-fit: cover;">
+                                            <img src="{{ asset($setting->value) }}" alt="Gambar saat ini"
+                                                class="img-thumbnail"
+                                                style="height: 100px; width: {{ $setting->key === 'sekolah_logo' ? '100px' : 'auto' }}; object-fit: cover;">
                                             <small class="d-block text-muted mt-1">Gambar saat ini</small>
                                         </div>
                                     @endif

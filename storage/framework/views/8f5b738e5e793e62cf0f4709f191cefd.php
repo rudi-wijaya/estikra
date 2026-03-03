@@ -80,7 +80,7 @@
 
     <!-- Tentang Sekolah Section -->
     <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12 animate-fadeInUp" data-animate>
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
             <div class="space-y-12">
                 <!-- Image First -->
                 <div>
@@ -147,20 +147,25 @@
 
     <!-- Sambutan Kepala Sekolah Section -->
     <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12 animate-fadeInUp" data-animate>
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
             <div class="text-center mb-8">
             
                 <h2 class="section-title">Sambutan dari Pimpinan Sekolah</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Icon -->
+                <!-- Left Photo -->
                 <div class="flex justify-center lg:justify-start">
                     <div class="relative">
                         <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-3xl transform rotate-6 opacity-10"></div>
-                        <div class="relative bg-gradient-to-br from-green-500 to-blue-600 rounded-3xl w-80 h-80 flex items-center justify-center shadow-2xl">
-                            <span class="text-9xl">👨‍💼</span>
-                        </div>
+                        <?php $sambutanFoto = \App\Models\Setting::get('sambutan_foto'); ?>
+                        <?php if($sambutanFoto): ?>
+                            <img src="<?php echo e(asset($sambutanFoto)); ?>" alt="Kepala Sekolah" class="relative rounded-3xl w-80 h-80 object-cover shadow-2xl">
+                        <?php else: ?>
+                            <div class="relative bg-gradient-to-br from-green-500 to-blue-600 rounded-3xl w-80 h-80 flex items-center justify-center shadow-2xl">
+                                <span class="text-9xl">👨‍💼</span>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -168,7 +173,7 @@
                 <div>
                     <h3 class="text-3xl font-bold text-gray-900 mb-4">Assalamu'alaikum Warahmatullahi Wabarakatuh</h3>
                     <div class="mb-6">
-                        <p class="text-lg font-semibold text-blue-600">Ibu Sutanti</p>
+                        <p class="text-lg font-semibold text-blue-600">Ibu Sutanti, S.Pd</p>
                         <p class="text-gray-500">Kepala Sekolah</p>
                     </div>
 
@@ -181,7 +186,7 @@
                     </div>
 
                     <div class="mt-8 pt-6 border-t-2 border-gray-200">
-                        <p class="font-bold text-gray-900">Ibu Sutanti</p>
+                        <p class="font-bold text-gray-900">Ibu Sutanti, S.Pd</p>
                         <p class="text-sm text-gray-600">Kepala Sekolah SD Negeri 3 Krasak Bangsri</p>
                     </div>
 
@@ -193,7 +198,7 @@
 
     <!-- Program Section -->
     <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12 animate-fadeInUp" data-animate>
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
             <div class="text-center mb-8">
             
                 <h2 class="section-title">Program Unggulan</h2>
@@ -210,16 +215,16 @@
                 </div>
 
                 <div class="card-hover bg-white rounded-xl p-6 border border-gray-100 text-center hover:shadow-xl">
-                    <div class="w-14 h-14 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i class="bi bi-moon-stars text-indigo-600 text-2xl"></i>
+                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="bi bi-moon-stars text-blue-600 text-2xl"></i>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Sholat Dhuha</h3>
                     <p class="text-sm text-gray-600">Pembiasaan sholat dhuha berjamaah setiap pagi untuk penguatan karakter spiritual dan kedisiplinan siswa.</p>
                 </div>
 
                 <div class="card-hover bg-white rounded-xl p-6 border border-gray-100 text-center hover:shadow-xl">
-                    <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i class="bi bi-bullseye text-purple-600 text-2xl"></i>
+                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="bi bi-bullseye text-blue-600 text-2xl"></i>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Pentaque</h3>
                     <p class="text-sm text-gray-600">Olahraga pentaque untuk melatih konsentrasi, strategi, dan sportivitas siswa dalam kompetisi.</p>
@@ -230,7 +235,7 @@
 
     <!-- Guru & Staff Section -->
     <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12 animate-fadeInUp" data-animate>
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
             <div class="text-center mb-8">
             
                 <h2 class="section-title">Guru & Staff Kami</h2>
@@ -272,10 +277,10 @@
     </section>
 
     <!-- Berita Terbaru Section -->
-    <section class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
+    <section class="py-8 bg-white">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16">
             <!-- Section Header -->
-            <div class="text-center mb-16 animate-fadeInUp">
+            <div class="text-center mb-8 animate-fadeInUp">
                
                 <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Berita Terkini</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Informasi dan update terbaru seputar kegiatan sekolah kami</p>
@@ -284,9 +289,9 @@
             <!-- Berita Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 <?php $__empty_1 = true; $__currentLoopData = $beritas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $berita): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                    <div class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl">
+                    <div class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col">
                         <!-- Image -->
-                        <div class="h-64 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 relative">
+                        <div class="h-64 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 relative flex-shrink-0">
                             <?php if($berita->gambar): ?>
                                 <img src="<?php echo e(asset('storage/' . $berita->gambar)); ?>" alt="<?php echo e($berita->judul); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                             <?php else: ?>
@@ -295,14 +300,14 @@
                         </div>
 
                         <!-- Content -->
-                        <div class="p-6">
-                            <div class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold mb-3">
+                        <div class="p-6 flex flex-col flex-1">
+                            <div class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold mb-3 self-start">
                                 <?php echo e($berita->tanggal_terbit->format('d M Y')); ?>
 
                             </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2"><?php echo e($berita->judul); ?></h3>
-                            <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4"><?php echo e(Str::limit(strip_tags($berita->konten), 150)); ?></p>
-                            <a href="#" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300">
+                            <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1"><?php echo e(Str::limit(strip_tags($berita->konten), 150)); ?></p>
+                            <a href="#" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 self-start mt-auto">
                                 Baca Selengkapnya
                             </a>
                         </div>
@@ -324,10 +329,10 @@
     </section>
 
     <!-- Galeri Section -->
-    <section class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
+    <section class="py-8 bg-white">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16">
             <!-- Section Header -->
-            <div class="text-center mb-16 animate-fadeInUp">
+            <div class="text-center mb-8 animate-fadeInUp">
                 
                 <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Galeri Foto Kami</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Dokumentasi kegiatan dan momen berharga di sekolah kami</p>
@@ -376,7 +381,7 @@
     </section>
 
     <!-- Kontak Section -->
-    <section class="py-20 bg-gradient-to-r from-blue-600 to-indigo-600">
+    <section class="py-8 bg-gradient-to-r from-blue-600 to-indigo-600">
         <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
             <!-- Section Header -->
             <div class="mb-8 animate-fadeInUp">

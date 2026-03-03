@@ -281,9 +281,14 @@
             <div class="flex justify-between items-center py-3">
                 <!-- Logo -->
                 <div class="flex items-center gap-3">
-                    <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-300" style="background-color: #5a74e8;">
-                        <span class="text-white font-bold text-lg">SD</span>
-                    </div>
+                    @php $logoUrl = \App\Models\Setting::get('sekolah_logo'); @endphp
+                    @if($logoUrl)
+                        <img src="{{ asset($logoUrl) }}" alt="Logo Sekolah" class="w-14 h-14 object-contain">
+                    @else
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg" style="background-color: #5a74e8;">
+                            <span class="text-white font-bold text-lg">SD</span>
+                        </div>
+                    @endif
                     <div class="nav-logo-text hidden sm:block">
                         <h1 class="text-sm font-bold transition-colors duration-300">SD Negeri 3 Krasak</h1>
                         <p class="text-xs transition-colors duration-300">Berkarakter Berprestasi</p>
@@ -340,9 +345,14 @@
                 <!-- About & Contact -->
                 <div>
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center shadow-lg">
-                            <span class="text-white font-bold text-xl">SD</span>
-                        </div>
+                        @php $logoUrl = \App\Models\Setting::get('sekolah_logo'); @endphp
+                        @if($logoUrl)
+                            <img src="{{ asset($logoUrl) }}" alt="Logo Sekolah" class="w-16 h-16 object-contain">
+                        @else
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center shadow-lg">
+                                <span class="text-white font-bold text-xl">SD</span>
+                            </div>
+                        @endif
                         <div>
                             <h3 class="text-white font-bold text-sm">SD Negeri 3</h3>
                             <p class="text-xs text-gray-400">Krasak Bangsri</p>
