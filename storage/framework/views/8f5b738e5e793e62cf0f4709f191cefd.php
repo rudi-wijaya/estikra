@@ -34,11 +34,11 @@
 
             <!-- CTA Buttons -->
             <div class="flex flex-wrap items-center gap-4 animate-fadeInUp" style="animation-delay: 0.3s;">
-                <a href="/tentang"
+                <a href="#tentang-sekolah"
                    class="card-hover group inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-7 py-3.5 rounded-xl shadow-lg hover:shadow-blue-300 transition-all duration-200">
                     <span>Pelajari Lebih Lanjut</span>
                 </a>
-                <a href="/kontak"
+                <a href="/ppdb"
                    class="card-hover group inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white/20 font-semibold px-7 py-3 rounded-xl transition-all duration-200 backdrop-blur-sm">
                     <i class=""></i>
                     <span>PPDB 2026</span>
@@ -79,7 +79,7 @@
 
 
     <!-- Tentang Sekolah Section -->
-    <section class="py-8 bg-white">
+    <section id="tentang-sekolah" class="py-8 bg-white">
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
             <div class="space-y-12">
                 <!-- Image First -->
@@ -104,36 +104,92 @@
                     <h2 class="text-4xl font-bold text-gray-900 mb-6">Tentang SD Negeri 3 Krasak Bangsri</h2>
                     
                     <div class="space-y-4 text-gray-600">
-                        <div class="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm">
-                            <h4 class="text-lg font-bold text-gray-900 mb-3">Visi Kami</h4>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-start gap-2">
-                                    <span class=""></span>
-                                    <span>Mewujudkan lulusan yang beriman dan bertakwa, kompeten, berprestasi, berkarakter Profil Pelajar Pancasila, serta didukung pembelajaran inovatif dan lingkungan sekolah yang nyaman, aman, dan tertata.</span>
-                                </li>
-                            </ul>
+                        <!-- Visi Card -->
+                        <div class="bg-white rounded-2xl border border-blue-100 shadow-sm overflow-hidden">
+                            <!-- Header + Toggle -->
+                            <button onclick="toggleCollapse('visiExtra','visiIcon')" class="w-full flex items-center justify-between p-6 text-left hover:bg-blue-50 transition-colors duration-200">
+                                <h4 class="text-lg font-bold text-gray-900">Visi Kami</h4>
+                                <span id="visiIcon" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 transition-transform duration-300">
+                                    <i class="bi bi-chevron-down text-sm"></i>
+                                </span>
+                            </button>
+
+                            <!-- Visi List -->
+                            <div class="px-6 pb-6 space-y-2.5">
+                                <!-- Items 1-3: selalu tampil -->
+                                <div class="flex items-start gap-3">
+                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                    <span class="text-gray-700 text-sm">Terwujudnya lulusan yang unggul dalam iman dan taqwa.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                    <span class="text-gray-700 text-sm">Terwujudnya lulusan yang kompeten dan berprestasi yang membanggakan.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                    <span class="text-gray-700 text-sm">Terwujudnya Kurikulum berwawasan karakter Profil Pelajar Pancasila dan lingkungan.</span>
+                                </div>
+
+                                <!-- Items 4-7: expand/collapse -->
+                                <div id="visiExtra" class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
+                                    <div class="space-y-2.5 pt-2.5">
+                                        <div class="flex items-start gap-3">
+                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                            <span class="text-gray-700 text-sm">Terwujudnya PBM yang efektif, efisien, dan inovatif.</span>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                            <span class="text-gray-700 text-sm">Terwujudnya warga sekolah yang berkarakter jujur, mandiri, gotong royong, percaya diri, bernalar kritis, kreatif, dan menghargai kebhinekaan.</span>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                            <span class="text-gray-700 text-sm">Terwujudnya standar pengelolaan dan manajemen sekolah sesuai ketentuan.</span>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                            <span class="text-gray-700 text-sm">Terwujudnya budaya sekolah sahabat keluarga dan lingkungan yang nyaman, aman, rindang, asri dan bersih dalam penyelenggaraan pendidikan yang berkualitas.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="bg-white rounded-2xl p-6 border border-indigo-100 shadow-sm">
-                            <h4 class="text-lg font-bold text-gray-900 mb-3">Misi Kami</h4>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-start gap-2">
+                        <!-- Misi Card -->
+                        <div class="bg-white rounded-2xl border border-indigo-100 shadow-sm overflow-hidden">
+                            <!-- Header + Toggle -->
+                            <button onclick="toggleCollapse('misiExtra','misiIcon')" class="w-full flex items-center justify-between p-6 text-left hover:bg-indigo-50 transition-colors duration-200">
+                                <h4 class="text-lg font-bold text-gray-900">Misi Kami</h4>
+                                <span id="misiIcon" class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 flex-shrink-0 transition-transform duration-300">
+                                    <i class="bi bi-chevron-down text-sm"></i>
+                                </span>
+                            </button>
+
+                            <!-- Misi List -->
+                            <div class="px-6 pb-6 space-y-2.5">
+                                <!-- Items 1-3: selalu tampil -->
+                                <div class="flex items-start gap-3">
                                     <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span>Menumbuh kembangkkan pengamalam ajaran agama sesuai dengan agama dan kepercayaan masing-masing.</span>
-                                </li>
-                                <li class="flex items-start gap-2">
+                                    <span class="text-gray-700 text-sm">Menumbuh kembangkan pengamalan ajaran agama sesuai dengan agama dan kepercayaan masing-masing.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
                                     <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span>Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing.</span>
-                                </li>
-                                <li class="flex items-start gap-2">
+                                    <span class="text-gray-700 text-sm">Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
                                     <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span>Melaksanakan pembelajaran yang aktiif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri.</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span>Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaan dalam bertindak.</span>
-                                </li>
-                            </ul>
+                                    <span class="text-gray-700 text-sm">Melaksanakan pembelajaran yang aktif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri.</span>
+                                </div>
+
+                                <!-- Item 4: expand/collapse -->
+                                <div id="misiExtra" class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
+                                    <div class="space-y-2.5 pt-2.5">
+                                        <div class="flex items-start gap-3">
+                                            <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
+                                            <span class="text-gray-700 text-sm">Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaan dalam bertindak.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

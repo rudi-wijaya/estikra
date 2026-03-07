@@ -16,9 +16,9 @@
             <!-- Gallery Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 @forelse ($galeris as $galeri)
-                    <div class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl">
+                    <div class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col">
                         <!-- Image -->
-                        <div class="h-64 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 relative">
+                        <div class="h-64 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 relative flex-shrink-0">
                             @if ($galeri->gambar)
                                 <img src="{{ asset('storage/' . $galeri->gambar) }}" alt="{{ $galeri->judul }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                             @else
@@ -27,12 +27,14 @@
                         </div>
 
                         <!-- Content -->
-                        <div class="p-6">
+                        <div class="p-6 flex flex-col flex-1">
                             <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">{{ $galeri->judul }}</h3>
                             @if ($galeri->deskripsi)
-                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-3">{{ Str::limit($galeri->deskripsi, 100) }}</p>
+                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-3 flex-1">{{ Str::limit($galeri->deskripsi, 100) }}</p>
+                            @else
+                                <div class="flex-1"></div>
                             @endif
-                            <div class="flex items-center text-gray-500 text-sm">
+                            <div class="flex items-center text-gray-500 text-sm mt-auto">
                                 <i class="bi bi-calendar-event mr-2"></i>
                                 {{ $galeri->tanggal_upload->format('d M Y') }}
                             </div>

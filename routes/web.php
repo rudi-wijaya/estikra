@@ -41,6 +41,10 @@ Route::get('/kontak', function () {
     return view('kontak');
 });
 
+Route::get('/ppdb', function () {
+    return view('ppdb');
+});
+
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
     // Admin Routes

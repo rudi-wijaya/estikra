@@ -56,6 +56,15 @@
             animation: fadeIn 0.6s ease-out;
         }
 
+        /* Visi Accordion */
+        .visi-content {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .visi-tab {
+            position: relative;
+        }
+
         nav a::after {
             content: '';
             position: absolute;
@@ -72,8 +81,29 @@
             width: 100%;
         }
 
-        .hamburger span {
-            transition: background-color 0.3s ease;
+        /* Hamburger animated bars */
+        .hamburger-bar {
+            display: block;
+            width: 22px;
+            height: 2px;
+            border-radius: 2px;
+            background-color: currentColor;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.25s ease,
+                        width 0.3s ease;
+            transform-origin: center;
+        }
+
+        /* Open state */
+        .hamburger.open .bar-top {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger.open .bar-mid {
+            opacity: 0;
+            width: 0;
+        }
+        .hamburger.open .bar-bot {
+            transform: translateY(-8px) rotate(-45deg);
         }
 
         @keyframes slideInDown {
@@ -94,41 +124,41 @@
         /* Mobile nav — default (white navbar / all pages except beranda hero) */
         .mobile-nav-link {
             display: block;
-            padding: 12px 16px;
+            padding: 14px 18px;
             text-decoration: none;
             font-weight: 500;
-            border-radius: 12px;
+            border-radius: 14px;
             transition: all 0.2s ease;
-            background: rgba(90, 116, 232, 0.08);
+            background: #f1f3f9;
             color: #374151;
-            border: 1px solid rgba(90, 116, 232, 0.2);
+            border: none;
             text-shadow: none;
+            box-shadow: none;
         }
 
         .mobile-nav-link:hover {
             background: #5a74e8;
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(90,116,232,0.25);
-            border-color: transparent;
+            box-shadow: 0 4px 14px rgba(90,116,232,0.25);
         }
 
         .mobile-nav-link.active {
             background: #5a74e8;
             color: #ffffff;
-            border-color: transparent;
+            box-shadow: 0 4px 14px rgba(90,116,232,0.25);
         }
 
         /* Mobile nav — beranda hero (transparan, belum scroll) */
         #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link {
-            background: rgba(255, 255, 255, 0.18);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+            background: #f1f3f9;
+            color: #111827;
+            border: none;
+            text-shadow: none;
         }
 
         #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link:hover {
-            background: #ffffff;
-            color: #5a74e8;
+            background: #5a74e8;
+            color: #ffffff;
             text-shadow: none;
         }
 
@@ -174,9 +204,9 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
-        /* Warna teks default (halaman biasa): gelap */
+        /* Warna teks default (halaman biasa): hitam */
         #navbar-header .nav-link {
-            color: #374151;
+            color: #111827;
             transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -186,13 +216,12 @@
         }
 
         #navbar-header .nav-logo-text p {
-            color: #6b7280;
+            color: #4b5563;
             transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        #navbar-header #hamburger-icon {
-            color: #1f2937;
-            transition: color 0.5s ease;
+        #navbar-header .hamburger .hamburger-bar {
+            background-color: #111827;
         }
 
         /* Warna teks di beranda: putih saat transparan */
@@ -211,13 +240,13 @@
             text-shadow: 0 1px 4px rgba(0,0,0,0.4);
         }
 
-        #navbar-header[data-transparent]:not(.scrolled) #hamburger-icon {
-            color: #ffffff;
+        #navbar-header[data-transparent]:not(.scrolled) .hamburger .hamburger-bar {
+            background-color: #ffffff;
         }
 
-        /* Setelah scroll di beranda: warna gelap */
+        /* Setelah scroll di beranda: warna hitam */
         #navbar-header[data-transparent].scrolled .nav-link {
-            color: #374151;
+            color: #111827;
         }
 
         #navbar-header[data-transparent].scrolled .nav-logo-text h1 {
@@ -225,11 +254,11 @@
         }
 
         #navbar-header[data-transparent].scrolled .nav-logo-text p {
-            color: #6b7280;
+            color: #4b5563;
         }
 
-        #navbar-header[data-transparent].scrolled #hamburger-icon {
-            color: #1f2937;
+        #navbar-header[data-transparent].scrolled .hamburger .hamburger-bar {
+            background-color: #111827;
         }
 
         #navbar-header .top-bar {
@@ -304,18 +333,21 @@
                         <li><a href="/guru-staff" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('guru-staff')): ?> active <?php endif; ?>">Guru &amp; Staff</a></li>
                         <li><a href="/berita" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('berita')): ?> active <?php endif; ?>">Berita</a></li>
                         <li><a href="/galeri" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('galeri')): ?> active <?php endif; ?>">Galeri</a></li>
+                        <li><a href="/ppdb" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('ppdb')): ?> active <?php endif; ?>">PPDB</a></li>
                         <li><a href="/kontak" class="nav-link px-4 py-2 no-underline font-medium transition-colors duration-300 relative group hover:text-blue-300 <?php if(request()->is('kontak')): ?> active <?php endif; ?>">Kontak</a></li>
                     </ul>
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <button class="hamburger lg:hidden flex items-center justify-center bg-transparent border-none cursor-pointer p-2 hover:opacity-75 transition-opacity" id="hamburger">
-                    <i id="hamburger-icon" class="bi bi-list text-2xl"></i>
+                <button class="hamburger lg:hidden flex flex-col items-center justify-center gap-1.5 bg-transparent border-none cursor-pointer p-2" id="hamburger" aria-label="Toggle menu">
+                    <span class="hamburger-bar bar-top"></span>
+                    <span class="hamburger-bar bar-mid"></span>
+                    <span class="hamburger-bar bar-bot"></span>
                 </button>
             </div>
 
             <!-- Mobile Navigation -->
-            <nav id="navbar" class="hidden lg:hidden nav-mobile rounded-b-3xl overflow-hidden">
+            <nav id="navbar" class="hidden lg:hidden nav-mobile rounded-b-3xl overflow-hidden bg-white shadow-lg">
                 <div class="py-4 px-4 pb-5">
                     <ul class="flex flex-col gap-2">
                         <li><a href="/" class="mobile-nav-link <?php if(request()->is('/')): ?> active <?php endif; ?>">Beranda</a></li>
@@ -324,6 +356,7 @@
                         <li><a href="/guru-staff" class="mobile-nav-link <?php if(request()->is('guru-staff')): ?> active <?php endif; ?>">Guru & Staff</a></li>
                         <li><a href="/berita" class="mobile-nav-link <?php if(request()->is('berita')): ?> active <?php endif; ?>">Berita</a></li>
                         <li><a href="/galeri" class="mobile-nav-link <?php if(request()->is('galeri')): ?> active <?php endif; ?>">Galeri</a></li>
+                        <li><a href="/ppdb" class="mobile-nav-link <?php if(request()->is('ppdb')): ?> active <?php endif; ?>">PPDB</a></li>
                         <li><a href="/kontak" class="mobile-nav-link <?php if(request()->is('kontak')): ?> active <?php endif; ?>">Kontak</a></li>
                     </ul>
                 </div>
@@ -417,6 +450,12 @@
     </footer>
 
     <script>
+        // Scroll ke atas saat halaman dimuat/refresh
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
         // Navbar scroll effect (hanya aktif di beranda)
         const navbarHeader = document.getElementById('navbar-header');
         if (navbarHeader.hasAttribute('data-transparent')) {
@@ -433,33 +472,32 @@
 
         // Hamburger menu
         const hamburger = document.getElementById('hamburger');
-        const hamburgerIcon = document.getElementById('hamburger-icon');
         const navbar = document.getElementById('navbar');
         const navLinks = navbar.querySelectorAll('a');
 
+        function openMenu() {
+            navbar.classList.remove('hidden');
+            hamburger.classList.add('open');
+        }
+
+        function closeMenu() {
+            navbar.classList.add('hidden');
+            hamburger.classList.remove('open');
+        }
+
         hamburger.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isOpen = !navbar.classList.contains('hidden');
-            navbar.classList.toggle('hidden');
-            hamburgerIcon.className = isOpen
-                ? 'bi bi-list text-2xl'
-                : 'bi bi-x-lg text-2xl';
+            navbar.classList.contains('hidden') ? openMenu() : closeMenu();
         });
 
         // Close menu when clicking on a link
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navbar.classList.add('hidden');
-                hamburgerIcon.className = 'bi bi-list text-2xl';
-            });
+            link.addEventListener('click', () => closeMenu());
         });
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('header')) {
-                navbar.classList.add('hidden');
-                hamburgerIcon.className = 'bi bi-list text-2xl';
-            }
+            if (!e.target.closest('header')) closeMenu();
         });
 
         // Smooth scroll for anchor links
@@ -470,10 +508,9 @@
                     e.preventDefault();
                     const target = document.querySelector(href);
                     if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                        const navbarHeight = document.getElementById('navbar-header').offsetHeight;
+                        const top = target.getBoundingClientRect().top + window.scrollY - navbarHeight - 16;
+                        window.scrollTo({ top, behavior: 'smooth' });
                     }
                 }
             });
@@ -497,6 +534,25 @@
         document.querySelectorAll('[data-animate]').forEach(el => {
             observer.observe(el);
         });
+
+        // Visi / Misi expand/collapse with smooth Tailwind animation
+        function toggleCollapse(contentId, iconId) {
+            const el = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            const isOpen = el.dataset.open === 'true';
+
+            if (!isOpen) {
+                el.classList.remove('max-h-0', 'opacity-0');
+                el.classList.add('max-h-96', 'opacity-100');
+                el.dataset.open = 'true';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                el.classList.remove('max-h-96', 'opacity-100');
+                el.classList.add('max-h-0', 'opacity-0');
+                el.dataset.open = 'false';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
     </script>
 </body>
 </html>
