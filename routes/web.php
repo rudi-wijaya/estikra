@@ -4,13 +4,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\GuruStaffController;
+use App\Http\Controllers\Admin\PpdbController;
 use Illuminate\Support\Facades\Route;
 
 // Halaman Publik
 Route::get('/', function () {
     $beritas = \App\Models\Berita::where('status', 'published')->orderBy('tanggal_terbit', 'desc')->limit(3)->get();
     $galeris = \App\Models\Galeri::where('status', 'aktif')->orderBy('tanggal_upload', 'desc')->limit(3)->get();
-    $guruStaffs = \App\Models\GuruStaff::aktif()->whereIn('kategori', ['guru_kelas', 'staff'])->inRandomOrder()->limit(3)->get();
+    $guruStaffs = \App\Models\GuruStaff::aktif()->where('kategori', '!=', 'kepala_sekolah')->orderBy('urutan')->orderBy('nama')->get();
     return view('beranda', compact('beritas', 'galeris', 'guruStaffs'));
 });
 
@@ -42,12 +43,16 @@ Route::get('/kontak', function () {
 });
 
 Route::get('/ppdb', function () {
-    return view('ppdb');
+    $dokumen = \App\Models\PpdbItem::aktif()->where('type', 'dokumen')->orderBy('urutan')->get();
+    $alur    = \App\Models\PpdbItem::aktif()->where('type', 'alur')->orderBy('urutan')->get();
+    return view('ppdb', compact('dokumen', 'alur'));
 });
 
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
     // Admin Routes
+    Route::get('/admin', fn() => redirect()->route('admin.dashboard'));
+
     Route::prefix('admin')->name('admin.')->group(function () {
         // Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -67,6 +72,15 @@ Route::middleware('auth')->group(function () {
         // Settings
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+
+        // PPDB
+        Route::get('ppdb', [PpdbController::class, 'index'])->name('ppdb.index');
+        Route::put('ppdb/settings', [PpdbController::class, 'updateSettings'])->name('ppdb.settings.update');
+        Route::get('ppdb/create', [PpdbController::class, 'create'])->name('ppdb.create');
+        Route::post('ppdb', [PpdbController::class, 'store'])->name('ppdb.store');
+        Route::get('ppdb/{ppdb}/edit', [PpdbController::class, 'edit'])->name('ppdb.edit');
+        Route::put('ppdb/{ppdb}', [PpdbController::class, 'update'])->name('ppdb.update');
+        Route::delete('ppdb/{ppdb}', [PpdbController::class, 'destroy'])->name('ppdb.destroy');
     });
 
     // Also create alias for home redirect

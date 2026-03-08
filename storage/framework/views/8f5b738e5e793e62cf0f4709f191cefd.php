@@ -4,7 +4,24 @@
 
 <?php $__env->startSection('content'); ?>
     <!-- Hero Section -->
-    <section class="relative flex flex-col justify-between -mt-32" style="min-height: calc(820px + 8rem); background-image: url('<?php echo e(asset(\App\Models\Setting::get('hero_background', 'images/homepage.jpg'))); ?>'); background-size: cover; background-position: center top;">
+    <?php
+        $heroSlides = collect([
+            \App\Models\Setting::get('hero_background',   'images/homepage.jpg'),
+            \App\Models\Setting::get('hero_background_2'),
+            \App\Models\Setting::get('hero_background_3'),
+        ])->filter()->values();
+    ?>
+
+    <section id="hero-section" class="relative flex flex-col justify-between -mt-32" style="min-height: calc(820px + 8rem);">
+
+        
+        <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+            <?php $__currentLoopData = $heroSlides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $slide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="hero-slide absolute inset-0 transition-opacity duration-1000 <?php echo e($i === 0 ? 'opacity-100' : 'opacity-0'); ?>"
+                     style="background-image: url('<?php echo e(asset($slide)); ?>'); background-size: cover; background-position: center top;"></div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+
         <div class="absolute inset-0 bg-black/40"></div>
         <!-- Decorative Elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -75,6 +92,24 @@
             </div>
         </div>
     </section>
+
+    <?php if($heroSlides->count() > 1): ?>
+    <script>
+    (function () {
+        const slides   = document.querySelectorAll('#hero-section .hero-slide');
+        const total    = slides.length;
+        if (total < 2) return;
+        let current = 0;
+        setInterval(function () {
+            slides[current].classList.remove('opacity-100');
+            slides[current].classList.add('opacity-0');
+            current = (current + 1) % total;
+            slides[current].classList.remove('opacity-0');
+            slides[current].classList.add('opacity-100');
+        }, 4000);
+    })();
+    </script>
+    <?php endif; ?>
 
 
 
@@ -291,46 +326,107 @@
 
     <!-- Guru & Staff Section -->
     <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16">
             <div class="text-center mb-8">
-            
                 <h2 class="section-title">Guru & Staff Kami</h2>
                 <p class="section-subtitle text-gray-600">Tim profesional yang berdedikasi dalam mendidik dan membimbing generasi masa depan</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-                <?php $__empty_1 = true; $__currentLoopData = $guruStaffs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                    <div class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200">
-                        <?php if($gs->foto): ?>
-                            <img src="<?php echo e(asset('storage/' . $gs->foto)); ?>" alt="<?php echo e($gs->nama); ?>" class="w-full h-64 object-cover">
-                        <?php else: ?>
-                            <div class="w-full h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                                <i class="bi bi-person-fill text-white text-6xl opacity-40"></i>
+            <?php if($guruStaffs->isEmpty()): ?>
+                <div class="text-center text-gray-400 py-8">
+                    <i class="bi bi-people text-5xl"></i>
+                    <p class="mt-2">Belum ada data guru &amp; staff.</p>
+                </div>
+            <?php else: ?>
+            <?php
+                $gsItems  = $guruStaffs->values();
+                $gsTotal  = $gsItems->count();
+                $gsMax    = max(0, $gsTotal - 3);
+                // Track width in % relative to container: N cards, 3 visible = N/3 * 100%
+                $gsTrackW = round($gsTotal / 3 * 100, 4);
+                // Each card width as % of track
+                $gsCardW  = round(100 / $gsTotal, 4);
+            ?>
+
+            <div class="relative px-6">
+                
+                <div style="overflow:hidden; width:100%;">
+                    
+                    <div id="gs-track"
+                         style="display:flex; width:<?php echo e($gsTrackW); ?>%; transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);">
+                        <?php $__currentLoopData = $gsItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div style="width:<?php echo e($gsCardW); ?>%; flex-shrink:0; padding:0 12px;">
+                            <div class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200" style="display:flex; flex-direction:column; height:100%;">
+                                <?php if($gs->foto): ?>
+                                    <img src="<?php echo e(asset('storage/' . $gs->foto)); ?>" alt="<?php echo e($gs->nama); ?>" class="w-full h-64 object-cover" style="flex-shrink:0;">
+                                <?php else: ?>
+                                    <div class="w-full h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center" style="flex-shrink:0;">
+                                        <i class="bi bi-person-fill text-white text-6xl opacity-40"></i>
+                                    </div>
+                                <?php endif; ?>
+                                <div style="padding:16px 20px 20px; flex:1; display:flex; flex-direction:column; justify-content:flex-start;">
+                                    <h3 style="font-size:15px; font-weight:700; color:#1f2937; line-height:1.45; word-break:break-word; overflow-wrap:break-word; min-height:2.9em; margin:0 0 5px 0; display:flex; align-items:flex-start;"><?php echo e($gs->nama); ?></h3>
+                                    <p style="font-size:13px; color:#5a74e8; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0 0 10px 0;"><?php echo e($gs->jabatan); ?></p>
+                                    <?php if($gs->deskripsi): ?>
+                                        <p class="text-gray-600 text-sm"><?php echo e($gs->deskripsi); ?></p>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                        <?php endif; ?>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-900 mb-1"><?php echo e($gs->nama); ?></h3>
-                            <p class="text-blue-600 text-sm font-semibold mb-4"><?php echo e($gs->jabatan); ?></p>
-                            <?php if($gs->deskripsi): ?>
-                                <p class="text-gray-600 text-sm"><?php echo e($gs->deskripsi); ?></p>
-                            <?php endif; ?>
                         </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                    <div class="col-span-3 text-center text-gray-400 py-8">
-                        <i class="bi bi-people text-5xl"></i>
-                        <p class="mt-2">Belum ada data guru &amp; staff.</p>
-                    </div>
+                </div>
+
+                <?php if($gsTotal > 3): ?>
+                <button onclick="gsPrev()"
+                    class="absolute left-0 top-32 z-10 w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center text-blue-600 hover:bg-blue-50 transition">
+                    <i class="bi bi-chevron-left text-lg"></i>
+                </button>
+                <button onclick="gsNext()"
+                    class="absolute right-0 top-32 z-10 w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center text-blue-600 hover:bg-blue-50 transition">
+                    <i class="bi bi-chevron-right text-lg"></i>
+                </button>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
 
-            <div class="text-center">
+            <div class="text-center mt-8">
                 <a href="/guru-staff" class="btn-primary inline-block">
                     Lihat Semua Guru & Staff
                 </a>
             </div>
         </div>
     </section>
+
+    <?php if(isset($gsTotal) && $gsTotal > 3): ?>
+    <script>
+        var gsCurrent = 0;
+        var gsTotal   = <?php echo e($gsTotal); ?>;
+        var gsMax     = <?php echo e($gsMax); ?>;
+        var gsTimer   = setInterval(function(){ gsGoTo(gsCurrent + 1); }, 4000);
+
+        function gsGoTo(n) {
+            // Clamp with loop
+            if (n > gsMax) n = 0;
+            if (n < 0)     n = gsMax;
+            gsCurrent = n;
+            // translateX as % of track width: move by (current / total * 100%)
+            var pct = gsCurrent * 100 / gsTotal;
+            document.getElementById('gs-track').style.transform = 'translateX(-' + pct + '%)';
+        }
+
+        function gsPrev() {
+            clearInterval(gsTimer);
+            gsGoTo(gsCurrent - 1);
+            gsTimer = setInterval(function(){ gsGoTo(gsCurrent + 1); }, 4000);
+        }
+        function gsNext() {
+            clearInterval(gsTimer);
+            gsGoTo(gsCurrent + 1);
+            gsTimer = setInterval(function(){ gsGoTo(gsCurrent + 1); }, 4000);
+        }
+    </script>
+    <?php endif; ?>
 
     <!-- Berita Terbaru Section -->
     <section class="py-8 bg-white">

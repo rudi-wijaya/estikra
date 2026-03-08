@@ -4,34 +4,82 @@
 
 @section('content')
     <style>
-        /* Org chart */
-        .org-tree { display: flex; flex-direction: column; align-items: center; }
-        .org-node {
+        /* ===== ORG CHART ===== */
+        .oc-wrap { display: flex; flex-direction: column; align-items: center; }
+
+        .oc-node {
             background: white;
-            border: 2px solid #3b82f6;
-            border-radius: 10px;
-            padding: 10px 22px;
+            border: 2px solid #5a74e8;
+            border-radius: 12px;
+            padding: 12px 28px;
             text-align: center;
-            min-width: 160px;
-            box-shadow: 0 2px 8px rgba(59,130,246,0.15);
+            min-width: 170px;
+            max-width: 260px;
+            box-shadow: 0 2px 10px rgba(90,116,232,0.15);
+            position: relative;
+            z-index: 1;
         }
-        .org-node.head { background: #1e40af; color: white; border-color: #1e40af; }
-        .org-node .node-name { font-weight: 700; font-size: 14px; }
-        .org-node .node-jabatan { font-size: 11px; opacity: 0.75; margin-top: 2px; }
-        .org-connector { width: 2px; height: 28px; background: #3b82f6; margin: 0 auto; }
-        .org-children { display: flex; align-items: flex-start; justify-content: center; gap: 0; width: 100%; }
-        .org-child-col { display: flex; flex-direction: column; align-items: center; flex: 1; padding: 0 8px; }
+        .oc-node.oc-head {
+            background: linear-gradient(135deg, #3a52c4 0%, #5a74e8 100%);
+            color: white;
+            border-color: #3a52c4;
+            box-shadow: 0 4px 16px rgba(90,116,232,0.35);
+        }
+        .oc-node .node-name { font-weight: 700; font-size: 14px; line-height: 1.3; }
+        .oc-node .node-sub  { font-size: 11px; opacity: 0.8; margin-top: 3px; }
+
+        /* Vertical trunk line */
+        .oc-trunk { width: 2px; height: 32px; background: #5a74e8; }
+
+        /* Children row */
+        .oc-children {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+        }
+        /* Horizontal bar — spans from centre of first child to centre of last child */
+        .oc-children.has-multiple::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left:  calc(100% / (2 * var(--n, 2)));
+            right: calc(100% / (2 * var(--n, 2)));
+            height: 2px;
+            background: #5a74e8;
+        }
+        /* Each child column */
+        .oc-child {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            padding: 32px 12px 0;
+            position: relative;
+        }
+        /* Vertical drop from horizontal bar to each child node */
+        .oc-child::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 2px; height: 32px;
+            background: #5a74e8;
+        }
         @media (max-width: 640px) {
-            .org-children { flex-direction: column; align-items: center; }
-            .org-child-col { width: 100%; }
+            .oc-children { flex-direction: column; align-items: center; }
+            .oc-children.has-multiple::before { display: none; }
+            .oc-child { flex: none; width: 100%; padding-top: 16px; }
+            .oc-child::before { height: 16px; }
         }
 
         /* Staff cards */
         .staff-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 24px;
             margin: 40px 0;
+            align-items: stretch;
         }
 
         .staff-card {
@@ -40,7 +88,9 @@
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            text-align: center;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
         }
 
         .staff-card:hover {
@@ -60,21 +110,34 @@
         }
 
         .staff-info {
-            padding: 25px;
+            padding: 16px 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
 
         .staff-name {
-            font-size: 20px;
+            font-size: 15px;
             font-weight: 700;
             margin: 0 0 5px 0;
             color: #2c3e50;
+            line-height: 1.45;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            min-height: 2.9em;
+            display: flex;
+            align-items: flex-start;
         }
 
         .staff-position {
-            font-size: 14px;
-            color: #3498db;
+            font-size: 13px;
+            color: #5a74e8;
             font-weight: 600;
-            margin: 0 0 15px 0;
+            margin: 0 0 12px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .staff-description {
@@ -158,37 +221,38 @@
                     <h3 class="text-2xl font-bold text-gray-900 text-center mb-10 pb-4 border-b-2 border-blue-400">
                         Struktur Organisasi
                     </h3>
-                    <div class="org-tree">
+
+                    @php
+                        $ksNode   = $guruStaffs->get('kepala_sekolah', collect())->first();
+                        $childKats = collect(['guru_kelas', 'guru_mapel', 'staff'])
+                            ->filter(fn($k) => $guruStaffs->has($k) && $guruStaffs[$k]->count())
+                            ->values();
+                        $cn = $childKats->count();
+                    @endphp
+
+                    <div class="oc-wrap">
                         {{-- Kepala Sekolah --}}
-                        @foreach ($guruStaffs->get('kepala_sekolah', collect()) as $ks)
-                            <div class="org-node head">
-                                <div class="node-name">{{ $ks->nama }}</div>
-                                <div class="node-jabatan">{{ $ks->jabatan }}</div>
-                            </div>
-                        @endforeach
-                        @if ($guruStaffs->get('kepala_sekolah', collect())->isEmpty())
-                            <div class="org-node head">
-                                <div class="node-name">Kepala Sekolah</div>
-                                <div class="node-jabatan">—</div>
-                            </div>
-                        @endif
+                        <div class="oc-node oc-head">
+                            <div class="node-name">{{ $ksNode ? $ksNode->nama : 'Kepala Sekolah' }}</div>
+                            <div class="node-sub">{{ $ksNode ? $ksNode->jabatan : '—' }}</div>
+                        </div>
 
-                        <div class="org-connector"></div>
+                        @if ($cn > 0)
+                            {{-- Trunk line --}}
+                            <div class="oc-trunk"></div>
 
-                        {{-- Cabang: Guru Kelas, Guru Mapel, Staff --}}
-                        <div class="org-children w-full">
-                            @foreach (['guru_kelas', 'guru_mapel', 'staff'] as $kat)
-                                @if ($guruStaffs->has($kat) && $guruStaffs[$kat]->count())
-                                    <div class="org-child-col">
-                                        <div class="org-connector"></div>
-                                        <div class="org-node">
+                            {{-- Children --}}
+                            <div class="oc-children {{ $cn > 1 ? 'has-multiple' : '' }}" style="--n: {{ $cn }};">
+                                @foreach ($childKats as $kat)
+                                    <div class="oc-child">
+                                        <div class="oc-node">
                                             <div class="node-name">{{ $kategoriLabels[$kat] }}</div>
-                                            <div class="node-jabatan">{{ $guruStaffs[$kat]->count() }} orang</div>
+                                            <div class="node-sub">{{ $guruStaffs[$kat]->count() }} orang</div>
                                         </div>
                                     </div>
-                                @endif
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
 

@@ -10,12 +10,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --sidebar-bg: #2c3e50;
-            --sidebar-hover: #34495e;
-            --primary-color: #3498db;
+            --sidebar-bg: #5a74e8;
+            --sidebar-hover: #6b83ec;
+            --sidebar-active: #8fa0f2;
+            --primary-color: #5a74e8;
+            --primary-hover: #4a63d8;
+            --primary-shadow: rgba(90, 116, 232, 0.3);
         }
 
         * {
@@ -25,8 +30,8 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background-color: #f2f3fb;
         }
 
         .admin-wrapper {
@@ -37,34 +42,38 @@
         /* Sidebar */
         .sidebar {
             width: 280px;
-            background-color: var(--sidebar-bg);
-            color: #ecf0f1;
+            background: linear-gradient(180deg, #4a63d8 0%, #5a74e8 50%, #6b83ec 100%);
+            color: #e8ecfd;
             position: fixed;
             left: 0;
             top: 0;
             height: 100vh;
             overflow-y: auto;
             padding-top: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 4px 0 20px rgba(90, 116, 232, 0.3);
         }
 
         .sidebar-header {
-            padding: 20px 15px;
+            padding: 24px 20px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             margin-bottom: 20px;
+            background: rgba(255,255,255,0.05);
         }
 
         .sidebar-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: #fff;
+            letter-spacing: 0.5px;
         }
 
         .sidebar-subtitle {
-            font-size: 12px;
-            color: #95a5a6;
-            margin-top: 5px;
+            font-size: 11px;
+            color: #bae6fd;
+            margin-top: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .sidebar-menu {
@@ -79,23 +88,27 @@
             display: flex;
             align-items: center;
             padding: 12px 20px;
-            color: #bdc3c7;
+            color: #e0f2fe;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             border-left: 3px solid transparent;
+            border-radius: 0 8px 8px 0;
+            margin: 2px 8px 2px 0;
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .sidebar-menu a:hover {
-            background-color: var(--sidebar-hover);
+            background-color: rgba(255, 255, 255, 0.18);
             color: #fff;
-            border-left-color: var(--primary-color);
-            padding-left: 18px;
+            border-left-color: #bae6fd;
         }
 
         .sidebar-menu a.active {
-            background-color: var(--sidebar-hover);
-            color: var(--primary-color);
-            border-left-color: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            border-left-color: #fff;
+            font-weight: 600;
         }
 
         .sidebar-menu i {
@@ -107,8 +120,8 @@
 
         .sidebar-divider {
             height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
-            margin: 15px 0;
+            background-color: rgba(255, 255, 255, 0.12);
+            margin: 12px 16px;
         }
 
         /* Main Content */
@@ -122,12 +135,12 @@
         /* Top Navigation */
         .top-navbar {
             background-color: #fff;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid #c7d2fa;
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 8px rgba(90, 116, 232, 0.08);
         }
 
         .navbar-left {
@@ -137,9 +150,9 @@
         }
 
         .navbar-brand {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
-            color: var(--sidebar-bg);
+            color: #5a74e8;
         }
 
         .navbar-right {
@@ -150,7 +163,7 @@
 
         .navbar-item {
             cursor: pointer;
-            color: #2c3e50;
+            color: #5a74e8;
             font-size: 18px;
             transition: color 0.3s ease;
         }
@@ -163,33 +176,34 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 15px;
+            padding: 7px 14px;
             border-radius: 20px;
-            background-color: #f8f9fa;
+            background-color: #eef0fd;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .user-profile:hover {
-            background-color: #e9ecef;
+            background-color: #dde1fb;
         }
 
         .user-avatar {
             width: 35px;
             height: 35px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #2980b9 100%);
+            background: linear-gradient(135deg, #5a74e8 0%, #6b83ec 100%);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 15px;
         }
 
         .user-name {
             font-size: 14px;
-            color: var(--sidebar-bg);
+            font-weight: 500;
+            color: #5a74e8;
         }
 
         /* Page Content */
@@ -204,9 +218,9 @@
         }
 
         .page-title {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
-            color: var(--sidebar-bg);
+            color: #5a74e8;
             margin-bottom: 5px;
         }
 
@@ -218,52 +232,52 @@
         /* Cards */
         .card {
             border: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.07);
+            border-radius: 12px;
             transition: all 0.3s ease;
             margin-bottom: 25px;
         }
 
         .card:hover {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.13);
         }
 
         .card-header {
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
-            border-radius: 10px 10px 0 0 !important;
+            background-color: #f0f2fd;
+            border-bottom: 1px solid #c7d2fa;
+            border-radius: 12px 12px 0 0 !important;
             font-weight: 600;
-            color: var(--sidebar-bg);
+            color: #5a74e8;
         }
 
         /* Dashboard Stats */
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             color: white;
             padding: 25px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
         }
 
         .stat-card.primary {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
         }
 
         .stat-card.success {
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            box-shadow: 0 4px 16px rgba(5, 150, 105, 0.3);
         }
 
         .stat-card.warning {
-            background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);
-            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            box-shadow: 0 4px 16px rgba(217, 119, 6, 0.3);
         }
 
         .stat-card.danger {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
         }
 
         .stat-value {
@@ -292,12 +306,12 @@
         }
 
         .table thead {
-            background-color: #f8f9fa;
+            background-color: #f0f2fd;
         }
 
         .table thead th {
             font-weight: 600;
-            color: var(--sidebar-bg);
+            color: #5a74e8;
             border: none;
             padding: 15px;
         }
@@ -309,16 +323,16 @@
         }
 
         .table tbody tr:hover {
-            background-color: #f8f9fa;
+            background-color: #f0f2fd;
         }
 
         /* Buttons */
         .btn {
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 8px 16px;
             font-size: 14px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             border: none;
         }
 
@@ -327,9 +341,9 @@
         }
 
         .btn-primary:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px var(--primary-shadow);
         }
 
         .btn-sm {
@@ -355,12 +369,12 @@
 
         .form-control:focus, .form-select:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(90, 116, 232, 0.2);
         }
 
         .form-label {
             font-weight: 600;
-            color: var(--sidebar-bg);
+            color: #5a74e8;
             margin-bottom: 8px;
         }
 
@@ -472,9 +486,9 @@
         }
 
         .alert-info {
-            border-left-color: #3498db;
-            background-color: #f0f9ff;
-            color: #0c2340;
+            border-left-color: #5a74e8;
+            background-color: #f0f2fd;
+            color: #3a52c4;
         }
     </style>
 </head>
@@ -529,6 +543,12 @@
                         <span>Guru & Staff</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.ppdb.index') }}" class="{{ request()->routeIs('admin.ppdb.*') ? 'active' : '' }}">
+                        <i class="bi bi-person-plus-fill"></i>
+                        <span>PPDB</span>
+                    </a>
+                </li>
                 <div class="sidebar-divider"></div>
                 <li>
                     <form method="POST" action="{{ route('logout') }}">
@@ -547,7 +567,7 @@
             <!-- Top Navigation -->
             <nav class="top-navbar">
                 <div class="navbar-left">
-                    <button class="btn btn-link" id="sidebarToggle" style="color: #2c3e50; padding: 4px 8px;">
+                    <button class="btn btn-link" id="sidebarToggle" style="color: #5a74e8; padding: 4px 8px;">
                         <i class="bi bi-list"></i>
                     </button>
                     <div class="navbar-brand">

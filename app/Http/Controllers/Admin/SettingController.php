@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Storage;
 class SettingController extends Controller
 {
     // Keys yang berupa file upload
-    protected array $fileKeys = ['hero_background', 'sekolah_logo', 'sambutan_foto'];
+    protected array $fileKeys = ['hero_background', 'hero_background_2', 'hero_background_3', 'sekolah_logo', 'sambutan_foto'];
 
     public function index()
     {
-        $settings = Setting::orderBy('group')->orderBy('key')->get()->groupBy('group');
+        $settings = Setting::orderBy('group')->orderBy('key')
+            ->where('group', '!=', 'ppdb')
+            ->get()->groupBy('group');
         return view('admin.settings.index', compact('settings'));
     }
 
@@ -29,10 +31,12 @@ class SettingController extends Controller
             }
         }
 
-        // Handle text fields (skip file keys)
+        // Handle text fields (skip file keys and ppdb keys)
         $data = $request->except(array_merge(['_token', '_method'], $this->fileKeys));
         foreach ($data as $key => $value) {
-            Setting::set($key, $value ?? '');
+            if (!str_starts_with($key, 'ppdb_')) {
+                Setting::set($key, $value ?? '');
+            }
         }
 
         return back()->with('success', 'Pengaturan berhasil disimpan.');

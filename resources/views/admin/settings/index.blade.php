@@ -41,7 +41,7 @@
                         @foreach ($items as $setting)
                             <div class="col-12 {{ !in_array($setting->key, ['tentang_visi', 'tentang_misi', 'sekolah_alamat', 'tentang_deskripsi']) ? 'col-md-6' : '' }}">
                                 <label class="form-label" for="{{ $setting->key }}">{{ $setting->label }}</label>
-                                @if (in_array($setting->key, ['hero_background', 'sekolah_logo', 'sambutan_foto']))
+                                @if (in_array($setting->key, ['hero_background', 'hero_background_2', 'hero_background_3', 'sekolah_logo', 'sambutan_foto']))
                                     @if ($setting->value)
                                         <div class="mb-2">
                                             <img src="{{ asset($setting->value) }}" alt="Gambar saat ini"
