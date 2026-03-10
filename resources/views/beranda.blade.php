@@ -337,14 +337,26 @@
                 </div>
             @else
             @php
-                $gsItems  = $guruStaffs->values();
-                $gsTotal  = $gsItems->count();
-                $gsMax    = max(0, $gsTotal - 3);
-                // Track width in % relative to container: N cards, 3 visible = N/3 * 100%
-                $gsTrackW = round($gsTotal / 3 * 100, 4);
-                // Each card width as % of track
-                $gsCardW  = round(100 / $gsTotal, 4);
+                $gsItems      = $guruStaffs->values();
+                $gsTotal      = $gsItems->count();
+                $gsMax        = max(0, $gsTotal - 3);
+                // Desktop: 3 visible. Track width = N/3 * 100%
+                $gsTrackW     = round($gsTotal / 3 * 100, 4);
+                // Tablet: 2 visible. Track width = N/2 * 100%
+                $gsTrackWTab  = round($gsTotal / 2 * 100, 4);
+                // Mobile: 1 visible. Track width = N * 100%
+                $gsTrackWMob  = $gsTotal * 100;
+                // Each card width as % of track (same for all breakpoints)
+                $gsCardW      = round(100 / $gsTotal, 4);
             @endphp
+            <style>
+                @media (max-width: 639px) {
+                    #gs-track { width: {{ $gsTrackWMob }}% !important; }
+                }
+                @media (min-width: 640px) and (max-width: 1023px) {
+                    #gs-track { width: {{ $gsTrackWTab }}% !important; }
+                }
+            </style>
 
             <div class="relative px-6">
                 {{-- Overflow container --}}
@@ -375,7 +387,7 @@
                     </div>
                 </div>
 
-                @if ($gsTotal > 3)
+                @if ($gsTotal > 1)
                 <button onclick="gsPrev()"
                     class="absolute left-0 top-32 z-10 w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center text-blue-600 hover:bg-blue-50 transition">
                     <i class="bi bi-chevron-left text-lg"></i>
@@ -396,19 +408,23 @@
         </div>
     </section>
 
-    @if (isset($gsTotal) && $gsTotal > 3)
+    @if (isset($gsTotal) && $gsTotal > 1)
     <script>
         var gsCurrent = 0;
         var gsTotal   = {{ $gsTotal }};
-        var gsMax     = {{ $gsMax }};
         var gsTimer   = setInterval(function(){ gsGoTo(gsCurrent + 1); }, 4000);
 
+        function gsVisible() {
+            if (window.innerWidth >= 1024) return 3;
+            if (window.innerWidth >= 640)  return 2;
+            return 1;
+        }
+
         function gsGoTo(n) {
-            // Clamp with loop
-            if (n > gsMax) n = 0;
-            if (n < 0)     n = gsMax;
+            var max = Math.max(0, gsTotal - gsVisible());
+            if (n > max) n = 0;
+            if (n < 0)   n = max;
             gsCurrent = n;
-            // translateX as % of track width: move by (current / total * 100%)
             var pct = gsCurrent * 100 / gsTotal;
             document.getElementById('gs-track').style.transform = 'translateX(-' + pct + '%)';
         }
@@ -423,6 +439,9 @@
             gsGoTo(gsCurrent + 1);
             gsTimer = setInterval(function(){ gsGoTo(gsCurrent + 1); }, 4000);
         }
+
+        // Re-snap to current index when resizing to avoid partial card display
+        window.addEventListener('resize', function() { gsGoTo(gsCurrent); });
     </script>
     @endif
 
