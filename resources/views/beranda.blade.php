@@ -115,26 +115,11 @@
     <section id="tentang-sekolah" class="py-8 bg-white">
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
             <div class="space-y-12">
-                <!-- Image First -->
-                <div>
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-3xl transform -rotate-6 opacity-10"></div>
-                        <div class="relative bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl overflow-hidden shadow-2xl p-8">
-                            <div class="flex items-center justify-center h-96">
-                                <div class="text-center text-white">
-                                    <i class="bi bi-graduation-cap text-7xl opacity-30 block mb-4"></i>
-                                    <p class="text-lg font-semibold">Berkarakter, Berprestasi,</p>
-                                    <p class="text-lg font-semibold">Berakhlak Mulia</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Visi and Misi Below -->
                 <div>
-            
-                    <h2 class="text-4xl font-bold text-gray-900 mb-6">Tentang SD Negeri 3 Krasak Bangsri</h2>
+                    <div class="text-center mb-12 mt-7">
+                        <h2 class="section-title">Tentang SD Negeri 3 Krasak Bangsri</h2>
+                    </div>
                     
                     <div class="space-y-4 text-gray-600">
                         <!-- Visi Card -->

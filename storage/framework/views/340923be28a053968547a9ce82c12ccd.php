@@ -407,26 +407,25 @@
                     </div>
                 </div>
 
-                <!-- Menu Utama -->
+                <!-- Menu Utama Kolom 1 -->
                 <div>
                     <h4 class="text-white font-bold mb-4 text-sm">Menu Utama</h4>
                     <ul class="space-y-2 text-xs">
                         <li><a href="/" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Beranda</a></li>
                         <li><a href="/tentang" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Tentang</a></li>
-                        <li><a href="/berita" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Berita</a></li>
-                        <li><a href="/galeri" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Galeri</a></li>
-                        <li><a href="/kontak" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Kontak</a></li>
+                        <li><a href="/program" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Program</a></li>
+                        <li><a href="/guru-staff" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Guru &amp; Staff</a></li>
                     </ul>
                 </div>
 
-                <!-- Lain - Lain -->
+                <!-- Menu Utama Kolom 2 -->
                 <div>
-                    <h4 class="text-white font-bold mb-4 text-sm">Lain - Lain</h4>
+                    <h4 class="text-white font-bold mb-4 text-sm">&nbsp;</h4>
                     <ul class="space-y-2 text-xs">
-                        <li><a href="/program" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Program Unggulan</a></li>
-                        <li><a href="/guru-staff" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">guru & staff</a></li>
-                        <li><a href="/tentang" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Fasilitas</a></li>
-                        <li><a href="/tentang" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Visi & Misi</a></li>
+                        <li><a href="/berita" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Berita</a></li>
+                        <li><a href="/galeri" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Galeri</a></li>
+                        <li><a href="/ppdb" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">PPDB</a></li>
+                        <li><a href="/kontak" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">Kontak</a></li>
                     </ul>
                 </div>
 
