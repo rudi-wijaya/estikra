@@ -1,8 +1,8 @@
-@extends('layouts.public')
 
-@section('title', 'Program - SD Negeri 3 Krasak Bangsri')
 
-@section('content')
+<?php $__env->startSection('title', 'Program - SD Negeri 3 Krasak Bangsri'); ?>
+
+<?php $__env->startSection('content'); ?>
     <!-- Programs Section -->
     <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
@@ -44,4 +44,6 @@
             </div>
         </div>
     </section>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\estikra\resources\views/program.blade.php ENDPATH**/ ?>

@@ -15,12 +15,12 @@
 
     <style>
         :root {
-            --sidebar-bg: #5a74e8;
-            --sidebar-hover: #6b83ec;
-            --sidebar-active: #8fa0f2;
-            --primary-color: #5a74e8;
-            --primary-hover: #4a63d8;
-            --primary-shadow: rgba(90, 116, 232, 0.3);
+            --sidebar-bg: #007AFF;
+            --sidebar-hover: #3396ff;
+            --sidebar-active: #66b1ff;
+            --primary-color: #007AFF;
+            --primary-hover: #0066d6;
+            --primary-shadow: rgba(0, 122, 255, 0.3);
         }
 
         * {
@@ -31,7 +31,7 @@
 
         body {
             font-family: 'Poppins', 'Segoe UI', sans-serif;
-            background-color: #f2f3fb;
+            background-color: #f0f6ff;
         }
 
         .admin-wrapper {
@@ -42,15 +42,15 @@
         /* Sidebar */
         .sidebar {
             width: 280px;
-            background: linear-gradient(180deg, #4a63d8 0%, #5a74e8 50%, #6b83ec 100%);
-            color: #e8ecfd;
+            background: linear-gradient(180deg, #0066d6 0%, #007AFF 50%, #3396ff 100%);
+            color: #e5f2ff;
             position: fixed;
             left: 0;
             top: 0;
             height: 100vh;
             overflow-y: auto;
             padding-top: 20px;
-            box-shadow: 4px 0 20px rgba(90, 116, 232, 0.3);
+            box-shadow: 4px 0 20px rgba(0, 122, 255, 0.3);
         }
 
         .sidebar-header {
@@ -135,12 +135,12 @@
         /* Top Navigation */
         .top-navbar {
             background-color: #fff;
-            border-bottom: 1px solid #c7d2fa;
+            border-bottom: 1px solid #cce5ff;
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(90, 116, 232, 0.08);
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.08);
         }
 
         .navbar-left {
@@ -152,7 +152,7 @@
         .navbar-brand {
             font-size: 18px;
             font-weight: 600;
-            color: #5a74e8;
+            color: #007AFF;
         }
 
         .navbar-right {
@@ -163,7 +163,7 @@
 
         .navbar-item {
             cursor: pointer;
-            color: #5a74e8;
+            color: #007AFF;
             font-size: 18px;
             transition: color 0.3s ease;
         }
@@ -178,20 +178,20 @@
             gap: 10px;
             padding: 7px 14px;
             border-radius: 20px;
-            background-color: #eef0fd;
+            background-color: #e5f2ff;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .user-profile:hover {
-            background-color: #dde1fb;
+            background-color: #cce5ff;
         }
 
         .user-avatar {
             width: 35px;
             height: 35px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #5a74e8 0%, #6b83ec 100%);
+            background: linear-gradient(135deg, #007AFF 0%, #3396ff 100%);
             color: white;
             display: flex;
             align-items: center;
@@ -203,7 +203,7 @@
         .user-name {
             font-size: 14px;
             font-weight: 500;
-            color: #5a74e8;
+            color: #007AFF;
         }
 
         /* Page Content */
@@ -220,7 +220,7 @@
         .page-title {
             font-size: 26px;
             font-weight: 700;
-            color: #5a74e8;
+            color: #007AFF;
             margin-bottom: 5px;
         }
 
@@ -232,32 +232,32 @@
         /* Cards */
         .card {
             border: none;
-            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.07);
+            box-shadow: 0 2px 12px rgba(0, 122, 255, 0.07);
             border-radius: 12px;
             transition: all 0.3s ease;
             margin-bottom: 25px;
         }
 
         .card:hover {
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.13);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.13);
         }
 
         .card-header {
-            background-color: #f0f2fd;
-            border-bottom: 1px solid #c7d2fa;
+            background-color: #e5f2ff;
+            border-bottom: 1px solid #cce5ff;
             border-radius: 12px 12px 0 0 !important;
             font-weight: 600;
-            color: #5a74e8;
+            color: #007AFF;
         }
 
         /* Dashboard Stats */
         .stat-card {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #007AFF 0%, #0066d6 100%);
             color: white;
             padding: 25px;
             border-radius: 12px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
         }
 
         .stat-card.primary {
@@ -306,12 +306,12 @@
         }
 
         .table thead {
-            background-color: #f0f2fd;
+            background-color: #e5f2ff;
         }
 
         .table thead th {
             font-weight: 600;
-            color: #5a74e8;
+            color: #007AFF;
             border: none;
             padding: 15px;
         }
@@ -323,7 +323,7 @@
         }
 
         .table tbody tr:hover {
-            background-color: #f0f2fd;
+            background-color: #e5f2ff;
         }
 
         /* Buttons */
@@ -369,12 +369,12 @@
 
         .form-control:focus, .form-select:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(90, 116, 232, 0.2);
+            box-shadow: 0 0 0 0.2rem rgba(0, 122, 255, 0.2);
         }
 
         .form-label {
             font-weight: 600;
-            color: #5a74e8;
+            color: #007AFF;
             margin-bottom: 8px;
         }
 
@@ -486,9 +486,9 @@
         }
 
         .alert-info {
-            border-left-color: #5a74e8;
-            background-color: #f0f2fd;
-            color: #3a52c4;
+            border-left-color: #007AFF;
+            background-color: #e5f2ff;
+            color: #0052ad;
         }
     </style>
 </head>
@@ -567,7 +567,7 @@
             <!-- Top Navigation -->
             <nav class="top-navbar">
                 <div class="navbar-left">
-                    <button class="btn btn-link" id="sidebarToggle" style="color: #5a74e8; padding: 4px 8px;">
+                    <button class="btn btn-link" id="sidebarToggle" style="color: #007AFF; padding: 4px 8px;">
                         <i class="bi bi-list"></i>
                     </button>
                     <div class="navbar-brand">

@@ -15,10 +15,10 @@
         }
 
         :root {
-            --primary-blue: #1e40af;
-            --secondary-blue: #3b82f6;
-            --light-blue: #dbeafe;
-            --dark-blue: #1e3a8a;
+            --primary-blue: #007AFF;
+            --secondary-blue: #3396ff;
+            --light-blue: #e5f2ff;
+            --dark-blue: #0052ad;
             --text-dark: #1f2937;
             --text-light: #6b7280;
             --white: #ffffff;

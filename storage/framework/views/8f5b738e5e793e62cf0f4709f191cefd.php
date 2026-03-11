@@ -26,7 +26,7 @@
         <!-- Decorative Elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-            <div class="absolute bottom-10 left-10 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            <div class="absolute bottom-10 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
         </div>
 
         <!-- Main Content -->
@@ -69,23 +69,23 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 
                     <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.4s;">
-                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #c5deff">150<span>+</span></span>
-                        <p class="text-blue-100 text-sm mt-2 font-medium drop-shadow">Siswa Aktif</p>
+                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #ffffff">150<span>+</span></span>
+                        <p class="text-white text-sm mt-2 font-medium drop-shadow">Siswa Aktif</p>
                     </div>
 
                     <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.5s;">
-                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #c5deff">10<span>+</span></span>
-                        <p class="text-blue-100 text-sm mt-2 font-medium drop-shadow">Guru &amp; Staff</p>
+                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow " style="color: #ffffff">10<span>+</span></span>
+                        <p class="text-white text-sm mt-2 font-medium drop-shadow">Guru &amp; Staff</p>
                     </div>
 
                     <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.6s;">
-                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #c5deff">6</span>
-                        <p class="text-blue-100 text-sm mt-2 font-medium drop-shadow">Kelas</p>
+                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #ffffff">6</span>
+                        <p class="text-white text-sm mt-2 font-medium drop-shadow">Kelas</p>
                     </div>
 
                     <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.7s;">
-                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #c5deff">50<span>+</span></span>
-                        <p class="text-blue-100 text-sm mt-2 font-medium drop-shadow">Prestasi</p>
+                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #ffffff">50<span>+</span></span>
+                        <p class="text-white text-sm mt-2 font-medium drop-shadow">Prestasi</p>
                     </div>
 
                 </div>
@@ -175,11 +175,11 @@
                         </div>
 
                         <!-- Misi Card -->
-                        <div class="bg-white rounded-2xl border border-indigo-100 shadow-sm overflow-hidden">
+                        <div class="bg-white rounded-2xl border border-blue-100 shadow-sm overflow-hidden">
                             <!-- Header + Toggle -->
-                            <button onclick="toggleCollapse('misiExtra','misiIcon')" class="w-full flex items-center justify-between p-6 text-left hover:bg-indigo-50 transition-colors duration-200">
+                            <button onclick="toggleCollapse('misiExtra','misiIcon')" class="w-full flex items-center justify-between p-6 text-left hover:bg-blue-50 transition-colors duration-200">
                                 <h4 class="text-lg font-bold text-gray-900">Misi Kami</h4>
-                                <span id="misiIcon" class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 flex-shrink-0 transition-transform duration-300">
+                                <span id="misiIcon" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 transition-transform duration-300">
                                     <i class="bi bi-chevron-down text-sm"></i>
                                 </span>
                             </button>
@@ -188,15 +188,15 @@
                             <div class="px-6 pb-6 space-y-2.5">
                                 <!-- Items 1-3: selalu tampil -->
                                 <div class="flex items-start gap-3">
-                                    <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
+                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
                                     <span class="text-gray-700 text-sm">Menumbuh kembangkan pengamalan ajaran agama sesuai dengan agama dan kepercayaan masing-masing.</span>
                                 </div>
                                 <div class="flex items-start gap-3">
-                                    <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
+                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
                                     <span class="text-gray-700 text-sm">Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing.</span>
                                 </div>
                                 <div class="flex items-start gap-3">
-                                    <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
+                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
                                     <span class="text-gray-700 text-sm">Melaksanakan pembelajaran yang aktif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri.</span>
                                 </div>
 
@@ -204,7 +204,7 @@
                                 <div id="misiExtra" class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
                                     <div class="space-y-2.5 pt-2.5">
                                         <div class="flex items-start gap-3">
-                                            <span class="w-2 h-2 bg-indigo-400 rounded-full mt-1.5 shrink-0"></span>
+                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
                                             <span class="text-gray-700 text-sm">Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaan dalam bertindak.</span>
                                         </div>
                                     </div>
@@ -225,49 +225,42 @@
     <section class="py-8 bg-white">
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
             <div class="text-center mb-8">
-            
                 <h2 class="section-title">Sambutan dari Pimpinan Sekolah</h2>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Photo -->
-                <div class="flex justify-center lg:justify-start">
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-3xl transform rotate-6 opacity-10"></div>
-                        <?php $sambutanFoto = \App\Models\Setting::get('sambutan_foto'); ?>
-                        <?php if($sambutanFoto): ?>
-                            <img src="<?php echo e(asset($sambutanFoto)); ?>" alt="Kepala Sekolah" class="relative rounded-3xl w-80 h-80 object-cover shadow-2xl">
-                        <?php else: ?>
-                            <div class="relative bg-gradient-to-br from-green-500 to-blue-600 rounded-3xl w-80 h-80 flex items-center justify-center shadow-2xl">
-                                <span class="text-9xl">👨‍💼</span>
-                            </div>
-                        <?php endif; ?>
+            <div class="max-w-4xl mx-auto">
+                <!-- Photo float left, text wraps around and below -->
+                <div class="float-left mr-8 mb-4 flex flex-col items-center">
+                    <?php $sambutanFoto = \App\Models\Setting::get('sambutan_foto'); ?>
+                    <?php if($sambutanFoto): ?>
+                        <img src="<?php echo e(asset($sambutanFoto)); ?>" alt="Kepala Sekolah" class="rounded-full w-64 h-64 object-cover shadow-xl border-4 border-blue-50">
+                    <?php else: ?>
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-full w-64 h-64 flex items-center justify-center shadow-xl border-4 border-blue-50">
+                            <span class="text-6xl"></span>
+                        </div>
+                    <?php endif; ?>
+                    <div class="mt-3 text-center">
+                        <p class="text-sm font-bold text-gray-900">Ibu Sutanti, S.Pd</p>
+                        <p class="text-xs text-blue-600 font-medium">Kepala Sekolah</p>
+                        <p class="text-xs text-gray-500">SD Negeri 3 Krasak Bangsri</p>
                     </div>
                 </div>
 
-                <!-- Right Text -->
-                <div>
-                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Assalamu'alaikum Warahmatullahi Wabarakatuh</h3>
-                    <div class="mb-6">
-                        <p class="text-lg font-semibold text-blue-600">Ibu Sutanti, S.Pd</p>
-                        <p class="text-gray-500">Kepala Sekolah</p>
-                    </div>
+                <!-- Text flows beside and below photo -->
+                <div class="text-gray-600 leading-relaxed text-[15px] space-y-4">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Assalamu'alaikum Warahmatullahi Wabarakatuh</h3>
 
-                    <div class="space-y-4 text-gray-600 leading-relaxed">
-                        <p>Dengan penuh kerendahan hati, kami menyambut kehadiran Anda di SD Negeri 3 Krasak. Sekolah kami berkomitmen untuk menjadi institusi pendidikan yang tidak hanya mengembangkan potensi akademik siswa, tetapi juga membentuk karakter yang kuat dan berakhlak mulia sesuai dengan nilai-nilai Pancasila dan ajaran agama.</p>
-                        
-                        <p>Kami percaya bahwa pendidikan yang berkualitas adalah hasil dari kerjasama sinergis antara guru, siswa, orang tua, dan masyarakat. Oleh karena itu, kami mengundang seluruh pihak untuk bersama-sama mendukung proses pembelajaran yang menyenangkan, bermakna, dan mempersiapkan siswa menjadi generasi penerus bangsa yang kompeten dan berintegritas.</p>
-                        
-                        <p>Terima kasih atas kepercayaan dan dukungan Anda. Semoga SD Negeri 3 Krasak terus berkembang dan menjadi sekolah pilihan yang menghasilkan lulusan berkarakter, berprestasi, dan berakhlak mulia.</p>
-                    </div>
+                    <p>Dengan penuh rasa syukur, kami menyambut kehadiran Anda di website SD Negeri 3 Krasak Bangsri. Website ini kami hadirkan sebagai media informasi dan komunikasi antara sekolah dengan siswa, orang tua, serta masyarakat.</p>
 
-                    <div class="mt-8 pt-6 border-t-2 border-gray-200">
-                        <p class="font-bold text-gray-900">Ibu Sutanti, S.Pd</p>
-                        <p class="text-sm text-gray-600">Kepala Sekolah SD Negeri 3 Krasak Bangsri</p>
-                    </div>
+                    <p>SD Negeri 3 Krasak Bangsri berkomitmen memberikan pendidikan yang berkualitas. Kami tidak hanya mengembangkan kemampuan akademik siswa, tetapi juga membentuk karakter, kedisiplinan, dan akhlak yang baik sesuai dengan nilai Pancasila dan ajaran agama.</p>
 
-                    
+                    <p>Kami percaya pendidikan yang baik lahir dari kerja sama antara sekolah, orang tua, dan masyarakat. Dukungan tersebut membantu menciptakan lingkungan belajar yang nyaman, aktif, dan mendorong siswa untuk berkembang sesuai potensi mereka.</p>
+
+                    <p>Melalui website ini kami berharap masyarakat dapat mengenal lebih dekat kegiatan, program, serta prestasi yang ada di SD Negeri 3 Krasak Bangsri.</p>
+
+                    <p>Terima kasih atas kepercayaan dan dukungan yang telah diberikan. Semoga SD Negeri 3 Krasak Bangsri terus berkembang dan mampu mencetak generasi yang berprestasi, berkarakter, dan berakhlak mulia.</p>
                 </div>
+                <div class="clear-both"></div>
             </div>
         </div>
     </section>
@@ -354,16 +347,18 @@
                         <?php $__currentLoopData = $gsItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div style="width:<?php echo e($gsCardW); ?>%; flex-shrink:0; padding:0 12px;">
                             <div class="card-hover bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200" style="display:flex; flex-direction:column; height:100%;">
+                                <div style="padding:20px 20px 0; display:flex; justify-content:center; flex-shrink:0;">
                                 <?php if($gs->foto): ?>
-                                    <img src="<?php echo e(asset('storage/' . $gs->foto)); ?>" alt="<?php echo e($gs->nama); ?>" class="w-full h-64 object-cover" style="flex-shrink:0;">
+                                    <img src="<?php echo e(asset('storage/' . $gs->foto)); ?>" alt="<?php echo e($gs->nama); ?>" class="w-32 h-32 rounded-full object-cover border-4 border-blue-50 shadow-md">
                                 <?php else: ?>
-                                    <div class="w-full h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center" style="flex-shrink:0;">
-                                        <i class="bi bi-person-fill text-white text-6xl opacity-40"></i>
+                                    <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center border-4 border-blue-50 shadow-md">
+                                        <i class="bi bi-person-fill text-white text-4xl opacity-60"></i>
                                     </div>
                                 <?php endif; ?>
+                                </div>
                                 <div style="padding:16px 20px 20px; flex:1; display:flex; flex-direction:column; justify-content:flex-start;">
                                     <h3 style="font-size:15px; font-weight:700; color:#1f2937; line-height:1.45; word-break:break-word; overflow-wrap:break-word; min-height:2.9em; margin:0 0 5px 0; display:flex; align-items:flex-start;"><?php echo e($gs->nama); ?></h3>
-                                    <p style="font-size:13px; color:#5a74e8; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0 0 10px 0;"><?php echo e($gs->jabatan); ?></p>
+                                    <p style="font-size:13px; color:#007AFF; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0 0 10px 0;"><?php echo e($gs->jabatan); ?></p>
                                     <?php if($gs->deskripsi): ?>
                                         <p class="text-gray-600 text-sm"><?php echo e($gs->deskripsi); ?></p>
                                     <?php endif; ?>
@@ -537,7 +532,7 @@
     </section>
 
     <!-- Kontak Section -->
-    <section class="py-8 bg-gradient-to-r from-blue-600 to-indigo-600">
+    <section class="py-8 bg-gradient-to-r from-blue-600 to-blue-700">
         <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
             <!-- Section Header -->
             <div class="mb-8 animate-fadeInUp">

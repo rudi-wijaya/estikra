@@ -29,12 +29,12 @@
                 </div>
 
                 <!-- Misi Card -->
-                <div class="bg-white rounded-2xl p-8 border border-indigo-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div class="bg-white rounded-2xl p-8 border border-blue-100 shadow-sm hover:shadow-md transition-shadow duration-300">
                     <h3 class="text-2xl font-bold text-gray-900 mb-6">Misi Kami</h3>
                     <ul class="space-y-3">
                         @foreach (array_filter(explode("\n", \App\Models\Setting::get('tentang_misi', ''))) as $poin)
                             <li class="flex items-start gap-3 text-gray-600">
-                                <span class="w-2 h-2 bg-indigo-400 rounded-full mt-2 shrink-0"></span>
+                                <span class="w-2 h-2 bg-blue-400 rounded-full mt-2 shrink-0"></span>
                                 <span>{{ trim($poin) }}</span>
                             </li>
                         @endforeach

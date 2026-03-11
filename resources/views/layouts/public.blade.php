@@ -72,7 +72,7 @@
             left: 0;
             width: 0;
             height: 3px;
-            background: #5a74e8;
+            background: #007AFF;
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -137,15 +137,15 @@
         }
 
         .mobile-nav-link:hover {
-            background: #5a74e8;
+            background: #007AFF;
             color: #ffffff;
-            box-shadow: 0 4px 14px rgba(90,116,232,0.25);
+            box-shadow: 0 4px 14px rgba(0,122,255,0.25);
         }
 
         .mobile-nav-link.active {
-            background: #5a74e8;
+            background: #007AFF;
             color: #ffffff;
-            box-shadow: 0 4px 14px rgba(90,116,232,0.25);
+            box-shadow: 0 4px 14px rgba(0,122,255,0.25);
         }
 
         /* Mobile nav — beranda hero (transparan, belum scroll) */
@@ -157,13 +157,13 @@
         }
 
         #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link:hover {
-            background: #5a74e8;
+            background: #007AFF;
             color: #ffffff;
             text-shadow: none;
         }
 
         #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link.active {
-            background: #5a74e8;
+            background: #007AFF;
             color: #ffffff;
             text-shadow: none;
         }
@@ -180,7 +180,7 @@
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #007AFF 0%, #3396ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -280,7 +280,7 @@
     <div id="navbar-header" class="fixed top-0 left-0 right-0 w-full z-50 backdrop-blur-sm" @if(request()->is('/')) data-transparent="true" @endif>
 
         <!-- Top Header -->
-        <div class="top-bar text-white py-2.5 text-xs" style="background-color: #5a74e8;">
+        <div class="top-bar text-white py-2.5 text-xs" style="background-color: #007AFF;">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center">
                     <!-- Email & Phone: hanya desktop -->
@@ -314,7 +314,7 @@
                     @if($logoUrl)
                         <img src="{{ asset($logoUrl) }}" alt="Logo Sekolah" class="w-14 h-14 object-contain">
                     @else
-                        <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg" style="background-color: #5a74e8;">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg" style="background-color: #007AFF;">
                             <span class="text-white font-bold text-lg">SD</span>
                         </div>
                     @endif
