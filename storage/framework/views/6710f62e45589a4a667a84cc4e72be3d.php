@@ -4,7 +4,7 @@
 
 <?php $__env->startSection('content'); ?>
     <!-- Hero PPDB -->
-    <section class="py-16 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
+    <section class="py-16 bg-gradient-to-br from-blue-600 to-blue-700 text-white">
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 text-center">
             <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
                 <i class="bi bi-calendar-check-fill"></i>
@@ -30,12 +30,12 @@
                     <p class="text-gray-500 text-xs mt-1"><?php echo e(\App\Models\Setting::get('ppdb_jam', 'Senin – Sabtu, 08.00 – 13.00 WIB')); ?></p>
                 </div>
                 <!-- Lokasi -->
-                <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center">
-                    <div class="w-14 h-14 bg-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-center">
+                    <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                         <i class="bi bi-geo-alt-fill text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-gray-900 text-lg mb-2">Lokasi Pendaftaran</h3>
-                    <p class="text-indigo-700 font-semibold text-sm"><?php echo e(\App\Models\Setting::get('ppdb_lokasi', 'Ruang Tata Usaha')); ?></p>
+                    <p class="text-blue-700 font-semibold text-sm"><?php echo e(\App\Models\Setting::get('ppdb_lokasi', 'Ruang Tata Usaha')); ?></p>
                     <p class="text-gray-500 text-xs mt-1"><?php echo e(\App\Models\Setting::get('ppdb_lokasi_detail', 'SD Negeri 3 Krasak, Jl. Raya Krasak No. 45')); ?></p>
                 </div>
                 <!-- Kuota -->
@@ -101,15 +101,15 @@
                 <?php if($alur->count()): ?>
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center text-sm font-bold">2</span>
+                        <span class="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold">2</span>
                         Alur Pendaftaran
                     </h2>
                     <div class="relative">
-                        <div class="absolute left-5 top-6 bottom-6 w-0.5 bg-indigo-100"></div>
+                        <div class="absolute left-5 top-6 bottom-6 w-0.5 bg-blue-100"></div>
                         <div class="space-y-5">
                             <?php $__currentLoopData = $alur; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $step): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="flex gap-4 relative">
-                                <div class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow"><?php echo e($i + 1); ?></div>
+                                <div class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow"><?php echo e($i + 1); ?></div>
                                 <div class="pt-1.5">
                                     <p class="font-semibold text-gray-900 text-sm"><?php echo e($step->judul); ?></p>
                                     <?php if($step->deskripsi): ?>

@@ -15,32 +15,37 @@
 
             <!-- Programs Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Program 1 -->
-                <div class="card-hover group bg-white rounded-2xl p-8 border-2 border-gray-100 hover:border-blue-300 transition-all duration-300">
-                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i class="bi bi-book text-blue-600 text-3xl"></i>
+                @forelse($programs as $program)
+                <!-- Program Card -->
+                <div class="card-hover group bg-white rounded-2xl overflow-hidden border-2 border-gray-100 hover:border-blue-300 transition-all duration-300 shadow-md hover:shadow-lg">
+                    <!-- Program Image -->
+                    <div class="w-full h-48 bg-blue-100 flex items-center justify-center overflow-hidden">
+                        @if($program->foto)
+                            <img src="{{ asset('storage/' . $program->foto) }}" alt="{{ $program->judul }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        @else
+                            @php
+                                $icons = [
+                                    'Literasi' => 'bi-book',
+                                    'Sholat Dhuha' => 'bi-moon-stars',
+                                    'Pentaque' => 'bi-bullseye',
+                                ];
+                                $icon = $icons[$program->judul] ?? 'bi-star';
+                            @endphp
+                            <i class="bi {{ $icon }} text-blue-600 text-6xl opacity-50"></i>
+                        @endif
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Literasi</h3>
-                    <p class="text-gray-600 leading-relaxed">Program pembiasaan membaca dan menulis setiap hari untuk meningkatkan kemampuan literasi siswa sejak dini secara menyenangkan.</p>
-                </div>
 
-                <!-- Program 2 -->
-                <div class="card-hover group bg-white rounded-2xl p-8 border-2 border-gray-100 hover:border-blue-300 transition-all duration-300">
-                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i class="bi bi-moon-stars text-blue-600 text-3xl"></i>
+                    <!-- Program Info -->
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ $program->judul }}</h3>
+                        <p class="text-gray-600 leading-relaxed">{{ $program->deskripsi }}</p>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Sholat Dhuha</h3>
-                    <p class="text-gray-600 leading-relaxed">Pembiasaan sholat dhuha berjamaah setiap pagi sebagai bentuk penguatan karakter spiritual dan kedisiplinan siswa dalam kehidupan sehari-hari.</p>
                 </div>
-
-                <!-- Program 3 -->
-                <div class="card-hover group bg-white rounded-2xl p-8 border-2 border-gray-100 hover:border-blue-300 transition-all duration-300">
-                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i class="bi bi-bullseye text-blue-600 text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Pentaque</h3>
-                    <p class="text-gray-600 leading-relaxed">Olahraga pentaque sebagai program unggulan untuk melatih konsentrasi, strategi, dan sportivitas siswa dalam kompetisi tingkat daerah maupun nasional.</p>
+                @empty
+                <div class="col-span-full text-center py-12 text-gray-400">
+                    <p class="text-lg">Belum ada program unggulan yang ditambahkan.</p>
                 </div>
+                @endforelse
             </div>
         </div>
     </section>

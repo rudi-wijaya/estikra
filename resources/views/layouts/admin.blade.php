@@ -549,6 +549,12 @@
                         <span>PPDB</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.programs.index') }}" class="{{ request()->routeIs('admin.programs.*') ? 'active' : '' }}">
+                        <i class="bi bi-star-fill"></i>
+                        <span>Program Unggulan</span>
+                    </a>
+                </li>
                 <div class="sidebar-divider"></div>
                 <li>
                     <form method="POST" action="{{ route('logout') }}">

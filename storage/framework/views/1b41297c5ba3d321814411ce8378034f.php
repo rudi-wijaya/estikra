@@ -76,10 +76,11 @@
         /* Staff cards */
         .staff-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
             gap: 24px;
             margin: 40px 0;
             align-items: stretch;
+            justify-content: center;
         }
 
         .staff-card {
@@ -272,7 +273,7 @@
 
                             </h3>
                         </div>
-                        <div class="staff-grid mb-10 <?php echo e($kat === 'kepala_sekolah' ? 'max-w-xs mx-auto' : ''); ?>">
+                        <div class="staff-grid mb-10">
                             <?php $__currentLoopData = $list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="staff-card">
                                     <?php if($gs->foto): ?>

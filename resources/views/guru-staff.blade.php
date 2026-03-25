@@ -76,10 +76,11 @@
         /* Staff cards */
         .staff-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
             gap: 24px;
             margin: 40px 0;
             align-items: stretch;
+            justify-content: center;
         }
 
         .staff-card {
@@ -271,7 +272,7 @@
                                 {{ $kategoriLabels[$kat] }}
                             </h3>
                         </div>
-                        <div class="staff-grid mb-10 {{ $kat === 'kepala_sekolah' ? 'max-w-xs mx-auto' : '' }}">
+                        <div class="staff-grid mb-10">
                             @foreach ($list as $gs)
                                 <div class="staff-card">
                                     @if ($gs->foto)

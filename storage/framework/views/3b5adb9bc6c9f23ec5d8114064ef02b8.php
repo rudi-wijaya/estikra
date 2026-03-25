@@ -549,6 +549,12 @@
                         <span>PPDB</span>
                     </a>
                 </li>
+                <li>
+                    <a href="<?php echo e(route('admin.programs.index')); ?>" class="<?php echo e(request()->routeIs('admin.programs.*') ? 'active' : ''); ?>">
+                        <i class="bi bi-star-fill"></i>
+                        <span>Program Unggulan</span>
+                    </a>
+                </li>
                 <div class="sidebar-divider"></div>
                 <li>
                     <form method="POST" action="<?php echo e(route('logout')); ?>">

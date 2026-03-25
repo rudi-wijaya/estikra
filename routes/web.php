@@ -20,7 +20,8 @@ Route::get('/tentang', function () {
 });
 
 Route::get('/program', function () {
-    return view('program');
+    $programs = \App\Models\Program::all();
+    return view('program', compact('programs'));
 });
 
 Route::get('/guru-staff', function () {
@@ -32,6 +33,16 @@ Route::get('/berita', function () {
     $beritas = \App\Models\Berita::where('status', 'published')->orderBy('tanggal_terbit', 'desc')->paginate(9);
     return view('berita', compact('beritas'));
 });
+
+Route::get('/berita/{berita:slug}', function (\App\Models\Berita $berita) {
+    abort_if($berita->status !== 'published', 404);
+    $lainnya = \App\Models\Berita::where('status', 'published')
+        ->where('id', '!=', $berita->id)
+        ->orderBy('tanggal_terbit', 'desc')
+        ->limit(3)
+        ->get();
+    return view('berita-detail', compact('berita', 'lainnya'));
+})->name('berita.show');
 
 Route::get('/galeri', function () {
     $galeris = \App\Models\Galeri::where('status', 'aktif')->orderBy('tanggal_upload', 'desc')->paginate(12);
@@ -68,6 +79,9 @@ Route::middleware('auth')->group(function () {
 
         // Guru Staffs
         Route::resource('guru-staffs', GuruStaffController::class);
+
+        // Programs
+        Route::resource('programs', \App\Http\Controllers\Admin\ProgramController::class);
 
         // Settings
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
