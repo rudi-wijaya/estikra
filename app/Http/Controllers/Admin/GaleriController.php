@@ -11,7 +11,7 @@ class GaleriController extends Controller
 {
     public function index()
     {
-        $galeris = Galeri::orderBy('tanggal_upload', 'desc')->paginate(12);
+        $galeris = Galeri::orderBy('tanggal_upload', 'desc')->paginate(10);
         return view('admin.galeris.index', compact('galeris'));
     }
 

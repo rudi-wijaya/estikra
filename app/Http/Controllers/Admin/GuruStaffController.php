@@ -10,8 +10,10 @@ class GuruStaffController extends Controller
 {
     public function index()
     {
-        $guruStaffs = GuruStaff::orderBy('urutan')->orderBy('nama')->get()->groupBy('kategori');
-        return view('admin.guru-staffs.index', compact('guruStaffs'));
+        $guruStaffs = GuruStaff::orderBy('urutan')->orderBy('nama')->paginate(10);
+        $groupedGuruStaffs = $guruStaffs->getCollection()->groupBy('kategori');
+
+        return view('admin.guru-staffs.index', compact('guruStaffs', 'groupedGuruStaffs'));
     }
 
     public function create()

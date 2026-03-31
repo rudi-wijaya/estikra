@@ -103,7 +103,7 @@
             <div class="d-flex align-items-center gap-2">
                 <i class="bi bi-file-earmark-check"></i>
                 <strong>Persyaratan Dokumen</strong>
-                <span class="badge bg-secondary">{{ $dokumen->count() }}</span>
+                <span class="badge bg-secondary">{{ $dokumen->total() }}</span>
             </div>
             <a href="{{ route('admin.ppdb.create', ['type' => 'dokumen']) }}" class="btn btn-sm btn-primary">
                 <i class="bi bi-plus-lg me-1"></i> Tambah Dokumen
@@ -159,6 +159,12 @@
                         </tbody>
                     </table>
                 </div>
+
+                @if ($dokumen->hasPages())
+                    <div class="d-flex justify-content-center py-3 border-top">
+                        {{ $dokumen->appends(['alur_page' => $alur->currentPage()])->links() }}
+                    </div>
+                @endif
             @endif
         </div>
     </div>
@@ -171,7 +177,7 @@
             <div class="d-flex align-items-center gap-2">
                 <i class="bi bi-list-ol"></i>
                 <strong>Alur Pendaftaran</strong>
-                <span class="badge bg-secondary">{{ $alur->count() }}</span>
+                <span class="badge bg-secondary">{{ $alur->total() }}</span>
             </div>
             <a href="{{ route('admin.ppdb.create', ['type' => 'alur']) }}" class="btn btn-sm btn-primary">
                 <i class="bi bi-plus-lg me-1"></i> Tambah Langkah
@@ -227,6 +233,12 @@
                         </tbody>
                     </table>
                 </div>
+
+                @if ($alur->hasPages())
+                    <div class="d-flex justify-content-center py-3 border-top">
+                        {{ $alur->appends(['dokumen_page' => $dokumen->currentPage()])->links() }}
+                    </div>
+                @endif
             @endif
         </div>
     </div>

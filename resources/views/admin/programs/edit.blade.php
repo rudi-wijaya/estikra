@@ -1,79 +1,81 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Edit Program Unggulan')
+@section('page_title', 'Edit Program Unggulan')
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Edit Program Unggulan</h1>
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2 class="h4">Edit Program Unggulan</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ route('admin.programs.index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali
+            </a>
+        </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6 max-w-2xl">
-        <form action="{{ route('admin.programs.update', $program) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Validasi Error!</strong>
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
 
-            <div class="mb-6">
-                <label for="judul" class="block text-gray-700 font-semibold mb-2">Judul Program</label>
-                <input 
-                    type="text" 
-                    id="judul" 
-                    name="judul" 
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('judul') border-red-500 @enderror"
-                    value="{{ old('judul', $program->judul) }}"
-                    required
-                >
-                @error('judul')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ route('admin.programs.update', $program) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
-            <div class="mb-6">
-                <label for="deskripsi" class="block text-gray-700 font-semibold mb-2">Deskripsi</label>
-                <textarea 
-                    id="deskripsi" 
-                    name="deskripsi" 
-                    rows="5"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('deskripsi') border-red-500 @enderror"
-                    required
-                >{{ old('deskripsi', $program->deskripsi) }}</textarea>
-                @error('deskripsi')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label for="judul" class="form-label">Judul Program <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control @error('judul') is-invalid @enderror" 
+                           id="judul" name="judul" value="{{ old('judul', $program->judul) }}" required>
+                    @error('judul')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            <div class="mb-6">
-                <label for="foto" class="block text-gray-700 font-semibold mb-2">Foto Program</label>
-                
-                @if($program->foto)
-                    <div class="mb-4">
-                        <img src="{{ asset('storage/' . $program->foto) }}" alt="{{ $program->judul }}" class="w-32 h-32 object-cover rounded-lg">
-                        <p class="text-sm text-gray-600 mt-2">Foto saat ini</p>
-                    </div>
-                @endif
+                <div class="mb-3">
+                    <label for="deskripsi" class="form-label">Deskripsi <span class="text-danger">*</span></label>
+                    <textarea class="form-control @error('deskripsi') is-invalid @enderror" 
+                              id="deskripsi" name="deskripsi" rows="6" required>{{ old('deskripsi', $program->deskripsi) }}</textarea>
+                    @error('deskripsi')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
-                <input 
-                    type="file" 
-                    id="foto" 
-                    name="foto" 
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg @error('foto') border-red-500 @enderror"
-                    accept="image/*"
-                >
-                <p class="text-gray-500 text-sm mt-1">Format: JPEG, PNG, JPG, GIF. Max: 5MB (Kosongkan jika tidak ingin mengubah foto)</p>
-                @error('foto')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <div class="mb-3">
+                    <label for="foto" class="form-label">Foto Program</label>
+                    @if ($program->foto)
+                        <div class="mb-2">
+                            <img src="{{ asset('storage/' . $program->foto) }}" alt="{{ $program->judul }}" class="img-thumbnail" style="max-width: 200px;">
+                        </div>
+                    @endif
+                    <input type="file" class="form-control @error('foto') is-invalid @enderror" 
+                           id="foto" name="foto" accept="image/*">
+                    <small class="form-text text-muted">Format: JPEG, PNG, JPG, GIF. Max: 5MB (Kosongkan jika tidak ingin mengubah foto)</small>
+                    @error('foto')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            <div class="flex gap-4">
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
-                    Update Program
-                </button>
-                <a href="{{ route('admin.programs.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
-                    Batal
-                </a>
-            </div>
-        </form>
+                <div class="d-flex gap-2 justify-content-end">
+                    <a href="{{ route('admin.programs.index') }}" class="btn btn-secondary">
+                        Batal
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg"></i> Update Program
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

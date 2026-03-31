@@ -5,22 +5,27 @@
 <?php $__env->startSection('content'); ?>
     <!-- Hero Section -->
     <?php
-        $heroSlides = collect([
-            \App\Models\Setting::get('hero_background',   'images/homepage.jpg'),
-            \App\Models\Setting::get('hero_background_2'),
-            \App\Models\Setting::get('hero_background_3'),
-        ])->filter()->values();
+        $heroSlidesFromSetting = json_decode(\App\Models\Setting::get('hero_slides', '[]'), true);
+
+        $heroSlides = collect(is_array($heroSlidesFromSetting) ? $heroSlidesFromSetting : [])
+            ->map(fn ($slide) => trim((string) $slide))
+            ->filter()
+            ->values();
+
+        $hasHeroSlides = $heroSlides->isNotEmpty();
     ?>
 
-    <section id="hero-section" class="relative flex flex-col justify-between -mt-32" style="min-height: calc(820px + 8rem);">
+    <section id="hero-section" class="relative flex flex-col justify-between -mt-32 <?php echo e(!$hasHeroSlides ? 'bg-gradient-to-br from-blue-700 to-slate-800' : ''); ?>" style="min-height: calc(820px + 8rem);">
 
         
-        <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
-            <?php $__currentLoopData = $heroSlides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $slide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="hero-slide absolute inset-0 transition-opacity duration-1000 <?php echo e($i === 0 ? 'opacity-100' : 'opacity-0'); ?>"
-                     style="background-image: url('<?php echo e(asset($slide)); ?>'); background-size: cover; background-position: center top;"></div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </div>
+        <?php if($hasHeroSlides): ?>
+            <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+                <?php $__currentLoopData = $heroSlides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $slide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 <?php echo e($i === 0 ? 'opacity-100' : 'opacity-0'); ?>"
+                         style="background-image: url('<?php echo e(asset($slide)); ?>'); background-size: cover; background-position: center top;"></div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+        <?php endif; ?>
 
         <div class="absolute inset-0 bg-black/40"></div>
         <!-- Decorative Elements -->
@@ -65,28 +70,38 @@
 
         <!-- Stats Cards (langsung menempel di bawah hero, tanpa gap) -->
         <div class="relative z-10 py-8">
+            <?php
+                $berandaStats = [
+                    [
+                        'angka' => \App\Models\Setting::get('beranda_stat_1_angka', '150+'),
+                        'label' => \App\Models\Setting::get('beranda_stat_1_label', 'Siswa Aktif'),
+                        'delay' => '0.4s',
+                    ],
+                    [
+                        'angka' => \App\Models\Setting::get('beranda_stat_2_angka', '10+'),
+                        'label' => \App\Models\Setting::get('beranda_stat_2_label', 'Guru & Staff'),
+                        'delay' => '0.5s',
+                    ],
+                    [
+                        'angka' => \App\Models\Setting::get('beranda_stat_3_angka', '6'),
+                        'label' => \App\Models\Setting::get('beranda_stat_3_label', 'Kelas'),
+                        'delay' => '0.6s',
+                    ],
+                    [
+                        'angka' => \App\Models\Setting::get('beranda_stat_4_angka', '50+'),
+                        'label' => \App\Models\Setting::get('beranda_stat_4_label', 'Prestasi'),
+                        'delay' => '0.7s',
+                    ],
+                ];
+            ?>
             <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-
-                    <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.4s;">
-                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #ffffff">150<span>+</span></span>
-                        <p class="text-white text-sm mt-2 font-medium drop-shadow">Siswa Aktif</p>
-                    </div>
-
-                    <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.5s;">
-                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow " style="color: #ffffff">10<span>+</span></span>
-                        <p class="text-white text-sm mt-2 font-medium drop-shadow">Guru &amp; Staff</p>
-                    </div>
-
-                    <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.6s;">
-                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #ffffff">6</span>
-                        <p class="text-white text-sm mt-2 font-medium drop-shadow">Kelas</p>
-                    </div>
-
-                    <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: 0.7s;">
-                        <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #ffffff">50<span>+</span></span>
-                        <p class="text-white text-sm mt-2 font-medium drop-shadow">Prestasi</p>
-                    </div>
+                    <?php $__currentLoopData = $berandaStats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="backdrop-blur-md rounded-2xl p-6 border border-white/30 text-center animate-fadeInUp transition-all duration-300 hover:bg-white/40 hover:scale-105 hover:shadow-lg cursor-default" style="background: rgba(255,255,255,0.20); animation-delay: <?php echo e($stat['delay']); ?>;">
+                            <span class="font-black text-4xl lg:text-5xl leading-none drop-shadow" style="color: #ffffff"><?php echo e($stat['angka']); ?></span>
+                            <p class="text-white text-sm mt-2 font-medium drop-shadow"><?php echo e($stat['label']); ?></p>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                 </div>
             </div>
@@ -122,93 +137,116 @@
                     <div class="text-center mb-12 mt-7">
                         <h2 class="section-title">Tentang SD Negeri 3 Krasak Bangsri</h2>
                     </div>
+
+                    <?php
+                        $defaultVisi = implode("\n", [
+                            'Terwujudnya lulusan yang unggul dalam iman dan taqwa.',
+                            'Terwujudnya lulusan yang kompeten dan berprestasi yang membanggakan.',
+                            'Terwujudnya Kurikulum berwawasan karakter Profil Pelajar Pancasila dan lingkungan.',
+                            'Terwujudnya PBM yang efektif, efisien, dan inovatif.',
+                            'Terwujudnya warga sekolah yang berkarakter jujur, mandiri, gotong royong, percaya diri, bernalar kritis, kreatif, dan menghargai kebhinekaan.',
+                            'Terwujudnya standar pengelolaan dan manajemen sekolah sesuai ketentuan.',
+                            'Terwujudnya budaya sekolah sahabat keluarga dan lingkungan yang nyaman, aman, rindang, asri dan bersih dalam penyelenggaraan pendidikan yang berkualitas.',
+                        ]);
+
+                        $defaultMisi = implode("\n", [
+                            'Menumbuh kembangkan pengamalan ajaran agama sesuai dengan agama dan kepercayaan masing-masing.',
+                            'Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing.',
+                            'Melaksanakan pembelajaran yang aktif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri.',
+                            'Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaan dalam bertindak.',
+                        ]);
+
+                        $visiItems = array_values(array_filter(array_map('trim', explode("\n", \App\Models\Setting::get('tentang_visi', $defaultVisi)))));
+                        $misiItems = array_values(array_filter(array_map('trim', explode("\n", \App\Models\Setting::get('tentang_misi', $defaultMisi)))));
+
+                        $visiPrimary = array_slice($visiItems, 0, 3);
+                        $visiExtra = array_slice($visiItems, 3);
+                        $misiPrimary = array_slice($misiItems, 0, 3);
+                        $misiExtra = array_slice($misiItems, 3);
+                    ?>
                     
                     <div class="space-y-4 text-gray-600">
                         <!-- Visi Card -->
                         <div class="bg-white rounded-2xl border border-blue-100 shadow-sm overflow-hidden">
                             <!-- Header + Toggle -->
-                            <button onclick="toggleCollapse('visiExtra','visiIcon')" class="w-full flex items-center justify-between p-6 text-left hover:bg-blue-50 transition-colors duration-200">
+                            <button
+                                <?php if(count($visiExtra) > 0): ?>
+                                    onclick="toggleCollapse('visiExtra','visiIcon')"
+                                <?php endif; ?>
+                                class="w-full flex items-center justify-between p-6 text-left transition-colors duration-200 <?php echo e(count($visiExtra) > 0 ? 'hover:bg-blue-50 cursor-pointer' : 'cursor-default'); ?>"
+                            >
                                 <h4 class="text-lg font-bold text-gray-900">Visi Kami</h4>
-                                <span id="visiIcon" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 transition-transform duration-300">
-                                    <i class="bi bi-chevron-down text-sm"></i>
-                                </span>
+                                <?php if(count($visiExtra) > 0): ?>
+                                    <span id="visiIcon" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 transition-transform duration-300">
+                                        <i class="bi bi-chevron-down text-sm"></i>
+                                    </span>
+                                <?php endif; ?>
                             </button>
 
                             <!-- Visi List -->
                             <div class="px-6 pb-6 space-y-2.5">
-                                <!-- Items 1-3: selalu tampil -->
-                                <div class="flex items-start gap-3">
-                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span class="text-gray-700 text-sm">Terwujudnya lulusan yang unggul dalam iman dan taqwa.</span>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span class="text-gray-700 text-sm">Terwujudnya lulusan yang kompeten dan berprestasi yang membanggakan.</span>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span class="text-gray-700 text-sm">Terwujudnya Kurikulum berwawasan karakter Profil Pelajar Pancasila dan lingkungan.</span>
-                                </div>
+                                <?php $__currentLoopData = $visiPrimary; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="flex items-start gap-3">
+                                        <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                        <span class="text-gray-700 text-sm"><?php echo e($item); ?></span>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                 <!-- Items 4-7: expand/collapse -->
-                                <div id="visiExtra" class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
-                                    <div class="space-y-2.5 pt-2.5">
-                                        <div class="flex items-start gap-3">
-                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                            <span class="text-gray-700 text-sm">Terwujudnya PBM yang efektif, efisien, dan inovatif.</span>
-                                        </div>
-                                        <div class="flex items-start gap-3">
-                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                            <span class="text-gray-700 text-sm">Terwujudnya warga sekolah yang berkarakter jujur, mandiri, gotong royong, percaya diri, bernalar kritis, kreatif, dan menghargai kebhinekaan.</span>
-                                        </div>
-                                        <div class="flex items-start gap-3">
-                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                            <span class="text-gray-700 text-sm">Terwujudnya standar pengelolaan dan manajemen sekolah sesuai ketentuan.</span>
-                                        </div>
-                                        <div class="flex items-start gap-3">
-                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                            <span class="text-gray-700 text-sm">Terwujudnya budaya sekolah sahabat keluarga dan lingkungan yang nyaman, aman, rindang, asri dan bersih dalam penyelenggaraan pendidikan yang berkualitas.</span>
+                                <?php if(count($visiExtra) > 0): ?>
+                                    <div id="visiExtra" class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
+                                        <div class="space-y-2.5 pt-2.5">
+                                            <?php $__currentLoopData = $visiExtra; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div class="flex items-start gap-3">
+                                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                                    <span class="text-gray-700 text-sm"><?php echo e($item); ?></span>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </div>
                                     </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
 
                         <!-- Misi Card -->
                         <div class="bg-white rounded-2xl border border-blue-100 shadow-sm overflow-hidden">
                             <!-- Header + Toggle -->
-                            <button onclick="toggleCollapse('misiExtra','misiIcon')" class="w-full flex items-center justify-between p-6 text-left hover:bg-blue-50 transition-colors duration-200">
+                            <button
+                                <?php if(count($misiExtra) > 0): ?>
+                                    onclick="toggleCollapse('misiExtra','misiIcon')"
+                                <?php endif; ?>
+                                class="w-full flex items-center justify-between p-6 text-left transition-colors duration-200 <?php echo e(count($misiExtra) > 0 ? 'hover:bg-blue-50 cursor-pointer' : 'cursor-default'); ?>"
+                            >
                                 <h4 class="text-lg font-bold text-gray-900">Misi Kami</h4>
-                                <span id="misiIcon" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 transition-transform duration-300">
-                                    <i class="bi bi-chevron-down text-sm"></i>
-                                </span>
+                                <?php if(count($misiExtra) > 0): ?>
+                                    <span id="misiIcon" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 transition-transform duration-300">
+                                        <i class="bi bi-chevron-down text-sm"></i>
+                                    </span>
+                                <?php endif; ?>
                             </button>
 
                             <!-- Misi List -->
                             <div class="px-6 pb-6 space-y-2.5">
-                                <!-- Items 1-3: selalu tampil -->
-                                <div class="flex items-start gap-3">
-                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span class="text-gray-700 text-sm">Menumbuh kembangkan pengamalan ajaran agama sesuai dengan agama dan kepercayaan masing-masing.</span>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span class="text-gray-700 text-sm">Menciptakan insan yang unggul dalam IPTEK dan mampu berdaya saing.</span>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                    <span class="text-gray-700 text-sm">Melaksanakan pembelajaran yang aktif, kreatif, inovatif yang menghasilkan peserta didik yang berkarya, bernalar kritis, dan mandiri.</span>
-                                </div>
+                                <?php $__currentLoopData = $misiPrimary; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="flex items-start gap-3">
+                                        <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                        <span class="text-gray-700 text-sm"><?php echo e($item); ?></span>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                 <!-- Item 4: expand/collapse -->
-                                <div id="misiExtra" class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
-                                    <div class="space-y-2.5 pt-2.5">
-                                        <div class="flex items-start gap-3">
-                                            <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                            <span class="text-gray-700 text-sm">Menumbuhkan warga sekolah yang berkarakter jujur, disiplin, percaya diri, sopan santun, menghargai kebhinekaan dalam bertindak.</span>
+                                <?php if(count($misiExtra) > 0): ?>
+                                    <div id="misiExtra" class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
+                                        <div class="space-y-2.5 pt-2.5">
+                                            <?php $__currentLoopData = $misiExtra; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div class="flex items-start gap-3">
+                                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
+                                                    <span class="text-gray-700 text-sm"><?php echo e($item); ?></span>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </div>
                                     </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

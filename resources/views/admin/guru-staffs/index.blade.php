@@ -28,7 +28,7 @@
     @endphp
 
     @foreach ($urutan as $kat)
-        @if (isset($guruStaffs[$kat]) && $guruStaffs[$kat]->count())
+        @if (isset($groupedGuruStaffs[$kat]) && $groupedGuruStaffs[$kat]->count())
             <div class="card mb-4">
                 <div class="card-header"><strong>{{ $kategoriLabels[$kat] }}</strong></div>
                 <div class="table-responsive">
@@ -44,7 +44,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($guruStaffs[$kat] as $gs)
+                            @foreach ($groupedGuruStaffs[$kat] as $gs)
                                 <tr>
                                     <td>
                                         @if ($gs->foto)
@@ -93,6 +93,12 @@
     @if ($guruStaffs->isEmpty())
         <div class="card text-center py-5">
             <p class="text-muted">Belum ada data guru & staff. <a href="{{ route('admin.guru-staffs.create') }}">Tambah sekarang</a></p>
+        </div>
+    @endif
+
+    @if ($guruStaffs->hasPages())
+        <div class="d-flex justify-content-center mt-4">
+            {{ $guruStaffs->links() }}
         </div>
     @endif
 </div>

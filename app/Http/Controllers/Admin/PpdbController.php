@@ -23,8 +23,8 @@ class PpdbController extends Controller
     public function index()
     {
         $settings = Setting::whereIn('key', $this->settingKeys)->get()->keyBy('key');
-        $dokumen  = PpdbItem::where('type', 'dokumen')->orderBy('urutan')->get();
-        $alur     = PpdbItem::where('type', 'alur')->orderBy('urutan')->get();
+        $dokumen  = PpdbItem::where('type', 'dokumen')->orderBy('urutan')->paginate(10, ['*'], 'dokumen_page');
+        $alur     = PpdbItem::where('type', 'alur')->orderBy('urutan')->paginate(10, ['*'], 'alur_page');
         return view('admin.ppdb.index', compact('settings', 'dokumen', 'alur'));
     }
 

@@ -32,6 +32,7 @@
                         <th>Judul</th>
                         <th class="d-none d-sm-table-cell" style="width: 100px">Tanggal</th>
                         <th style="width: 100px">Status</th>
+                        <th class="d-none d-lg-table-cell" style="width: 120px">Link</th>
                         <th style="width: 120px">Aksi</th>
                     </tr>
                 </thead>
@@ -51,6 +52,15 @@
                                     <span class="badge bg-warning">Draft</span>
                                 <?php else: ?>
                                     <span class="badge bg-danger">Archived</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="d-none d-lg-table-cell">
+                                <?php if($berita->link_eksternal): ?>
+                                    <a href="<?php echo e($berita->link_eksternal); ?>" class="btn btn-sm btn-outline-info" title="Buka artikel lengkap" target="_blank">
+                                        <i class="bi bi-link-45deg"></i> Baca
+                                    </a>
+                                <?php else: ?>
+                                    <span class="text-muted text-sm">—</span>
                                 <?php endif; ?>
                             </td>
                             <td>

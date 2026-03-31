@@ -29,7 +29,7 @@
     ?>
 
     <?php $__currentLoopData = $urutan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <?php if(isset($guruStaffs[$kat]) && $guruStaffs[$kat]->count()): ?>
+        <?php if(isset($groupedGuruStaffs[$kat]) && $groupedGuruStaffs[$kat]->count()): ?>
             <div class="card mb-4">
                 <div class="card-header"><strong><?php echo e($kategoriLabels[$kat]); ?></strong></div>
                 <div class="table-responsive">
@@ -45,7 +45,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $__currentLoopData = $guruStaffs[$kat]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $groupedGuruStaffs[$kat]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td>
                                         <?php if($gs->foto): ?>
@@ -95,6 +95,13 @@
     <?php if($guruStaffs->isEmpty()): ?>
         <div class="card text-center py-5">
             <p class="text-muted">Belum ada data guru & staff. <a href="<?php echo e(route('admin.guru-staffs.create')); ?>">Tambah sekarang</a></p>
+        </div>
+    <?php endif; ?>
+
+    <?php if($guruStaffs->hasPages()): ?>
+        <div class="d-flex justify-content-center mt-4">
+            <?php echo e($guruStaffs->links()); ?>
+
         </div>
     <?php endif; ?>
 </div>

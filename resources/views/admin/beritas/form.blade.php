@@ -54,6 +54,17 @@
                     @enderror
                 </div>
 
+                <div class="mb-3">
+                    <label for="link_eksternal" class="form-label">Link Artikel Lengkap (Website Lain)</label>
+                    <input type="url" class="form-control @error('link_eksternal') is-invalid @enderror" 
+                           id="link_eksternal" name="link_eksternal" placeholder="https://contoh.com/artikel" 
+                           value="{{ old('link_eksternal', $berita->link_eksternal ?? '') }}">
+                    <small class="form-text text-muted">Masukkan URL lengkap jika ada artikel lebih lengkap di website lain</small>
+                    @error('link_eksternal')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">

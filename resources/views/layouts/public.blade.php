@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'SD Negeri 3 Krasak Bangsri - Berkarakter, Berprestasi, Berakhlak Mulia')</title>
+    @php $faviconUrl = \App\Models\Setting::get('sekolah_logo'); @endphp
+    <link rel="icon" href="{{ $faviconUrl ? asset($faviconUrl) : asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ $faviconUrl ? asset($faviconUrl) : asset('favicon.ico') }}" type="image/x-icon">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -289,10 +292,13 @@
                             <i class="bi bi-envelope-fill"></i>
                             <span>{{ \App\Models\Setting::get('sekolah_email', 'sdn3krasakbangsri@gmail.com') }}</span>
                         </a>
-                        <a href="tel:{{ \App\Models\Setting::get('sekolah_telepon', '(0291) 771380') }}" class="flex items-center gap-2 hover:text-blue-200 transition-colors duration-300">
-                            <i class="bi bi-telephone-fill"></i>
-                            <span>{{ \App\Models\Setting::get('sekolah_telepon', '(0291) 771380') }}</span>
-                        </a>
+                        @php $phoneNumber = trim(\App\Models\Setting::get('sekolah_telepon', '')); @endphp
+                        @if ($phoneNumber !== '')
+                            <a href="tel:{{ $phoneNumber }}" class="flex items-center gap-2 hover:text-blue-200 transition-colors duration-300">
+                                <i class="bi bi-telephone-fill"></i>
+                                <span>{{ $phoneNumber }}</span>
+                            </a>
+                        @endif
                     </div>
                     <!-- Sosmed: selalu tampil, di mobile center -->
                     <div class="flex gap-4 sm:ml-auto mx-auto sm:mx-0">
@@ -309,7 +315,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-3">
                 <!-- Logo -->
-                <div class="flex items-center gap-3">
+                <a href="{{ url('/') }}" class="logo-home-link flex items-center gap-3 no-underline">
                     @php $logoUrl = \App\Models\Setting::get('sekolah_logo'); @endphp
                     @if($logoUrl)
                         <img src="{{ asset($logoUrl) }}" alt="Logo Sekolah" class="w-14 h-14 object-contain">
@@ -319,10 +325,10 @@
                         </div>
                     @endif
                     <div class="nav-logo-text hidden sm:block">
-                        <h1 class="text-sm font-bold transition-colors duration-300">SD Negeri 3 Krasak</h1>
-                        <p class="text-xs transition-colors duration-300">Berkarakter Berprestasi</p>
+                        <h1 class="text-sm font-bold transition-colors duration-300">{{ \App\Models\Setting::get('sekolah_nama', 'SD Negeri 3 Krasak Bangsri') }}</h1>
+                        <p class="text-xs transition-colors duration-300">{{ \App\Models\Setting::get('sekolah_tagline', 'Berkarakter Berprestasi') }}</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden lg:flex">
@@ -387,23 +393,42 @@
                             </div>
                         @endif
                         <div>
-                            <h3 class="text-white font-bold text-sm">SD Negeri 3</h3>
-                            <p class="text-xs text-gray-400">Krasak Bangsri</p>
+                            <h3 class="text-white font-bold text-sm">{{ \App\Models\Setting::get('sekolah_nama', 'SD Negeri 3 Krasak Bangsri') }}</h3>
+                            <p class="text-xs text-gray-400">{{ \App\Models\Setting::get('sekolah_tagline', 'Berkarakter Berprestasi') }}</p>
                         </div>
                     </div>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-4">{{ \App\Models\Setting::get('sekolah_alamat', 'Jl. Raya Krasak No. 45 Desa Krasak, Kec. Bangsri Kabupaten Jepara, Jawa Tengah 59453') }}</p>
-                    <p class="text-xs font-semibold text-gray-300 mb-3">No Telp</p>
-                    <p class="text-sm font-bold text-blue-400 mb-4">{{ \App\Models\Setting::get('sekolah_telepon', '(0291) 771380') }}</p>
+                    @php
+                        $footerAlamat = trim(\App\Models\Setting::get('sekolah_alamat', ''));
+                        $footerTelepon = trim(\App\Models\Setting::get('sekolah_telepon', ''));
+                    @endphp
+                    @if ($footerAlamat !== '')
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4">{{ $footerAlamat }}</p>
+                    @endif
+                    @if ($footerTelepon !== '')
+                        <p class="text-xs font-semibold text-gray-300 mb-3">No Telp</p>
+                        <p class="text-sm font-bold text-blue-400 mb-4">{{ $footerTelepon }}</p>
+                    @endif
                     <div class="flex gap-3">
-                        <a href="{{ \App\Models\Setting::get('sekolah_instagram', 'https://www.instagram.com/sdn3krasakbangsri') }}" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
-                            <i class="bi bi-instagram text-sm"></i>
-                        </a>
-                        <a href="{{ \App\Models\Setting::get('sekolah_youtube', 'https://youtube.com/@sdnegeri3krasakbangsri786') }}" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
-                            <i class="bi bi-youtube text-sm"></i>
-                        </a>
-                        <a href="{{ \App\Models\Setting::get('sekolah_tiktok', 'https://www.tiktok.com/@sdn3krasakbangsri') }}" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
-                            <i class="bi bi-tiktok text-sm"></i>
-                        </a>
+                        @php
+                            $footerInstagram = trim(\App\Models\Setting::get('sekolah_instagram', ''));
+                            $footerYoutube = trim(\App\Models\Setting::get('sekolah_youtube', ''));
+                            $footerTiktok = trim(\App\Models\Setting::get('sekolah_tiktok', ''));
+                        @endphp
+                        @if ($footerInstagram !== '')
+                            <a href="{{ $footerInstagram }}" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
+                                <i class="bi bi-instagram text-sm"></i>
+                            </a>
+                        @endif
+                        @if ($footerYoutube !== '')
+                            <a href="{{ $footerYoutube }}" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
+                                <i class="bi bi-youtube text-sm"></i>
+                            </a>
+                        @endif
+                        @if ($footerTiktok !== '')
+                            <a href="{{ $footerTiktok }}" target="_blank" class="w-8 h-8 bg-gray-800 hover:bg-blue-600 text-white flex items-center justify-center rounded transition-colors duration-300">
+                                <i class="bi bi-tiktok text-sm"></i>
+                            </a>
+                        @endif
                     </div>
                 </div>
 
@@ -433,7 +458,7 @@
                 <div>
                     <h4 class="text-white font-bold mb-3 text-sm">Maps</h4>
                     <div class="rounded-lg overflow-hidden h-40 shadow-lg border border-gray-700">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d559.8102610922303!2d110.75636700555906!3d-6.528610492722258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e71189725f32787%3A0x9d13f4409aad6ce8!2sSD%20Negeri%201%2C%202%20dan%203%20Krasak%20Bangsri!5e1!3m2!1sen!2sid!4v1771315568758!5m2!1sen!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="{{ \App\Models\Setting::get('footer_maps_embed', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d559.8102610922303!2d110.75636700555906!3d-6.528610492722258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e71189725f32787%3A0x9d13f4409aad6ce8!2sSD%20Negeri%201%2C%202%20dan%203%20Krasak%20Bangsri!5e1!3m2!1sen!2sid!4v1771315568758!5m2!1sen!2sid') }}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -443,7 +468,7 @@
 
             <!-- Footer Bottom -->
             <div class="flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-3 pt-6">
-                <p>&copy; 2026 © SD Negeri 3 Krasak Bangsri, All Right Reserved. dikembangkan oleh <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 underline">M Rudi Wijaya</a></p>
+                <p>&copy; {{ date('Y') }} {{ \App\Models\Setting::get('sekolah_nama', 'SD Negeri 3 Krasak Bangsri') }}, All Right Reserved. dikembangkan oleh <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 underline">M Rudi Wijaya</a></p>
             </div>
         </div>
     </footer>
@@ -454,6 +479,16 @@
             history.scrollRestoration = 'manual';
         }
         window.scrollTo(0, 0);
+
+        // Logo: dari halaman mana pun ke beranda; jika sudah di beranda, paksa refresh dari atas.
+        document.querySelectorAll('.logo-home-link').forEach(function (el) {
+            el.addEventListener('click', function (e) {
+                if (window.location.pathname === '/') {
+                    e.preventDefault();
+                    window.location.reload();
+                }
+            });
+        });
 
         // Navbar scroll effect (hanya aktif di beranda)
         const navbarHeader = document.getElementById('navbar-header');
