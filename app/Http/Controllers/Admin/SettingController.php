@@ -12,6 +12,41 @@ class SettingController extends Controller
     // Keys yang berupa file upload
     protected array $fileKeys = ['sekolah_logo', 'sambutan_foto'];
 
+    protected array $tentangKeyOrder = [
+        'tentang_judul',
+        'tentang_subjudul',
+        'tentang_deskripsi_judul',
+        'tentang_profil_judul',
+        'tentang_visi_judul',
+        'tentang_misi_judul',
+        'tentang_prestasi_judul',
+        'tentang_prestasi_subjudul',
+        'tentang_label_status',
+        'tentang_label_npsn',
+        'tentang_label_akreditasi',
+        'tentang_label_alamat',
+        'tentang_label_email',
+        'tentang_deskripsi',
+        'tentang_visi',
+        'tentang_misi',
+    ];
+
+    protected array $profilSekolahKeyOrder = [
+        'sekolah_status',
+        'npsn',
+        'akreditasi',
+        'sekolah_alamat',
+        'sekolah_email',
+    ];
+
+    protected array $profilSekolahLabelKeyOrder = [
+        'tentang_label_status',
+        'tentang_label_npsn',
+        'tentang_label_akreditasi',
+        'tentang_label_alamat',
+        'tentang_label_email',
+    ];
+
     protected function ensureHeroSettingsExist(): void
     {
         $defaults = [
@@ -46,9 +81,37 @@ class SettingController extends Controller
 
     protected function ensureTentangSettingsExist(): void
     {
+        $obsoleteKeys = [
+            'tentang_alamat_judul',
+            'tentang_alamat_subjudul',
+            'tentang_label_telepon',
+            'tentang_label_kode_pos',
+            'prestasi',
+        ];
+
+        Setting::whereIn('key', $obsoleteKeys)->delete();
+
         $defaults = [
+            'tentang_deskripsi_judul' => 'Judul Deskripsi Singkat',
+            'tentang_deskripsi' => 'Deskripsi Singkat Sekolah',
+            'tentang_profil_judul' => 'Judul Profil Sekolah',
             'tentang_visi' => 'Visi Sekolah (satu poin per baris)',
             'tentang_misi' => 'Misi Sekolah (satu poin per baris)',
+            'tentang_visi_judul' => 'Judul Card Visi',
+            'tentang_misi_judul' => 'Judul Card Misi',
+            'tentang_judul' => 'Judul Halaman Tentang',
+            'tentang_subjudul' => 'Subjudul Halaman Tentang',
+            'tentang_label_alamat' => 'Label Alamat',
+            'tentang_label_status' => 'Label Status',
+            'tentang_label_email' => 'Label Email',
+            'tentang_label_npsn' => 'Label NPSN',
+            'tentang_label_akreditasi' => 'Label Akreditasi',
+            'sekolah_status' => 'Status Sekolah',
+            'tentang_prestasi_judul' => 'Judul Section Prestasi',
+            'tentang_prestasi_subjudul' => 'Subjudul Section Prestasi',
+            'kode_pos' => 'Kode Pos Sekolah',
+            'npsn' => 'NPSN Sekolah',
+            'akreditasi' => 'Akreditasi Sekolah',
         ];
 
         foreach ($defaults as $key => $label) {
@@ -137,9 +200,43 @@ class SettingController extends Controller
         $this->ensurePublicSettingsExist();
 
         $settings = Setting::orderBy('group')->orderBy('key')
-            ->where('group', '!=', 'ppdb')
+            ->whereNotIn('group', ['ppdb', 'tentang'])
             ->get()->groupBy('group');
-        return view('admin.settings.index', compact('settings'));
+
+        $formAction = route('admin.settings.update');
+        $pageTitle = 'Pengaturan Website';
+        $pageSubtitle = 'Kelola informasi dan konten yang tampil di website';
+
+        return view('admin.settings.index', compact('settings', 'formAction', 'pageTitle', 'pageSubtitle'));
+    }
+
+    public function tentang()
+    {
+        $this->ensureTentangSettingsExist();
+
+        $settings = Setting::whereIn('key', $this->tentangKeyOrder)
+            ->get()
+            ->sortBy(fn ($setting) => array_search($setting->key, $this->tentangKeyOrder, true))
+            ->values()
+            ->groupBy('group');
+
+        $profilSekolahSettings = Setting::whereIn('key', $this->profilSekolahKeyOrder)
+            ->get()
+            ->sortBy(fn ($setting) => array_search($setting->key, $this->profilSekolahKeyOrder, true))
+            ->values();
+
+        $profilSekolahLabelSettings = Setting::whereIn('key', $this->profilSekolahLabelKeyOrder)
+            ->get()
+            ->sortBy(fn ($setting) => array_search($setting->key, $this->profilSekolahLabelKeyOrder, true))
+            ->values();
+
+        $prestasis = \App\Models\Prestasi::orderBy('urutan')->orderByDesc('created_at')->get();
+
+        $formAction = route('admin.settings.tentang.update');
+        $pageTitle = 'Pengaturan Halaman Tentang';
+        $pageSubtitle = 'Kelola konten khusus halaman Tentang';
+
+        return view('admin.settings.index', compact('settings', 'formAction', 'pageTitle', 'pageSubtitle', 'prestasis', 'profilSekolahSettings', 'profilSekolahLabelSettings'));
     }
 
     public function update(Request $request)
@@ -257,5 +354,21 @@ class SettingController extends Controller
         }
 
         return back()->with('success', 'Pengaturan berhasil disimpan.');
+    }
+
+    public function updateTentang(Request $request)
+    {
+        $this->ensureTentangSettingsExist();
+
+        $allowedKeys = array_merge($this->tentangKeyOrder, $this->profilSekolahKeyOrder);
+        $data = $request->except(['_token', '_method']);
+
+        foreach ($data as $key => $value) {
+            if (in_array($key, $allowedKeys, true) && !is_array($value)) {
+                Setting::set($key, $value ?? '');
+            }
+        }
+
+        return back()->with('success', 'Pengaturan halaman Tentang berhasil disimpan.');
     }
 }

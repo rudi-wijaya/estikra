@@ -6,8 +6,8 @@
 <div class="container-fluid">
     <div class="row mb-4 align-items-center">
         <div class="col">
-            <h2 class="h4 mb-0">Pengaturan Website</h2>
-            <p class="text-muted small mt-1">Kelola informasi dan konten yang tampil di website</p>
+            <h2 class="h4 mb-0"><?php echo e($pageTitle ?? 'Pengaturan Website'); ?></h2>
+            <p class="text-muted small mt-1"><?php echo e($pageSubtitle ?? 'Kelola informasi dan konten yang tampil di website'); ?></p>
         </div>
     </div>
 
@@ -19,11 +19,13 @@
         </div>
     <?php endif; ?>
 
-    <form action="<?php echo e(route('admin.settings.update')); ?>" method="POST" enctype="multipart/form-data">
+    <form action="<?php echo e($formAction ?? route('admin.settings.update')); ?>" method="POST" enctype="multipart/form-data">
         <?php echo csrf_field(); ?>
         <?php echo method_field('PUT'); ?>
 
         <?php
+            $tentangProfilKeys = ['sekolah_status', 'npsn', 'akreditasi'];
+            $tentangProfilLabelKeys = ['tentang_label_status', 'tentang_label_npsn', 'tentang_label_akreditasi', 'tentang_label_alamat', 'tentang_label_email'];
             $groupLabels = [
                 'sekolah' => ['label' => 'Informasi Sekolah', 'icon' => 'bi-building'],
                 'beranda' => ['label' => 'Beranda (Hero)', 'icon' => 'bi-house-door'],
@@ -93,6 +95,17 @@
                         <?php endif; ?>
 
                         <?php $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                                $isTentangPage = request()->routeIs('admin.settings.tentang.*');
+                                $wideKeysDefault = ['tentang_visi', 'tentang_misi', 'sekolah_alamat', 'tentang_deskripsi', 'footer_maps_embed'];
+                                $wideKeysTentang = ['tentang_visi', 'tentang_misi', 'tentang_deskripsi'];
+                                $isWideField = in_array($setting->key, $isTentangPage ? $wideKeysTentang : $wideKeysDefault, true);
+                            ?>
+
+                            <?php if(request()->routeIs('admin.settings.tentang.*') && (in_array($setting->key, $tentangProfilKeys, true) || in_array($setting->key, $tentangProfilLabelKeys, true))): ?>
+                                <?php continue; ?>
+                            <?php endif; ?>
+
                             <?php if(in_array($setting->key, ['hero_background', 'hero_background_2', 'hero_background_3'])): ?>
                                 <?php continue; ?>
                             <?php endif; ?>
@@ -136,7 +149,7 @@
                                 <?php continue; ?>
                             <?php endif; ?>
 
-                            <div class="col-12 <?php echo e(!in_array($setting->key, ['tentang_visi', 'tentang_misi', 'sekolah_alamat', 'tentang_deskripsi', 'footer_maps_embed']) ? 'col-md-6' : ''); ?>">
+                            <div class="col-12 <?php echo e($isWideField ? '' : 'col-md-6'); ?>">
                                 <label class="form-label" for="<?php echo e($setting->key); ?>"><?php echo e($setting->label); ?></label>
                                 <?php if(in_array($setting->key, ['sekolah_logo', 'sambutan_foto'])): ?>
                                     <?php if($setting->value): ?>
@@ -183,12 +196,128 @@
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
+        <?php if(request()->routeIs('admin.settings.tentang.*')): ?>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center gap-2">
+                    <i class="bi bi-building"></i>
+                    <strong>Profil Sekolah</strong>
+                </div>
+                <div class="card-body">
+                    <?php
+                        $labelMap = collect($profilSekolahLabelSettings ?? collect())->keyBy('key');
+                        $valueMap = collect($profilSekolahSettings ?? collect())->keyBy('key');
+                        $pairs = [
+                            ['label' => 'tentang_label_status', 'value' => 'sekolah_status'],
+                            ['label' => 'tentang_label_npsn', 'value' => 'npsn'],
+                            ['label' => 'tentang_label_akreditasi', 'value' => 'akreditasi'],
+                            ['label' => 'tentang_label_alamat', 'value' => 'sekolah_alamat'],
+                            ['label' => 'tentang_label_email', 'value' => 'sekolah_email'],
+                        ];
+                    ?>
+
+                    <div class="row g-3">
+                        <?php $__currentLoopData = $pairs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pair): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                                $labelSetting = $labelMap->get($pair['label']);
+                                $valueSetting = $valueMap->get($pair['value']);
+                                $isAlamat = $pair['value'] === 'sekolah_alamat';
+                            ?>
+
+                            <?php if($labelSetting && $valueSetting): ?>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="<?php echo e($labelSetting->key); ?>"><?php echo e($labelSetting->label); ?></label>
+                                    <input type="text" id="<?php echo e($labelSetting->key); ?>" name="<?php echo e($labelSetting->key); ?>" class="form-control" value="<?php echo e(old($labelSetting->key, $labelSetting->value)); ?>">
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="<?php echo e($valueSetting->key); ?>"><?php echo e($valueSetting->label); ?></label>
+                                    <?php if($isAlamat): ?>
+                                        <textarea id="<?php echo e($valueSetting->key); ?>" name="<?php echo e($valueSetting->key); ?>" class="form-control" rows="3"><?php echo e(old($valueSetting->key, $valueSetting->value)); ?></textarea>
+                                    <?php else: ?>
+                                        <input type="text" id="<?php echo e($valueSetting->key); ?>" name="<?php echo e($valueSetting->key); ?>" class="form-control" value="<?php echo e(old($valueSetting->key, $valueSetting->value)); ?>">
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <div class="d-flex justify-content-end mb-4">
             <button type="submit" class="btn btn-primary px-5">
                 <i class="bi bi-save me-2"></i>Simpan Pengaturan
             </button>
         </div>
     </form>
+
+        <?php if(request()->routeIs('admin.settings.tentang.*')): ?>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-trophy"></i>
+                        <strong>Data Prestasi</strong>
+                    </div>
+                    <a href="<?php echo e(route('admin.prestasis.create')); ?>" class="btn btn-sm btn-primary">
+                        <i class="bi bi-plus-lg me-1"></i>Tambah Prestasi
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 36%">Judul</th>
+                                    <th style="width: 12%">Tahun</th>
+                                    <th style="width: 12%">Urutan</th>
+                                    <th style="width: 15%">Status</th>
+                                    <th style="width: 25%">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $__empty_1 = true; $__currentLoopData = ($prestasis ?? collect()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prestasi): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                    <tr>
+                                        <td>
+                                            <strong class="d-block"><?php echo e($prestasi->judul); ?></strong>
+                                            <?php if($prestasi->keterangan): ?>
+                                                <small class="text-muted"><?php echo e(\Illuminate\Support\Str::limit($prestasi->keterangan, 80)); ?></small>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?php echo e($prestasi->tahun ?: '-'); ?></td>
+                                        <td><?php echo e($prestasi->urutan); ?></td>
+                                        <td>
+                                            <?php if($prestasi->status === 'aktif'): ?>
+                                                <span class="badge bg-success">Aktif</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-secondary">Nonaktif</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-1">
+                                                <a href="<?php echo e(route('admin.prestasis.edit', $prestasi)); ?>" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form action="<?php echo e(route('admin.prestasis.destroy', $prestasi)); ?>" method="POST" style="display:inline;">
+                                                    <?php echo csrf_field(); ?>
+                                                    <?php echo method_field('DELETE'); ?>
+                                                    <button type="submit" class="btn btn-sm btn-outline-secondary" title="Hapus" onclick="return confirm('Yakin hapus prestasi ini?')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                    <tr>
+                                        <td colspan="5" class="text-center py-4 text-muted">Belum ada data prestasi.</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
 </div>
 <?php $__env->stopSection(); ?>
 

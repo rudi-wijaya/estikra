@@ -60,6 +60,19 @@
                     @enderror
                 </div>
 
+                <div class="mb-3">
+                    <label for="galeri_foto" class="form-label">Gambar Tambahan Program</label>
+                    <input type="file" class="form-control @error('galeri_foto') is-invalid @enderror @error('galeri_foto.*') is-invalid @enderror"
+                           id="galeri_foto" name="galeri_foto[]" accept="image/*" multiple>
+                    <small class="form-text text-muted">Bisa pilih lebih dari satu gambar. Format: JPEG, PNG, JPG, GIF. Max: 5MB per gambar</small>
+                    @error('galeri_foto')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                    @error('galeri_foto.*')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <div class="d-flex gap-2 justify-content-end">
                     <a href="{{ route('admin.programs.index') }}" class="btn btn-secondary">
                         Batal

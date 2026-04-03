@@ -311,29 +311,39 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="card-hover bg-white rounded-xl p-6 border border-gray-100 text-center hover:shadow-xl">
-                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i class="bi bi-book text-blue-600 text-2xl"></i>
+                @forelse ($programs as $program)
+                    <a href="{{ route('program.show', $program) }}" class="card-hover group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl flex flex-col">
+                        <div class="h-44 bg-gradient-to-br from-blue-100 to-blue-200 overflow-hidden">
+                            @if ($program->foto)
+                                @php
+                                    $programFoto = str_starts_with($program->foto, 'storage/')
+                                        ? asset($program->foto)
+                                        : asset('storage/' . $program->foto);
+                                @endphp
+                                <img src="{{ $programFoto }}" alt="{{ $program->judul }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center">
+                                    <i class="bi bi-image text-blue-500 text-4xl opacity-60"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="p-6 text-center flex flex-col flex-1">
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $program->judul }}</h3>
+                            <p class="text-sm text-gray-600 mb-3">{{ \Illuminate\Support\Str::limit($program->deskripsi, 130) }}</p>
+                            <span class="text-blue-600 font-semibold mt-auto">Baca Selengkapnya</span>
+                        </div>
+                    </a>
+                @empty
+                    <div class="col-span-full text-center py-12 text-gray-400">
+                        <p class="text-lg">Belum ada program unggulan yang ditambahkan.</p>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Literasi</h3>
-                    <p class="text-sm text-gray-600">Pembiasaan membaca dan menulis setiap hari untuk meningkatkan kemampuan literasi siswa sejak dini.</p>
-                </div>
+                @endforelse
+            </div>
 
-                <div class="card-hover bg-white rounded-xl p-6 border border-gray-100 text-center hover:shadow-xl">
-                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i class="bi bi-moon-stars text-blue-600 text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Sholat Dhuha</h3>
-                    <p class="text-sm text-gray-600">Pembiasaan sholat dhuha berjamaah setiap pagi untuk penguatan karakter spiritual dan kedisiplinan siswa.</p>
-                </div>
-
-                <div class="card-hover bg-white rounded-xl p-6 border border-gray-100 text-center hover:shadow-xl">
-                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i class="bi bi-bullseye text-blue-600 text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Pentaque</h3>
-                    <p class="text-sm text-gray-600">Olahraga pentaque untuk melatih konsentrasi, strategi, dan sportivitas siswa dalam kompetisi.</p>
-                </div>
+            <div class="text-center mt-8">
+                <a href="/program" class="btn-primary inline-block">
+                    Lihat Selengkapnya
+                </a>
             </div>
         </div>
     </section>

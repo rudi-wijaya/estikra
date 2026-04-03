@@ -6,8 +6,8 @@
 <div class="container-fluid">
     <div class="row mb-4 align-items-center">
         <div class="col">
-            <h2 class="h4 mb-0">Pengaturan Website</h2>
-            <p class="text-muted small mt-1">Kelola informasi dan konten yang tampil di website</p>
+            <h2 class="h4 mb-0">{{ $pageTitle ?? 'Pengaturan Website' }}</h2>
+            <p class="text-muted small mt-1">{{ $pageSubtitle ?? 'Kelola informasi dan konten yang tampil di website' }}</p>
         </div>
     </div>
 
@@ -18,11 +18,13 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ $formAction ?? route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         @php
+            $tentangProfilKeys = ['sekolah_status', 'npsn', 'akreditasi'];
+            $tentangProfilLabelKeys = ['tentang_label_status', 'tentang_label_npsn', 'tentang_label_akreditasi', 'tentang_label_alamat', 'tentang_label_email'];
             $groupLabels = [
                 'sekolah' => ['label' => 'Informasi Sekolah', 'icon' => 'bi-building'],
                 'beranda' => ['label' => 'Beranda (Hero)', 'icon' => 'bi-house-door'],
@@ -92,6 +94,17 @@
                         @endif
 
                         @foreach ($items as $setting)
+                            @php
+                                $isTentangPage = request()->routeIs('admin.settings.tentang.*');
+                                $wideKeysDefault = ['tentang_visi', 'tentang_misi', 'sekolah_alamat', 'tentang_deskripsi', 'footer_maps_embed'];
+                                $wideKeysTentang = ['tentang_visi', 'tentang_misi', 'tentang_deskripsi'];
+                                $isWideField = in_array($setting->key, $isTentangPage ? $wideKeysTentang : $wideKeysDefault, true);
+                            @endphp
+
+                            @if (request()->routeIs('admin.settings.tentang.*') && (in_array($setting->key, $tentangProfilKeys, true) || in_array($setting->key, $tentangProfilLabelKeys, true)))
+                                @continue
+                            @endif
+
                             @if (in_array($setting->key, ['hero_background', 'hero_background_2', 'hero_background_3']))
                                 @continue
                             @endif
@@ -135,7 +148,7 @@
                                 @continue
                             @endif
 
-                            <div class="col-12 {{ !in_array($setting->key, ['tentang_visi', 'tentang_misi', 'sekolah_alamat', 'tentang_deskripsi', 'footer_maps_embed']) ? 'col-md-6' : '' }}">
+                            <div class="col-12 {{ $isWideField ? '' : 'col-md-6' }}">
                                 <label class="form-label" for="{{ $setting->key }}">{{ $setting->label }}</label>
                                 @if (in_array($setting->key, ['sekolah_logo', 'sambutan_foto']))
                                     @if ($setting->value)
@@ -182,12 +195,128 @@
             </div>
         @endforeach
 
+        @if (request()->routeIs('admin.settings.tentang.*'))
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center gap-2">
+                    <i class="bi bi-building"></i>
+                    <strong>Profil Sekolah</strong>
+                </div>
+                <div class="card-body">
+                    @php
+                        $labelMap = collect($profilSekolahLabelSettings ?? collect())->keyBy('key');
+                        $valueMap = collect($profilSekolahSettings ?? collect())->keyBy('key');
+                        $pairs = [
+                            ['label' => 'tentang_label_status', 'value' => 'sekolah_status'],
+                            ['label' => 'tentang_label_npsn', 'value' => 'npsn'],
+                            ['label' => 'tentang_label_akreditasi', 'value' => 'akreditasi'],
+                            ['label' => 'tentang_label_alamat', 'value' => 'sekolah_alamat'],
+                            ['label' => 'tentang_label_email', 'value' => 'sekolah_email'],
+                        ];
+                    @endphp
+
+                    <div class="row g-3">
+                        @foreach ($pairs as $pair)
+                            @php
+                                $labelSetting = $labelMap->get($pair['label']);
+                                $valueSetting = $valueMap->get($pair['value']);
+                                $isAlamat = $pair['value'] === 'sekolah_alamat';
+                            @endphp
+
+                            @if ($labelSetting && $valueSetting)
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="{{ $labelSetting->key }}">{{ $labelSetting->label }}</label>
+                                    <input type="text" id="{{ $labelSetting->key }}" name="{{ $labelSetting->key }}" class="form-control" value="{{ old($labelSetting->key, $labelSetting->value) }}">
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="{{ $valueSetting->key }}">{{ $valueSetting->label }}</label>
+                                    @if ($isAlamat)
+                                        <textarea id="{{ $valueSetting->key }}" name="{{ $valueSetting->key }}" class="form-control" rows="3">{{ old($valueSetting->key, $valueSetting->value) }}</textarea>
+                                    @else
+                                        <input type="text" id="{{ $valueSetting->key }}" name="{{ $valueSetting->key }}" class="form-control" value="{{ old($valueSetting->key, $valueSetting->value) }}">
+                                    @endif
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-end mb-4">
             <button type="submit" class="btn btn-primary px-5">
                 <i class="bi bi-save me-2"></i>Simpan Pengaturan
             </button>
         </div>
     </form>
+
+        @if (request()->routeIs('admin.settings.tentang.*'))
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-trophy"></i>
+                        <strong>Data Prestasi</strong>
+                    </div>
+                    <a href="{{ route('admin.prestasis.create') }}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-plus-lg me-1"></i>Tambah Prestasi
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 36%">Judul</th>
+                                    <th style="width: 12%">Tahun</th>
+                                    <th style="width: 12%">Urutan</th>
+                                    <th style="width: 15%">Status</th>
+                                    <th style="width: 25%">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse (($prestasis ?? collect()) as $prestasi)
+                                    <tr>
+                                        <td>
+                                            <strong class="d-block">{{ $prestasi->judul }}</strong>
+                                            @if ($prestasi->keterangan)
+                                                <small class="text-muted">{{ \Illuminate\Support\Str::limit($prestasi->keterangan, 80) }}</small>
+                                            @endif
+                                        </td>
+                                        <td>{{ $prestasi->tahun ?: '-' }}</td>
+                                        <td>{{ $prestasi->urutan }}</td>
+                                        <td>
+                                            @if ($prestasi->status === 'aktif')
+                                                <span class="badge bg-success">Aktif</span>
+                                            @else
+                                                <span class="badge bg-secondary">Nonaktif</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-1">
+                                                <a href="{{ route('admin.prestasis.edit', $prestasi) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form action="{{ route('admin.prestasis.destroy', $prestasi) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-secondary" title="Hapus" onclick="return confirm('Yakin hapus prestasi ini?')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center py-4 text-muted">Belum ada data prestasi.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @endif
 </div>
 @endsection
 

@@ -523,9 +523,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo e(route('admin.settings.index')); ?>" class="<?php echo e(request()->routeIs('admin.settings.*') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('admin.settings.index')); ?>" class="<?php echo e(request()->routeIs('admin.settings.index') || request()->routeIs('admin.settings.update') ? 'active' : ''); ?>">
                         <i class="bi bi-gear"></i>
                         <span>Profil</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('admin.settings.tentang.index')); ?>" class="<?php echo e(request()->routeIs('admin.settings.tentang.*') ? 'active' : ''); ?>">
+                        <i class="bi bi-info-circle"></i>
+                        <span>Halaman Tentang</span>
                     </a>
                 </li>
                 <li>

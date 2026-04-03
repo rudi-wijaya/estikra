@@ -12,17 +12,32 @@ Route::get('/', function () {
     $beritas = \App\Models\Berita::where('status', 'published')->orderBy('tanggal_terbit', 'desc')->limit(3)->get();
     $galeris = \App\Models\Galeri::where('status', 'aktif')->orderBy('tanggal_upload', 'desc')->limit(3)->get();
     $guruStaffs = \App\Models\GuruStaff::aktif()->where('kategori', '!=', 'kepala_sekolah')->orderBy('urutan')->orderBy('nama')->get();
-    return view('beranda', compact('beritas', 'galeris', 'guruStaffs'));
+    $programs = \App\Models\Program::orderByDesc('created_at')->limit(3)->get();
+    return view('beranda', compact('beritas', 'galeris', 'guruStaffs', 'programs'));
 });
 
 Route::get('/tentang', function () {
-    return view('tentang');
+    $prestasis = \App\Models\Prestasi::where('status', 'aktif')
+        ->orderBy('urutan')
+        ->orderByDesc('created_at')
+        ->get();
+
+    return view('tentang', compact('prestasis'));
 });
 
 Route::get('/program', function () {
     $programs = \App\Models\Program::all();
     return view('program', compact('programs'));
 });
+
+Route::get('/program/{program}', function (\App\Models\Program $program) {
+    $lainnya = \App\Models\Program::where('id', '!=', $program->id)
+        ->orderByDesc('created_at')
+        ->limit(3)
+        ->get();
+
+    return view('program-detail', compact('program', 'lainnya'));
+})->name('program.show');
 
 Route::get('/guru-staff', function () {
     $guruStaffs = \App\Models\GuruStaff::aktif()->orderBy('urutan')->orderBy('nama')->get()->groupBy('kategori');
@@ -83,9 +98,14 @@ Route::middleware('auth')->group(function () {
         // Programs
         Route::resource('programs', \App\Http\Controllers\Admin\ProgramController::class);
 
+        // Prestasis
+        Route::resource('prestasis', \App\Http\Controllers\Admin\PrestasiController::class)->except(['show']);
+
         // Settings
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+        Route::get('settings/tentang', [SettingController::class, 'tentang'])->name('settings.tentang.index');
+        Route::put('settings/tentang', [SettingController::class, 'updateTentang'])->name('settings.tentang.update');
 
         // PPDB
         Route::get('ppdb', [PpdbController::class, 'index'])->name('ppdb.index');
