@@ -25,6 +25,15 @@ Route::get('/tentang', function () {
     return view('tentang', compact('prestasis'));
 });
 
+Route::get('/prestasi', function () {
+    $prestasis = \App\Models\Prestasi::where('status', 'aktif')
+        ->orderBy('urutan')
+        ->orderByDesc('created_at')
+        ->paginate(9);
+
+    return view('prestasi', compact('prestasis'));
+})->name('prestasi.index');
+
 Route::get('/program', function () {
     $programs = \App\Models\Program::all();
     return view('program', compact('programs'));

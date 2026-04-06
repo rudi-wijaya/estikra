@@ -57,11 +57,11 @@
             <!-- CTA Buttons -->
             <div class="flex flex-wrap items-center gap-4 animate-fadeInUp" style="animation-delay: 0.3s;">
                 <a href="#tentang-sekolah"
-                   class="card-hover group inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-7 py-3.5 rounded-xl shadow-lg hover:shadow-blue-300 transition-all duration-200">
+                         class="card-hover group inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-7 py-3.5 rounded-full shadow-lg hover:shadow-blue-300 transition-all duration-200">
                     <span>Pelajari Lebih Lanjut</span>
                 </a>
                 <a href="/ppdb"
-                   class="card-hover group inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white/20 font-semibold px-7 py-3 rounded-xl transition-all duration-200 backdrop-blur-sm">
+                         class="card-hover group inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white/20 font-semibold px-7 py-3 rounded-full transition-all duration-200 backdrop-blur-sm">
                     <i class=""></i>
                     <span>PPDB 2026</span>
                 </a>
@@ -251,7 +251,7 @@
                         </div>
                     </div>
 
-                    <a href="/tentang" class="btn-primary mt-8 inline-block">
+                    <a href="/tentang" class="btn-primary mt-8 inline-block rounded-full">
                         Selengkapnya
                     </a>
                 </div>
@@ -343,7 +343,7 @@
             </div>
 
             <div class="text-center mt-8">
-                <a href="/program" class="btn-primary inline-block">
+                <a href="/program" class="btn-primary inline-block rounded-full">
                     Lihat Selengkapnya
                 </a>
             </div>
@@ -431,7 +431,7 @@
             <?php endif; ?>
 
             <div class="text-center mt-8">
-                <a href="/guru-staff" class="btn-primary inline-block">
+                <a href="/guru-staff" class="btn-primary inline-block rounded-full">
                     Lihat Semua Guru & Staff
                 </a>
             </div>
@@ -506,7 +506,7 @@
                             </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2"><?php echo e($berita->judul); ?></h3>
                             <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1"><?php echo e(Str::limit(strip_tags($berita->konten), 150)); ?></p>
-                            <a href="<?php echo e(route('berita.show', $berita->slug)); ?>" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 self-start mt-auto">
+                            <a href="<?php echo e(route('berita.show', $berita->slug)); ?>" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300 self-start mt-auto">
                                 Baca Selengkapnya
                             </a>
                         </div>
@@ -520,7 +520,7 @@
             </div>
 
             <div class="text-center">
-                <a href="/berita" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                <a href="/berita" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors duration-300">
                     Lihat Semua Berita
                 </a>
             </div>
@@ -572,7 +572,7 @@
             </div>
 
             <div class="text-center">
-                <a href="/galeri" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                <a href="/galeri" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors duration-300">
                     Lihat Semua Galeri
                 </a>
             </div>
@@ -593,7 +593,7 @@
             <!-- CTA Button -->
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a href="/kontak"
-                   class="card-hover group inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-blue-600 font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 text-lg">
+                         class="card-hover group inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-blue-600 font-bold px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 text-lg">
                     <i class="bi bi-telephone-fill text-xl"></i>
                     <span>Hubungi Kami Sekarang</span>
                 </a>

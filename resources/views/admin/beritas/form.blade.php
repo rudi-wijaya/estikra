@@ -109,6 +109,24 @@
                     @enderror
                 </div>
 
+                @php
+                    $sudahTerhubungKePrestasi = isset($berita) && $berita->prestasi;
+                    $checkboxPrestasi = old('tambah_ke_prestasi', $sudahTerhubungKePrestasi ? '1' : '');
+                @endphp
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1" id="tambah_ke_prestasi" name="tambah_ke_prestasi" {{ $checkboxPrestasi ? 'checked' : '' }}>
+                        <label class="form-check-label" for="tambah_ke_prestasi">
+                            Ini termasuk berita Prestasi
+                        </label>
+                    </div>
+                    @if ($sudahTerhubungKePrestasi)
+                        <small class="form-text text-muted">Jika dicentang, perubahan berita akan ikut menyinkronkan data Prestasi. Jika tidak dicentang, relasi Prestasi akan dihapus.</small>
+                    @else
+                        <small class="form-text text-muted">Centang jika ini berita Prestasi. Data Prestasi akan dibuat otomatis dan ikut ter-update saat berita diubah.</small>
+                    @endif
+                </div>
+
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="{{ route('admin.beritas.index') }}" class="btn btn-secondary">Batal</a>
                     <button type="submit" class="btn btn-primary">

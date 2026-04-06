@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Gallery Section -->
-    <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
+  
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
             <!-- Section Header -->
             <div class="text-center mb-16 animate-fadeInUp">
@@ -50,8 +50,41 @@
 
             <!-- Pagination -->
             @if ($galeris->hasPages())
-                <div class="flex justify-center mt-12">
-                    {{ $galeris->links() }}
+                <div class="flex justify-center mt-10">
+                    <nav class="flex items-center gap-2" aria-label="Pagination">
+                        @if ($galeris->onFirstPage())
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Previous</span>
+                        @else
+                            <a href="{{ $galeris->previousPageUrl() }}" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Previous</a>
+                        @endif
+
+                        @for ($page = 1; $page <= $galeris->lastPage(); $page++)
+                            @php
+                                $isNearCurrent = abs($page - $galeris->currentPage()) <= 1;
+                                $isEdgePage = in_array($page, [1, $galeris->lastPage()], true);
+                            @endphp
+
+                            @if (!($isNearCurrent || $isEdgePage))
+                                @continue
+                            @endif
+
+                            @if ($page > 1 && !($isNearCurrent || in_array($page - 1, [1, $galeris->lastPage()], true) || abs(($page - 1) - $galeris->currentPage()) <= 1))
+                                <span class="inline-flex items-center justify-center min-w-10 h-10 text-sm font-semibold text-gray-400">...</span>
+                            @endif
+
+                            @if ($page == $galeris->currentPage())
+                                <span class="inline-flex items-center justify-center min-w-10 h-10 rounded-full px-3 text-sm font-bold text-white bg-blue-600">{{ $page }}</span>
+                            @else
+                                <a href="{{ $galeris->url($page) }}" class="inline-flex items-center justify-center min-w-10 h-10 rounded-full px-3 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">{{ $page }}</a>
+                            @endif
+                        @endfor
+
+                        @if ($galeris->hasMorePages())
+                            <a href="{{ $galeris->nextPageUrl() }}" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Next</a>
+                        @else
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Next</span>
+                        @endif
+                    </nav>
                 </div>
             @endif
         </div>

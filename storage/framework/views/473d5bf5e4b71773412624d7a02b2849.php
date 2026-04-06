@@ -11,6 +11,17 @@
         </div>
     </div>
 
+    <?php if(request()->routeIs('admin.settings.tentang.*')): ?>
+        <div class="admin-top-tabs">
+            <a class="tab-link active" href="<?php echo e(route('admin.settings.tentang.index')); ?>">
+                <i class="bi bi-info-circle"></i>Konten Tentang
+            </a>
+            <a class="tab-link" href="<?php echo e(route('admin.prestasis.index')); ?>">
+                <i class="bi bi-trophy"></i>Data Prestasi
+            </a>
+        </div>
+    <?php endif; ?>
+
     <?php if(session('success')): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="bi bi-check-circle me-2"></i><?php echo e(session('success')); ?>
@@ -253,68 +264,15 @@
 
         <?php if(request()->routeIs('admin.settings.tentang.*')): ?>
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between gap-2">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-trophy"></i>
-                        <strong>Data Prestasi</strong>
-                    </div>
-                    <a href="<?php echo e(route('admin.prestasis.create')); ?>" class="btn btn-sm btn-primary">
-                        <i class="bi bi-plus-lg me-1"></i>Tambah Prestasi
-                    </a>
+                <div class="card-header d-flex align-items-center gap-2">
+                    <i class="bi bi-trophy"></i>
+                    <strong>Data Prestasi</strong>
                 </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th style="width: 36%">Judul</th>
-                                    <th style="width: 12%">Tahun</th>
-                                    <th style="width: 12%">Urutan</th>
-                                    <th style="width: 15%">Status</th>
-                                    <th style="width: 25%">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $__empty_1 = true; $__currentLoopData = ($prestasis ?? collect()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prestasi): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                    <tr>
-                                        <td>
-                                            <strong class="d-block"><?php echo e($prestasi->judul); ?></strong>
-                                            <?php if($prestasi->keterangan): ?>
-                                                <small class="text-muted"><?php echo e(\Illuminate\Support\Str::limit($prestasi->keterangan, 80)); ?></small>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><?php echo e($prestasi->tahun ?: '-'); ?></td>
-                                        <td><?php echo e($prestasi->urutan); ?></td>
-                                        <td>
-                                            <?php if($prestasi->status === 'aktif'): ?>
-                                                <span class="badge bg-success">Aktif</span>
-                                            <?php else: ?>
-                                                <span class="badge bg-secondary">Nonaktif</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-1">
-                                                <a href="<?php echo e(route('admin.prestasis.edit', $prestasi)); ?>" class="btn btn-sm btn-outline-secondary" title="Edit">
-                                                    <i class="bi bi-pencil"></i>
-                                                </a>
-                                                <form action="<?php echo e(route('admin.prestasis.destroy', $prestasi)); ?>" method="POST" style="display:inline;">
-                                                    <?php echo csrf_field(); ?>
-                                                    <?php echo method_field('DELETE'); ?>
-                                                    <button type="submit" class="btn btn-sm btn-outline-secondary" title="Hapus" onclick="return confirm('Yakin hapus prestasi ini?')">
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                    <tr>
-                                        <td colspan="5" class="text-center py-4 text-muted">Belum ada data prestasi.</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="card-body d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <p class="mb-0 text-muted">Pengelolaan data Prestasi dipisahkan di halaman tersendiri agar lebih fokus dan rapi.</p>
+                    <a href="<?php echo e(route('admin.prestasis.index')); ?>" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-up-right me-1"></i>Buka Halaman Prestasi
+                    </a>
                 </div>
             </div>
         <?php endif; ?>

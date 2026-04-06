@@ -202,7 +202,7 @@
     </style>
 
     <!-- Guru & Staff Section -->
-    <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
+
         <div class="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16">
             <div class="text-center mb-16 animate-fadeInUp">
                 <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Tim Pendidik Kami</h2>

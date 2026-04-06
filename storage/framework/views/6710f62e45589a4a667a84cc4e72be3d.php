@@ -132,15 +132,11 @@
             <div class="bg-white rounded-3xl shadow-sm border border-blue-100 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
                 <div class="flex-1">
                     <h3 class="text-2xl font-bold text-gray-900 mb-2">Ada pertanyaan seputar PPDB?</h3>
-                    <p class="text-gray-600 mb-4">Hubungi kami langsung atau datang ke sekolah pada jam kerja untuk informasi lebih lanjut.</p>
+                    <p class="text-gray-600 mb-4">Hubungi kami langsung, kirim pesan via Instagram, atau datang ke sekolah pada jam kerja untuk informasi lebih lanjut.</p>
                     <div class="flex flex-col sm:flex-row gap-3">
-                        <a href="tel:<?php echo e(\App\Models\Setting::get('sekolah_telepon', '(0291) 771380')); ?>" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-sm">
-                            <i class="bi bi-telephone-fill"></i>
-                            <span><?php echo e(\App\Models\Setting::get('sekolah_telepon', '(0291) 771380')); ?></span>
-                        </a>
-                        <a href="/kontak" class="inline-flex items-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold px-6 py-3 rounded-xl transition-all duration-200">
-                            <i class="bi bi-envelope-fill"></i>
-                            <span>Kirim Pesan</span>
+                        <a href="<?php echo e(\App\Models\Setting::get('sekolah_instagram', 'https://www.instagram.com/sdn3krasakbangsri')); ?>" target="_blank" rel="noopener" class="inline-flex items-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold px-6 py-3 rounded-full transition-all duration-200">
+                            <i class="bi bi-instagram"></i>
+                            <span>Instagram</span>
                         </a>
                     </div>
                 </div>

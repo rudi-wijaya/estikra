@@ -127,6 +127,49 @@
             margin: 12px 16px;
         }
 
+        /* Top tab nav style aligned with public website navbar */
+        .admin-top-tabs {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            border-bottom: 1px solid #dbeafe;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-top-tabs .tab-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 600;
+            padding: 0.3rem 0.1rem;
+            transition: color 0.25s ease;
+        }
+
+        .admin-top-tabs .tab-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 0;
+            height: 3px;
+            background: #007AFF;
+            transition: width 0.3s ease;
+        }
+
+        .admin-top-tabs .tab-link:hover,
+        .admin-top-tabs .tab-link.active {
+            color: #007AFF;
+        }
+
+        .admin-top-tabs .tab-link:hover::after,
+        .admin-top-tabs .tab-link.active::after {
+            width: 100%;
+        }
+
         /* Main Content */
         .main-content {
             margin-left: 280px;

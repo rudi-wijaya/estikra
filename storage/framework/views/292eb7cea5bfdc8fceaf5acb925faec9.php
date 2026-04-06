@@ -3,7 +3,7 @@
 <?php $__env->startSection('title', $berita->judul . ' - SD Negeri 3 Krasak Bangsri'); ?>
 
 <?php $__env->startSection('content'); ?>
-    <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
+    <section class="py-10 bg-gradient-to-b from-slate-50 to-white">
         <div class="max-w-5xl mx-auto px-8 sm:px-12 lg:px-16">
 
             <!-- Back link -->

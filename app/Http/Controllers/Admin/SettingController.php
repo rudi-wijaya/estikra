@@ -230,13 +230,11 @@ class SettingController extends Controller
             ->sortBy(fn ($setting) => array_search($setting->key, $this->profilSekolahLabelKeyOrder, true))
             ->values();
 
-        $prestasis = \App\Models\Prestasi::orderBy('urutan')->orderByDesc('created_at')->get();
-
         $formAction = route('admin.settings.tentang.update');
         $pageTitle = 'Pengaturan Halaman Tentang';
         $pageSubtitle = 'Kelola konten khusus halaman Tentang';
 
-        return view('admin.settings.index', compact('settings', 'formAction', 'pageTitle', 'pageSubtitle', 'prestasis', 'profilSekolahSettings', 'profilSekolahLabelSettings'));
+        return view('admin.settings.index', compact('settings', 'formAction', 'pageTitle', 'pageSubtitle', 'profilSekolahSettings', 'profilSekolahLabelSettings'));
     }
 
     public function update(Request $request)

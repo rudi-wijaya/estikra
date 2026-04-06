@@ -13,14 +13,24 @@
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">{{ \App\Models\Setting::get('tentang_subjudul', 'Mengenal lebih dekat sekolah kami dan komitmen kami terhadap pendidikan berkualitas') }}</p>
             </div>
 
+            @php
+                $tentangDeskripsi = \App\Models\Setting::get('tentang_deskripsi', 'SD Negeri 3 Krasak Bangsri merupakan sekolah dasar yang berkomitmen memberikan pendidikan berkualitas, membentuk karakter siswa, dan mendorong prestasi akademik maupun non akademik.');
+                $deskripsiParagraf = preg_split('/\R{2,}/', trim($tentangDeskripsi));
+            @endphp
             <div class="bg-white rounded-2xl p-8 border border-blue-100 shadow-sm mb-8">
-                <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ \App\Models\Setting::get('tentang_deskripsi_judul', 'Deskripsi Singkat') }}</h3>
-                <p class="text-gray-700 leading-relaxed">
-                    {{ \App\Models\Setting::get('tentang_deskripsi', 'SD Negeri 3 Krasak Bangsri merupakan sekolah dasar yang berkomitmen memberikan pendidikan berkualitas, membentuk karakter siswa, dan mendorong prestasi akademik maupun non akademik.') }}
-                </p>
+                <div class="max-w-5xl text-gray-700 text-lg leading-9">
+                    @foreach ($deskripsiParagraf as $paragraf)
+                        @if (trim($paragraf) !== '')
+                            <p class="mb-5 last:mb-0 whitespace-pre-line">{{ trim($paragraf) }}</p>
+                        @endif
+                    @endforeach
+                </div>
             </div>
 
-            <div class="bg-white rounded-2xl p-8 border border-blue-100 shadow-sm mb-8">
+            <div class="mb-4">
+                <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-sm font-semibold text-blue-700">Profil Sekolah</span>
+            </div>
+            <div class="bg-white rounded-2xl p-8 border border-blue-100 shadow-sm mb-10">
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ \App\Models\Setting::get('tentang_profil_judul', 'Profil Sekolah') }}</h3>
                 @php
                     $profilItems = [
@@ -60,6 +70,10 @@
                         </div>
                     @endforeach
                 </div>
+            </div>
+
+            <div class="mb-4">
+                <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-sm font-semibold text-blue-700">Visi & Misi</span>
             </div>
 
             <!-- Visi & Misi Cards -->
@@ -102,8 +116,11 @@
             </div>
             <div class="space-y-4">
                 @if (isset($prestasis) && $prestasis->count() > 0)
+                    @php
+                        $prestasiUtama = $prestasis->take(3);
+                    @endphp
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach ($prestasis as $prestasi)
+                        @foreach ($prestasiUtama as $prestasi)
                             <div class="card-hover bg-white rounded-xl border-2 border-yellow-100 hover:border-yellow-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
                                 <div class="h-44 bg-gradient-to-br from-yellow-100 to-yellow-50 overflow-hidden">
                                     @if ($prestasi->foto)
@@ -126,6 +143,15 @@
                             </div>
                         @endforeach
                     </div>
+
+                    @if ($prestasis->count() > 3)
+                        <div class="text-center pt-2">
+                            <a href="{{ route('prestasi.index') }}" class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-5 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50 transition-colors">
+                                <span>Lihat Selengkapnya</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    @endif
                 @else
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @php

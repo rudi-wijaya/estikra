@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Berita extends Model
 {
@@ -25,5 +26,10 @@ class Berita extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function prestasi(): HasOne
+    {
+        return $this->hasOne(Prestasi::class);
     }
 }

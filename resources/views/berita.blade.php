@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Berita Section -->
-    <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
+
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
             <!-- Section Header -->
             <div class="text-center mb-16 animate-fadeInUp">
@@ -33,7 +33,7 @@
                             </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2">{{ $berita->judul }}</h3>
                             <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">{{ Str::limit(strip_tags($berita->konten), 150) }}</p>
-                            <a href="{{ route('berita.show', $berita->slug) }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 self-start mt-auto">
+                            <a href="{{ route('berita.show', $berita->slug) }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300 self-start mt-auto">
                                 Baca Selengkapnya
                             </a>
                         </div>
@@ -48,10 +48,46 @@
 
             <!-- Pagination -->
             @if ($beritas->hasPages())
-                <div class="flex justify-center mt-12">
-                    {{ $beritas->links() }}
+                <div class="flex justify-center mt-10">
+                    <nav class="flex items-center gap-2" aria-label="Pagination">
+                        @if ($beritas->onFirstPage())
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Previous</span>
+                        @else
+                            <a href="{{ $beritas->previousPageUrl() }}" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Previous</a>
+                        @endif
+
+                        @for ($page = 1; $page <= $beritas->lastPage(); $page++)
+                            @php
+                                $isNearCurrent = abs($page - $beritas->currentPage()) <= 1;
+                                $isEdgePage = in_array($page, [1, $beritas->lastPage()], true);
+                            @endphp
+
+                            @if (!($isNearCurrent || $isEdgePage))
+                                @continue
+                            @endif
+
+                            @if ($page > 1 && !($isNearCurrent || in_array($page - 1, [1, $beritas->lastPage()], true) || abs(($page - 1) - $beritas->currentPage()) <= 1))
+                                <span class="inline-flex items-center justify-center min-w-10 h-10 text-sm font-semibold text-gray-400">...</span>
+                            @endif
+
+                            @if ($page == $beritas->currentPage())
+                                <span class="inline-flex items-center justify-center min-w-10 h-10 rounded-full px-3 text-sm font-bold text-white bg-blue-600">{{ $page }}</span>
+                            @else
+                                <a href="{{ $beritas->url($page) }}" class="inline-flex items-center justify-center min-w-10 h-10 rounded-full px-3 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">{{ $page }}</a>
+                            @endif
+                        @endfor
+
+                        @if ($beritas->hasMorePages())
+                            <a href="{{ $beritas->nextPageUrl() }}" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Next</a>
+                        @else
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Next</span>
+                        @endif
+                    </nav>
                 </div>
             @endif
+
+
+
         </div>
     </section>
 @endsection

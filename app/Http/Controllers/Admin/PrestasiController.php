@@ -8,10 +8,25 @@ use Illuminate\Http\Request;
 
 class PrestasiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $prestasis = Prestasi::orderBy('urutan')->orderByDesc('created_at')->paginate(10);
-        return view('admin.prestasis.index', compact('prestasis'));
+        $search = trim((string) $request->query('q', ''));
+
+        $prestasis = Prestasi::query()
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($subQuery) use ($search) {
+                    $subQuery->where('judul', 'like', '%' . $search . '%')
+                        ->orWhere('keterangan', 'like', '%' . $search . '%')
+                        ->orWhere('tahun', 'like', '%' . $search . '%')
+                        ->orWhere('status', 'like', '%' . $search . '%');
+                });
+            })
+            ->orderBy('urutan')
+            ->orderByDesc('created_at')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.prestasis.index', compact('prestasis', 'search'));
     }
 
     public function create()
@@ -35,6 +50,7 @@ class PrestasiController extends Controller
         }
 
         Prestasi::create($validated);
+        Prestasi::refreshUrutanByTanggalTahun();
 
         return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi berhasil ditambahkan');
     }
@@ -63,6 +79,7 @@ class PrestasiController extends Controller
         }
 
         $prestasi->update($validated);
+        Prestasi::refreshUrutanByTanggalTahun();
 
         return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi berhasil diperbarui');
     }
@@ -74,6 +91,7 @@ class PrestasiController extends Controller
         }
 
         $prestasi->delete();
+        Prestasi::refreshUrutanByTanggalTahun();
 
         return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi berhasil dihapus');
     }
