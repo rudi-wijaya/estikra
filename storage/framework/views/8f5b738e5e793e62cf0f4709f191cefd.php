@@ -128,6 +128,51 @@
 
 
 
+    
+    <!-- Sambutan Kepala Sekolah Section -->
+    <section class="py-8 bg-white ">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
+            <div class="text-center mb-8">
+                <h2 class="section-title">Sambutan dari Pimpinan Sekolah</h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <!-- Photo float left, text wraps around and below -->
+                <div class="float-left mr-8 mb-4 flex flex-col items-center">
+                    <?php $sambutanFoto = \App\Models\Setting::get('sambutan_foto'); ?>
+                    <?php if($sambutanFoto): ?>
+                        <img src="<?php echo e(asset($sambutanFoto)); ?>" alt="Kepala Sekolah" class="rounded-full w-64 h-64 object-cover shadow-xl border-4 border-blue-50">
+                    <?php else: ?>
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-full w-64 h-64 flex items-center justify-center shadow-xl border-4 border-blue-50">
+                            <span class="text-6xl"></span>
+                        </div>
+                    <?php endif; ?>
+                    <div class="mt-3 text-center">
+                        <p class="text-sm font-bold text-gray-900">Ibu Sutanti, S.Pd</p>
+                        <p class="text-xs text-blue-600 font-medium">Kepala Sekolah</p>
+                        <p class="text-xs text-gray-500">SD Negeri 3 Krasak Bangsri</p>
+                    </div>
+                </div>
+
+                <!-- Text flows beside and below photo -->
+                <div class="text-gray-600 leading-relaxed text-[15px] space-y-4">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Assalamu'alaikum Warahmatullahi Wabarakatuh</h3>
+
+                    <p>Dengan penuh rasa syukur, kami menyambut kehadiran Anda di website SD Negeri 3 Krasak Bangsri. Website ini kami hadirkan sebagai media informasi dan komunikasi antara sekolah dengan siswa, orang tua, serta masyarakat.</p>
+
+                    <p>SD Negeri 3 Krasak Bangsri berkomitmen memberikan pendidikan yang berkualitas. Kami tidak hanya mengembangkan kemampuan akademik siswa, tetapi juga membentuk karakter, kedisiplinan, dan akhlak yang baik sesuai dengan nilai Pancasila dan ajaran agama.</p>
+
+                    <p>Kami percaya pendidikan yang baik lahir dari kerja sama antara sekolah, orang tua, dan masyarakat. Dukungan tersebut membantu menciptakan lingkungan belajar yang nyaman, aktif, dan mendorong siswa untuk berkembang sesuai potensi mereka.</p>
+
+                    <p>Melalui website ini kami berharap masyarakat dapat mengenal lebih dekat kegiatan, program, serta prestasi yang ada di SD Negeri 3 Krasak Bangsri.</p>
+
+                    <p>Terima kasih atas kepercayaan dan dukungan yang telah diberikan. Semoga SD Negeri 3 Krasak Bangsri terus berkembang dan mampu mencetak generasi yang berprestasi, berkarakter, dan berakhlak mulia.</p>
+                </div>
+                <div class="clear-both"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- Tentang Sekolah Section -->
     <section id="tentang-sekolah" class="py-8 bg-white">
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
@@ -210,98 +255,33 @@
 
                         <!-- Misi Card -->
                         <div class="bg-white rounded-2xl border border-blue-100 shadow-sm overflow-hidden">
-                            <!-- Header + Toggle -->
-                            <button
-                                <?php if(count($misiExtra) > 0): ?>
-                                    onclick="toggleCollapse('misiExtra','misiIcon')"
-                                <?php endif; ?>
-                                class="w-full flex items-center justify-between p-6 text-left transition-colors duration-200 <?php echo e(count($misiExtra) > 0 ? 'hover:bg-blue-50 cursor-pointer' : 'cursor-default'); ?>"
-                            >
+                            <!-- Header -->
+                            <div class="w-full p-6 text-left">
                                 <h4 class="text-lg font-bold text-gray-900">Misi Kami</h4>
-                                <?php if(count($misiExtra) > 0): ?>
-                                    <span id="misiIcon" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0 transition-transform duration-300">
-                                        <i class="bi bi-chevron-down text-sm"></i>
-                                    </span>
-                                <?php endif; ?>
-                            </button>
+                            </div>
 
                             <!-- Misi List -->
                             <div class="px-6 pb-6 space-y-2.5">
-                                <?php $__currentLoopData = $misiPrimary; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $misiItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="flex items-start gap-3">
                                         <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
                                         <span class="text-gray-700 text-sm"><?php echo e($item); ?></span>
                                     </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                                <!-- Item 4: expand/collapse -->
-                                <?php if(count($misiExtra) > 0): ?>
-                                    <div id="misiExtra" class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
-                                        <div class="space-y-2.5 pt-2.5">
-                                            <?php $__currentLoopData = $misiExtra; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <div class="flex items-start gap-3">
-                                                    <span class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 shrink-0"></span>
-                                                    <span class="text-gray-700 text-sm"><?php echo e($item); ?></span>
-                                                </div>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
 
+                    <div class="text-center ">
                     <a href="/tentang" class="btn-primary mt-8 inline-block rounded-full">
-                        Selengkapnya
+                        Pelajari Lebih Lanjut
                     </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sambutan Kepala Sekolah Section -->
-    <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
-            <div class="text-center mb-8">
-                <h2 class="section-title">Sambutan dari Pimpinan Sekolah</h2>
-            </div>
-
-            <div class="max-w-4xl mx-auto">
-                <!-- Photo float left, text wraps around and below -->
-                <div class="float-left mr-8 mb-4 flex flex-col items-center">
-                    <?php $sambutanFoto = \App\Models\Setting::get('sambutan_foto'); ?>
-                    <?php if($sambutanFoto): ?>
-                        <img src="<?php echo e(asset($sambutanFoto)); ?>" alt="Kepala Sekolah" class="rounded-full w-64 h-64 object-cover shadow-xl border-4 border-blue-50">
-                    <?php else: ?>
-                        <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-full w-64 h-64 flex items-center justify-center shadow-xl border-4 border-blue-50">
-                            <span class="text-6xl"></span>
-                        </div>
-                    <?php endif; ?>
-                    <div class="mt-3 text-center">
-                        <p class="text-sm font-bold text-gray-900">Ibu Sutanti, S.Pd</p>
-                        <p class="text-xs text-blue-600 font-medium">Kepala Sekolah</p>
-                        <p class="text-xs text-gray-500">SD Negeri 3 Krasak Bangsri</p>
                     </div>
                 </div>
-
-                <!-- Text flows beside and below photo -->
-                <div class="text-gray-600 leading-relaxed text-[15px] space-y-4">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Assalamu'alaikum Warahmatullahi Wabarakatuh</h3>
-
-                    <p>Dengan penuh rasa syukur, kami menyambut kehadiran Anda di website SD Negeri 3 Krasak Bangsri. Website ini kami hadirkan sebagai media informasi dan komunikasi antara sekolah dengan siswa, orang tua, serta masyarakat.</p>
-
-                    <p>SD Negeri 3 Krasak Bangsri berkomitmen memberikan pendidikan yang berkualitas. Kami tidak hanya mengembangkan kemampuan akademik siswa, tetapi juga membentuk karakter, kedisiplinan, dan akhlak yang baik sesuai dengan nilai Pancasila dan ajaran agama.</p>
-
-                    <p>Kami percaya pendidikan yang baik lahir dari kerja sama antara sekolah, orang tua, dan masyarakat. Dukungan tersebut membantu menciptakan lingkungan belajar yang nyaman, aktif, dan mendorong siswa untuk berkembang sesuai potensi mereka.</p>
-
-                    <p>Melalui website ini kami berharap masyarakat dapat mengenal lebih dekat kegiatan, program, serta prestasi yang ada di SD Negeri 3 Krasak Bangsri.</p>
-
-                    <p>Terima kasih atas kepercayaan dan dukungan yang telah diberikan. Semoga SD Negeri 3 Krasak Bangsri terus berkembang dan mampu mencetak generasi yang berprestasi, berkarakter, dan berakhlak mulia.</p>
-                </div>
-                <div class="clear-both"></div>
             </div>
         </div>
     </section>
+
 
     <!-- Program Section -->
     <section class="py-8 bg-white">
@@ -586,16 +566,16 @@
             <div class="mb-8 animate-fadeInUp">
                 <h2 class="text-4xl lg:text-5xl font-bold text-white mb-4">Hubungi Kami</h2>
                 <p class="text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed">
-                    Kami siap menjawab semua pertanyaan Anda tentang sekolah, pendaftaran, atau hal lainnya. Hubungi kami sekarang melalui berbagai saluran komunikasi yang tersedia.
+                    Ikuti Instagram kami untuk melihat kegiatan terbaru, informasi sekolah, dan momen-momen terbaik siswa SD Negeri 3 Krasak Bangsri.
                 </p>
             </div>
 
             <!-- CTA Button -->
             <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="/kontak"
+                <a href="<?php echo e(\App\Models\Setting::get('sekolah_instagram', 'https://www.instagram.com/sdn3krasakbangsri')); ?>" target="_blank" rel="noopener noreferrer"
                          class="card-hover group inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-blue-600 font-bold px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 text-lg">
-                    <i class="bi bi-telephone-fill text-xl"></i>
-                    <span>Hubungi Kami Sekarang</span>
+                    <i class="bi bi-instagram text-xl"></i>
+                    <span>Kunjungi Instagram Kami</span>
                 </a>
             </div>
         </div>

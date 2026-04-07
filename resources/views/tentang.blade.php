@@ -146,9 +146,8 @@
 
                     @if ($prestasis->count() > 3)
                         <div class="text-center pt-2">
-                            <a href="{{ route('prestasi.index') }}" class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-5 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50 transition-colors">
-                                <span>Lihat Selengkapnya</span>
-                                <i class="bi bi-arrow-right"></i>
+                            <a href="{{ route('prestasi.index') }}" class="btn-primary inline-block rounded-full">
+                                Lihat Selengkapnya
                             </a>
                         </div>
                     @endif

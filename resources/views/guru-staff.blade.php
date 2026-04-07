@@ -203,7 +203,7 @@
 
     <!-- Guru & Staff Section -->
 
-        <div class="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16">
+        <div class="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 p-12">
             <div class="text-center mb-16 animate-fadeInUp">
                 <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Tim Pendidik Kami</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Tim profesional yang berdedikasi untuk pendidikan berkualitas dan pembentukan karakter siswa</p>

@@ -20,7 +20,13 @@
                         <!-- Image -->
                         <div class="h-64 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 relative flex-shrink-0">
                             <?php if($galeri->gambar): ?>
-                                <img src="<?php echo e(asset('storage/' . $galeri->gambar)); ?>" alt="<?php echo e($galeri->judul); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                <img
+                                    src="<?php echo e(asset('storage/' . $galeri->gambar)); ?>"
+                                    alt="<?php echo e($galeri->judul); ?>"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 cursor-zoom-in"
+                                    data-lightbox-image="<?php echo e(asset('storage/' . $galeri->gambar)); ?>"
+                                    data-lightbox-title="<?php echo e($galeri->judul); ?>"
+                                >
                             <?php else: ?>
                                 <div class="w-full h-full flex items-center justify-center text-6xl"></div>
                             <?php endif; ?>
@@ -89,7 +95,79 @@
                 </div>
             <?php endif; ?>
         </div>
+
+        <!-- Lightbox Modal -->
+        <div id="galeriLightbox" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
+            <div class="absolute inset-0 bg-black/80"></div>
+
+            <button
+                type="button"
+                id="lightboxCloseButton"
+                class="absolute top-4 right-4 text-white text-3xl leading-none w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                aria-label="Tutup popup gambar"
+            >&times;</button>
+
+            <div class="relative h-full w-full flex items-center justify-center p-4 sm:p-8">
+                <div class="max-w-5xl w-full flex flex-col items-center">
+                    <img id="lightboxImage" src="" alt="Preview gambar galeri" class="max-h-[80vh] w-auto max-w-full object-contain rounded-xl shadow-2xl">
+                    <p id="lightboxTitle" class="mt-4 text-white text-center text-base sm:text-lg font-medium"></p>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const lightbox = document.getElementById('galeriLightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxTitle = document.getElementById('lightboxTitle');
+            const closeButton = document.getElementById('lightboxCloseButton');
+            const galleryImages = document.querySelectorAll('[data-lightbox-image]');
+
+            if (!lightbox || !lightboxImage || !lightboxTitle || !closeButton || galleryImages.length === 0) {
+                return;
+            }
+
+            const openLightbox = (src, title) => {
+                lightboxImage.src = src;
+                lightboxTitle.textContent = title || '';
+                lightbox.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+                lightbox.setAttribute('aria-hidden', 'false');
+            };
+
+            const closeLightbox = () => {
+                lightbox.classList.add('hidden');
+                lightboxImage.src = '';
+                lightboxTitle.textContent = '';
+                document.body.classList.remove('overflow-hidden');
+                lightbox.setAttribute('aria-hidden', 'true');
+            };
+
+            galleryImages.forEach((image) => {
+                image.addEventListener('click', function () {
+                    openLightbox(this.dataset.lightboxImage, this.dataset.lightboxTitle);
+                });
+            });
+
+            closeButton.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', function (event) {
+                if (event.target !== lightboxImage) {
+                    closeLightbox();
+                }
+            });
+
+            lightboxImage.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && lightbox.getAttribute('aria-hidden') === 'false') {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\estikra\resources\views/galeri.blade.php ENDPATH**/ ?>
