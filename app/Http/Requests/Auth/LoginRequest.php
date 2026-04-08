@@ -4,6 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
@@ -42,12 +43,12 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         $inputEmail = trim(strtolower($this->input('email')));
-        $allowedEmail = strtolower(config('admin.allowed_email', 'admin@estikra.local'));
-        
-        // Check if email is allowed
-        if ($inputEmail !== $allowedEmail) {
+
+        $user = User::whereRaw('LOWER(email) = ?', [$inputEmail])->first();
+
+        if ($user && $user->status !== 'active') {
             throw ValidationException::withMessages([
-                'email' => 'Email tidak diizinkan untuk login.',
+                'email' => 'Akun Anda tidak aktif. Hubungi administrator.',
             ]);
         }
 

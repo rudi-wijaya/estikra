@@ -3,8 +3,28 @@
 @section('page_title', isset($user) ? 'Edit User' : 'Tambah User')
 
 @section('content')
+    <style>
+        @media (max-width: 768px) {
+            .user-form-header {
+                gap: 0.75rem;
+            }
+
+            .user-form-header .btn {
+                width: 100%;
+            }
+
+            .user-form-actions {
+                flex-direction: column;
+            }
+
+            .user-form-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+
     <div class="page-header mb-4">
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center user-form-header">
             <div>
                 <h1 class="page-title">{{ isset($user) ? 'Edit User' : 'Tambah User Baru' }}</h1>
                 <p class="page-subtitle">{{ isset($user) ? 'Perbarui informasi user' : 'Isi form di bawah untuk menambah user baru' }}</p>
@@ -87,7 +107,7 @@
                         </div>
 
                         <!-- Buttons -->
-                        <div class="d-flex gap-2">
+                        <div class="d-flex gap-2 user-form-actions">
                             <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-{{ isset($user) ? 'check-circle' : 'plus-circle' }} me-2"></i>
                                 {{ isset($user) ? 'Perbarui' : 'Tambah' }} User
@@ -120,17 +140,6 @@
                         <div class="mb-3">
                             <small class="text-muted">Terakhir Diubah</small>
                             <p class="mb-0 fw-semibold">{{ $user->updated_at->format('d/m/Y H:i') }}</p>
-                        </div>
-                        <div class="mb-3">
-                            <small class="text-muted">Verifikasi Email</small>
-                            <p class="mb-0">
-                                @if($user->email_verified_at)
-                                    <span class="badge bg-success">Terverifikasi</span>
-                                    <small class="text-muted d-block mt-1">{{ $user->email_verified_at->format('d/m/Y H:i') }}</small>
-                                @else
-                                    <span class="badge bg-warning">Belum Terverifikasi</span>
-                                @endif
-                            </p>
                         </div>
                     @else
                         <div class="alert alert-info">

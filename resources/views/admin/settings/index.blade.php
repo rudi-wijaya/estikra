@@ -65,6 +65,31 @@
         @endphp
 
         @foreach ($settings as $group => $items)
+            @php
+                $itemsToRender = $items;
+                if ($group === 'sekolah') {
+                    $sekolahOrder = [
+                        'sekolah_nama',
+                        'sekolah_tagline',
+                        'sekolah_logo',
+                        'sambutan_foto',
+                        'sambutan_judul',
+                        'sambutan_isi',
+                        'sekolah_alamat',
+                        'sekolah_email',
+                        'sekolah_telepon',
+                        'sekolah_instagram',
+                        'footer_maps_embed',
+                    ];
+
+                    $itemsToRender = $items
+                        ->sortBy(fn ($setting) => array_search($setting->key, $sekolahOrder, true) !== false
+                            ? array_search($setting->key, $sekolahOrder, true)
+                            : 999)
+                        ->values();
+                }
+            @endphp
+
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi {{ $groupLabels[$group]['icon'] ?? 'bi-gear' }}"></i>
@@ -104,10 +129,10 @@
                             </div>
                         @endif
 
-                        @foreach ($items as $setting)
+                        @foreach ($itemsToRender as $setting)
                             @php
                                 $isTentangPage = request()->routeIs('admin.settings.tentang.*');
-                                $wideKeysDefault = ['tentang_visi', 'tentang_misi', 'sekolah_alamat', 'tentang_deskripsi', 'footer_maps_embed'];
+                                $wideKeysDefault = ['tentang_visi', 'tentang_misi', 'sekolah_alamat', 'tentang_deskripsi', 'footer_maps_embed', 'sambutan_judul', 'sambutan_isi'];
                                 $wideKeysTentang = ['tentang_visi', 'tentang_misi', 'tentang_deskripsi'];
                                 $isWideField = in_array($setting->key, $isTentangPage ? $wideKeysTentang : $wideKeysDefault, true);
                             @endphp
@@ -160,7 +185,15 @@
                             @endif
 
                             <div class="col-12 {{ $isWideField ? '' : 'col-md-6' }}">
-                                <label class="form-label" for="{{ $setting->key }}">{{ $setting->label }}</label>
+                                @php
+                                    $displayLabel = $setting->label;
+                                    if ($setting->key === 'sambutan_isi') {
+                                        $displayLabel = 'Isi Sambutan Kepala Sekolah';
+                                    } elseif ($setting->key === 'sambutan_judul') {
+                                        $displayLabel = 'Judul Sambutan Kepala Sekolah';
+                                    }
+                                @endphp
+                                <label class="form-label text-nowrap" for="{{ $setting->key }}">{{ $displayLabel }}</label>
                                 @if (in_array($setting->key, ['sekolah_logo', 'sambutan_foto']))
                                     @if ($setting->value)
                                         <div class="mb-2">
@@ -182,13 +215,15 @@
                                     <textarea
                                         id="{{ $setting->key }}"
                                         name="{{ $setting->key }}"
-                                        class="form-control"
+                                        class="form-control auto-resize-textarea"
                                         rows="{{ in_array($setting->key, ['tentang_visi', 'tentang_misi']) ? 8 : (in_array($setting->key, ['footer_maps_embed']) ? 4 : 3) }}"
                                     >{{ old($setting->key, $setting->value) }}</textarea>
                                     @if (in_array($setting->key, ['tentang_visi', 'tentang_misi']))
                                         <small class="text-muted">Tulis satu poin per baris. Tekan Enter untuk baris baru.</small>
                                     @elseif ($setting->key === 'footer_maps_embed')
                                         <small class="text-muted">Tempel URL embed dari Google Maps (nilai pada atribut src iframe).</small>
+                                    @elseif ($setting->key === 'sambutan_isi')
+                                        <small class="text-muted">Pisahkan paragraf dengan baris kosong.</small>
                                     @endif
                                 @else
                                     <input
@@ -242,7 +277,7 @@
                                 <div class="col-12 col-md-6">
                                     <label class="form-label" for="{{ $valueSetting->key }}">{{ $valueSetting->label }}</label>
                                     @if ($isAlamat)
-                                        <textarea id="{{ $valueSetting->key }}" name="{{ $valueSetting->key }}" class="form-control" rows="3">{{ old($valueSetting->key, $valueSetting->value) }}</textarea>
+                                        <textarea id="{{ $valueSetting->key }}" name="{{ $valueSetting->key }}" class="form-control auto-resize-textarea" rows="3">{{ old($valueSetting->key, $valueSetting->value) }}</textarea>
                                     @else
                                         <input type="text" id="{{ $valueSetting->key }}" name="{{ $valueSetting->key }}" class="form-control" value="{{ old($valueSetting->key, $valueSetting->value) }}">
                                     @endif
@@ -304,6 +339,24 @@
 
         addBtn.addEventListener('click', createInputRow);
         createInputRow();
+    })();
+
+    (function () {
+        const textareas = document.querySelectorAll('.auto-resize-textarea');
+        if (!textareas.length) return;
+
+        function autoResize(el) {
+            el.style.height = 'auto';
+            el.style.overflowY = 'hidden';
+            el.style.height = el.scrollHeight + 'px';
+        }
+
+        textareas.forEach((textarea) => {
+            autoResize(textarea);
+            textarea.addEventListener('input', function () {
+                autoResize(textarea);
+            });
+        });
     })();
 </script>
 @endsection

@@ -3,8 +3,70 @@
 <?php $__env->startSection('page_title', 'Manajemen User'); ?>
 
 <?php $__env->startSection('content'); ?>
+    <style>
+        @media (max-width: 768px) {
+            .user-page-header {
+                gap: 0.75rem;
+            }
+
+            .user-page-header .btn {
+                width: 100%;
+            }
+
+            .users-mobile-table thead {
+                display: none;
+            }
+
+            .users-mobile-table tbody,
+            .users-mobile-table tr,
+            .users-mobile-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .users-mobile-table tr {
+                border: 1px solid #dbeafe;
+                border-radius: 12px;
+                background: #fff;
+                margin: 0 0 12px;
+                padding: 10px;
+            }
+
+            .users-mobile-table td {
+                border: 0;
+                border-bottom: 1px dashed #dbeafe;
+                padding: 8px 4px;
+            }
+
+            .users-mobile-table td:last-child {
+                border-bottom: 0;
+                padding-bottom: 2px;
+            }
+
+            .users-mobile-table td::before {
+                content: attr(data-label);
+                display: block;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: #64748b;
+                margin-bottom: 5px;
+                font-weight: 600;
+            }
+
+            .users-mobile-table td[data-label="Aksi"] .d-flex {
+                flex-wrap: wrap;
+            }
+
+            .users-mobile-table td[data-label="Aksi"] .btn {
+                flex: 1 1 calc(33.333% - 6px);
+                min-width: 44px;
+            }
+        }
+    </style>
+
     <div class="page-header mb-4">
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center user-page-header">
             <div>
                 <h1 class="page-title">Manajemen User</h1>
                 <p class="page-subtitle">Kelola semua user dalam sistem</p>
@@ -44,22 +106,22 @@
             <i class="bi bi-table me-2"></i>Daftar User
         </div>
         <div class="table-responsive">
-            <table class="table mb-0">
+            <table class="table mb-0 users-mobile-table">
                 <thead>
                     <tr>
                         <th style="width: 50px">#</th>
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Terdaftar</th>
-                        <th>Status</th>
+                        <th>Status Akun</th>
                         <th style="width: 150px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr>
-                            <td><?php echo e($loop->iteration); ?></td>
-                            <td>
+                            <td data-label="#"><?php echo e($loop->iteration); ?></td>
+                            <td data-label="Nama">
                                 <div class="d-flex align-items-center">
                                     <div class="user-avatar" style="width: 36px; height: 36px; font-size: 14px;">
                                         <?php echo e(substr($user->name, 0, 1)); ?>
@@ -71,23 +133,23 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><?php echo e($user->email); ?></td>
-                            <td>
+                            <td data-label="Email"><?php echo e($user->email); ?></td>
+                            <td data-label="Terdaftar">
                                 <?php echo e($user->created_at->format('d/m/Y H:i')); ?>
 
                             </td>
-                            <td>
-                                <?php if($user->email_verified_at): ?>
+                            <td data-label="Status Akun">
+                                <?php if($user->status === 'active'): ?>
                                     <span class="badge bg-success">
-                                        <i class="bi bi-check-circle me-1"></i>Terverifikasi
+                                        <i class="bi bi-check-circle me-1"></i>Aktif
                                     </span>
                                 <?php else: ?>
-                                    <span class="badge bg-warning">
-                                        <i class="bi bi-clock-history me-1"></i>Pending
+                                    <span class="badge bg-danger">
+                                        <i class="bi bi-x-circle me-1"></i>Tidak Aktif
                                     </span>
                                 <?php endif; ?>
                             </td>
-                            <td>
+                            <td data-label="Aksi">
                                 <div class="d-flex gap-1">
                                     <a href="<?php echo e(route('admin.users.show', $user->id)); ?>" class="btn btn-sm btn-outline-secondary" title="Lihat">
                                         <i class="bi bi-eye"></i>

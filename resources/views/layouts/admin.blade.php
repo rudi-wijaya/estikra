@@ -35,11 +35,14 @@
         body {
             font-family: 'Poppins', 'Segoe UI', sans-serif;
             background-color: #f0f6ff;
+            overflow-x: hidden;
         }
 
         .admin-wrapper {
             display: flex;
             min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         /* Sidebar */
@@ -176,6 +179,9 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            min-width: 0;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         /* Top Navigation */
@@ -193,18 +199,21 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            min-width: 0;
         }
 
         .navbar-brand {
             font-size: 18px;
             font-weight: 600;
             color: #007AFF;
+            white-space: nowrap;
         }
 
         .navbar-right {
             display: flex;
             align-items: center;
             gap: 25px;
+            flex-shrink: 0;
         }
 
         .navbar-item {
@@ -212,6 +221,69 @@
             color: #007AFF;
             font-size: 18px;
             transition: color 0.3s ease;
+        }
+
+        .navbar-icon-btn {
+            border: 0;
+            background: transparent;
+            color: #007AFF;
+            font-size: 18px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            line-height: 1;
+        }
+
+        .navbar-icon-btn::after {
+            display: none;
+        }
+
+        .notif-badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 999px;
+            background: #dc2626;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            border: 1px solid #fff;
+        }
+
+        .notif-menu {
+            width: min(320px, calc(100vw - 24px));
+            border-radius: 12px;
+            border: 1px solid #dbeafe;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .notif-menu .dropdown-header {
+            font-weight: 700;
+            color: #0f172a;
+            padding: 10px 12px;
+            background: #f8fbff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .notif-menu .dropdown-item {
+            padding: 10px 12px;
+            white-space: normal;
+            font-size: 13px;
+        }
+
+        .notif-menu .dropdown-item small {
+            color: #64748b;
+            display: block;
         }
 
         .navbar-item:hover {
@@ -227,6 +299,7 @@
             background-color: #e5f2ff;
             cursor: pointer;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .user-profile:hover {
@@ -237,13 +310,23 @@
             width: 35px;
             height: 35px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #007AFF 0%, #3396ff 100%);
+            background-color: #007AFF;
+            border: 2px solid #ffffff;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             font-size: 15px;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+
+        .user-avatar svg {
+            width: 16px;
+            height: 16px;
+            display: block;
+            fill: currentColor;
         }
 
         .user-name {
@@ -257,6 +340,7 @@
             flex: 1;
             padding: 30px;
             overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .page-header {
@@ -453,18 +537,52 @@
 
             .main-content {
                 margin-left: 0;
+                width: 100%;
+                min-width: 0;
+                height: 100vh;
+                overflow: hidden;
             }
 
             .page-content {
                 padding: 15px;
+                height: calc(100vh - 57px);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             .top-navbar {
                 padding: 12px 16px;
+                position: sticky;
+                top: 0;
+                z-index: 990;
+            }
+
+            .navbar-left {
+                gap: 10px;
+                min-width: 0;
+                flex: 1;
             }
 
             .navbar-brand {
                 font-size: 16px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 45vw;
+            }
+
+            .navbar-right {
+                gap: 10px;
+                position: static;
+                transform: none;
+            }
+
+            .navbar-item {
+                font-size: 16px;
+                display: inline-flex;
+            }
+
+            .notif-menu {
+                width: min(300px, calc(100vw - 16px));
             }
 
             .page-title {
@@ -472,7 +590,23 @@
             }
 
             .user-name {
-                display: none;
+                display: none !important;
+            }
+
+            .user-profile {
+                padding: 4px;
+                border-radius: 999px;
+                background-color: transparent;
+                display: flex !important;
+            }
+
+            .user-profile:hover {
+                background-color: transparent;
+            }
+
+            .user-avatar {
+                width: 32px;
+                height: 32px;
             }
 
             .stat-value {
@@ -623,6 +757,12 @@
         <!-- Main Content -->
         <div class="main-content">
             <!-- Top Navigation -->
+            @php
+                $notifDraftBerita = \App\Models\Berita::where('status', 'draft')->count();
+                $notifInactiveUsers = \App\Models\User::where('status', 'inactive')->count();
+                $notifInactivePpdb = \App\Models\PpdbItem::where('aktif', false)->count();
+                $notifTotal = $notifDraftBerita + $notifInactiveUsers + $notifInactivePpdb;
+            @endphp
             <nav class="top-navbar">
                 <div class="navbar-left">
                     <button class="btn btn-link" id="sidebarToggle" style="color: #007AFF; padding: 4px 8px;">
@@ -633,14 +773,42 @@
                     </div>
                 </div>
                 <div class="navbar-right">
-                    <div class="navbar-item" title="Notifikasi">
-                        <i class="bi bi-bell"></i>
+                    <div class="dropdown navbar-item" title="Notifikasi">
+                        <button class="navbar-icon-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifikasi">
+                            <i class="bi bi-bell"></i>
+                            @if($notifTotal > 0)
+                                <span class="notif-badge">{{ $notifTotal > 99 ? '99+' : $notifTotal }}</span>
+                            @endif
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end notif-menu">
+                            <li class="dropdown-header">Notifikasi Sistem</li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.beritas.index') }}">
+                                    Draft Berita
+                                    <small>{{ $notifDraftBerita }} item belum dipublikasikan</small>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.users.index') }}">
+                                    User Tidak Aktif
+                                    <small>{{ $notifInactiveUsers }} akun perlu ditinjau</small>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.ppdb.index') }}">
+                                    Item PPDB Nonaktif
+                                    <small>{{ $notifInactivePpdb }} item belum aktif</small>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                     <div class="user-profile">
                         <div class="user-avatar">
-                            {{ substr(auth()->user()->name, 0, 1) }}
+                            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 1c-2.673 0-8 1.34-8 4v1h16v-1c0-2.66-5.327-4-8-4Z"/>
+                            </svg>
                         </div>
-                        <div class="user-name">{{ auth()->user()->name }}</div>
+                        <div class="user-name d-none d-md-block">{{ auth()->user()->name }}</div>
                     </div>
                 </div>
             </nav>

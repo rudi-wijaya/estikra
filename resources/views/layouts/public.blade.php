@@ -59,6 +59,28 @@
             animation: fadeIn 0.6s ease-out;
         }
 
+        [data-animate] {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            will-change: opacity, transform;
+        }
+
+        [data-animate].in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        [data-stagger] > * {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        [data-stagger].in-view > * {
+            animation: fadeInUp 0.7s ease-out forwards;
+            animation-delay: calc(var(--stagger-order, 0) * 90ms);
+        }
+
         /* Visi Accordion */
         .visi-content {
             animation: fadeIn 0.3s ease-out;
@@ -468,7 +490,7 @@
 
             <!-- Footer Bottom -->
             <div class="flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-3 pt-6">
-                <p>&copy; {{ date('Y') }} {{ \App\Models\Setting::get('sekolah_nama', 'SD Negeri 3 Krasak Bangsri') }}, All Right Reserved. dikembangkan oleh <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 underline">M Rudi Wijaya</a></p>
+                <p>&copy; {{ date('Y') }} {{ \App\Models\Setting::get('sekolah_nama', 'SD Negeri 3 Krasak Bangsri') }}, All Right Reserved. dikembangkan oleh <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 underline">M. Rudi Wijaya</a></p>
             </div>
         </div>
     </footer>
@@ -559,13 +581,24 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fadeInUp');
+                    if (entry.target.hasAttribute('data-stagger')) {
+                        const children = entry.target.querySelectorAll(':scope > *');
+                        children.forEach((child, index) => {
+                            child.style.setProperty('--stagger-order', index);
+                        });
+                        entry.target.classList.add('in-view');
+                    } else {
+                        entry.target.classList.add('in-view', 'animate-fadeInUp');
+                    }
+
                     observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('[data-animate]').forEach(el => {
+        document.querySelectorAll('[data-animate], [data-stagger]').forEach(el => {
+            // Prevent initial load animation; only animate when element enters viewport
+            el.classList.remove('animate-fadeInUp');
             observer.observe(el);
         });
 

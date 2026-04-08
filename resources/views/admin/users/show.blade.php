@@ -3,13 +3,37 @@
 @section('page_title', 'Detail User')
 
 @section('content')
+    <style>
+        @media (max-width: 768px) {
+            .user-show-header {
+                gap: 0.75rem;
+            }
+
+            .user-show-actions {
+                width: 100%;
+            }
+
+            .user-show-actions .btn {
+                width: 100%;
+            }
+
+            .user-danger-actions {
+                flex-direction: column;
+            }
+
+            .user-danger-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+
     <div class="page-header mb-4">
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center user-show-header">
             <div>
                 <h1 class="page-title">{{ $user->name }}</h1>
                 <p class="page-subtitle">Detail informasi user</p>
             </div>
-            <div class="d-flex gap-2">
+            <div class="d-flex flex-column flex-sm-row gap-2 user-show-actions">
                 <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">
                     <i class="bi bi-pencil me-2"></i>Edit
                 </a>
@@ -31,19 +55,6 @@
                     <h3 class="card-title">{{ $user->name }}</h3>
                     <p class="text-muted mb-3">{{ $user->email }}</p>
                     
-                    <!-- Status Badge -->
-                    <div class="mb-4">
-                        @if($user->email_verified_at)
-                            <span class="badge bg-success">
-                                <i class="bi bi-check-circle me-1"></i>Terverifikasi
-                            </span>
-                        @else
-                            <span class="badge bg-warning">
-                                <i class="bi bi-clock-history me-1"></i>Pending Verifikasi
-                            </span>
-                        @endif
-                    </div>
-
                     <!-- Action Buttons -->
                     <div class="d-grid gap-2">
                         <button class="btn btn-outline-primary btn-sm" onclick="copyToClipboard('{{ $user->id }}')">
@@ -109,37 +120,6 @@
                 </div>
             </div>
 
-            <!-- Verification Information -->
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="bi bi-shield-check me-2"></i>Verifikasi
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label text-muted">Status Verifikasi Email</label>
-                            @if($user->email_verified_at)
-                                <p class="fw-semibold">
-                                    <span class="badge bg-success">Terverifikasi</span>
-                                </p>
-                            @else
-                                <p class="fw-semibold">
-                                    <span class="badge bg-warning">Belum Terverifikasi</span>
-                                </p>
-                            @endif
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label text-muted">Tanggal Verifikasi</label>
-                            @if($user->email_verified_at)
-                                <p class="fw-semibold">{{ $user->email_verified_at->format('d/m/Y H:i') }}</p>
-                            @else
-                                <p class="text-muted">-</p>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Timestamps Information -->
             <div class="card">
                 <div class="card-header">
@@ -174,7 +154,7 @@
                 </div>
                 <div class="card-body">
                     <p class="text-muted mb-3">Tindakan di bawah tidak dapat dibatalkan. Lakukan dengan hati-hati.</p>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 user-danger-actions">
                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                             @csrf
                             @method('DELETE')

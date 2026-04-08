@@ -131,14 +131,31 @@
     <section class="py-8 bg-white ">
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 animate-fadeInUp" data-animate>
             <div class="text-center mb-8">
-                <h2 class="section-title">Sambutan dari Pimpinan Sekolah</h2>
+                <h2 class="section-title">Sambutan Kepala Sekolah</h2>
             </div>
 
-            <div class="max-w-4xl mx-auto">
-                <!-- Photo float left, text wraps around and below -->
-                <div class="float-left mr-8 mb-4 flex flex-col items-center">
+            <div class="max-w-4xl mx-auto" data-stagger>
+                <div class="mx-auto md:mx-0 md:float-left md:mr-8 mb-6 md:mb-3 flex flex-col items-center w-fit">
+                    @php
+                        $kepalaSekolah = \App\Models\GuruStaff::aktif()
+                            ->where('kategori', 'kepala_sekolah')
+                            ->orderBy('urutan')
+                            ->orderBy('nama')
+                            ->first();
+                    @endphp
                     @php $sambutanFoto = \App\Models\Setting::get('sambutan_foto'); @endphp
-                    @if($sambutanFoto)
+                    @php
+                        $sambutanJudulDefault = "Assalamu'alaikum Warahmatullahi Wabarakatuh";
+                        $sambutanIsiDefault = "Dengan penuh rasa syukur, kami menyambut kehadiran Anda di website SD Negeri 3 Krasak Bangsri. Website ini kami hadirkan sebagai media informasi dan komunikasi antara sekolah dengan siswa, orang tua, serta masyarakat.\n\nSD Negeri 3 Krasak Bangsri berkomitmen memberikan pendidikan yang berkualitas. Kami tidak hanya mengembangkan kemampuan akademik siswa, tetapi juga membentuk karakter, kedisiplinan, dan akhlak yang baik sesuai dengan nilai Pancasila dan ajaran agama.\n\nKami percaya pendidikan yang baik lahir dari kerja sama antara sekolah, orang tua, dan masyarakat. Dukungan tersebut membantu menciptakan lingkungan belajar yang nyaman, aktif, dan mendorong siswa untuk berkembang sesuai potensi mereka.\n\nMelalui website ini kami berharap masyarakat dapat mengenal lebih dekat kegiatan, program, serta prestasi yang ada di SD Negeri 3 Krasak Bangsri.\n\nTerima kasih atas kepercayaan dan dukungan yang telah diberikan. Semoga SD Negeri 3 Krasak Bangsri terus berkembang dan mampu mencetak generasi yang berprestasi, berkarakter, dan berakhlak mulia.";
+
+                        $sambutanJudul = \App\Models\Setting::get('sambutan_judul', $sambutanJudulDefault);
+                        $sambutanIsi = \App\Models\Setting::get('sambutan_isi', $sambutanIsiDefault);
+                        $sambutanParagraf = preg_split('/\R{2,}/', trim((string) $sambutanIsi));
+                        $sambutanParagraf = array_values(array_filter(array_map('trim', $sambutanParagraf)));
+                    @endphp
+                    @if($kepalaSekolah?->foto)
+                        <img src="{{ asset('storage/' . $kepalaSekolah->foto) }}" alt="{{ $kepalaSekolah->nama }}" class="rounded-full w-64 h-64 object-cover shadow-xl border-4 border-blue-50">
+                    @elseif($sambutanFoto)
                         <img src="{{ asset($sambutanFoto) }}" alt="Kepala Sekolah" class="rounded-full w-64 h-64 object-cover shadow-xl border-4 border-blue-50">
                     @else
                         <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-full w-64 h-64 flex items-center justify-center shadow-xl border-4 border-blue-50">
@@ -146,25 +163,20 @@
                         </div>
                     @endif
                     <div class="mt-3 text-center">
-                        <p class="text-sm font-bold text-gray-900">Ibu Sutanti, S.Pd</p>
-                        <p class="text-xs text-blue-600 font-medium">Kepala Sekolah</p>
+                        <p class="text-sm font-bold text-gray-900">{{ $kepalaSekolah->nama ?? 'Ibu Sutanti, S.Pd' }}</p>
+                        <p class="text-xs text-blue-600 font-medium">{{ $kepalaSekolah->jabatan ?? 'Kepala Sekolah' }}</p>
                         <p class="text-xs text-gray-500">SD Negeri 3 Krasak Bangsri</p>
                     </div>
                 </div>
 
-                <!-- Text flows beside and below photo -->
                 <div class="text-gray-600 leading-relaxed text-[15px] space-y-4">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Assalamu'alaikum Warahmatullahi Wabarakatuh</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ $sambutanJudul }}</h3>
 
-                    <p>Dengan penuh rasa syukur, kami menyambut kehadiran Anda di website SD Negeri 3 Krasak Bangsri. Website ini kami hadirkan sebagai media informasi dan komunikasi antara sekolah dengan siswa, orang tua, serta masyarakat.</p>
-
-                    <p>SD Negeri 3 Krasak Bangsri berkomitmen memberikan pendidikan yang berkualitas. Kami tidak hanya mengembangkan kemampuan akademik siswa, tetapi juga membentuk karakter, kedisiplinan, dan akhlak yang baik sesuai dengan nilai Pancasila dan ajaran agama.</p>
-
-                    <p>Kami percaya pendidikan yang baik lahir dari kerja sama antara sekolah, orang tua, dan masyarakat. Dukungan tersebut membantu menciptakan lingkungan belajar yang nyaman, aktif, dan mendorong siswa untuk berkembang sesuai potensi mereka.</p>
-
-                    <p>Melalui website ini kami berharap masyarakat dapat mengenal lebih dekat kegiatan, program, serta prestasi yang ada di SD Negeri 3 Krasak Bangsri.</p>
-
-                    <p>Terima kasih atas kepercayaan dan dukungan yang telah diberikan. Semoga SD Negeri 3 Krasak Bangsri terus berkembang dan mampu mencetak generasi yang berprestasi, berkarakter, dan berakhlak mulia.</p>
+                    @forelse($sambutanParagraf as $paragraf)
+                        <p>{{ $paragraf }}</p>
+                    @empty
+                        <p>{{ $sambutanIsiDefault }}</p>
+                    @endforelse
                 </div>
                 <div class="clear-both"></div>
             </div>
@@ -290,7 +302,7 @@
                 <p class="section-subtitle text-gray-600">Berbagai program unggulan yang dirancang untuk mengoptimalkan potensi siswa</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger>
                 @forelse ($programs as $program)
                     <a href="{{ route('program.show', $program) }}" class="card-hover group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl flex flex-col">
                         <div class="h-44 bg-gradient-to-br from-blue-100 to-blue-200 overflow-hidden">
@@ -330,7 +342,7 @@
 
     <!-- Guru & Staff Section -->
     <section class="py-8 bg-white">
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16" data-animate>
             <div class="text-center mb-8">
                 <h2 class="section-title">Guru & Staff Kami</h2>
                 <p class="section-subtitle text-gray-600">Tim profesional yang berdedikasi dalam mendidik dan membimbing generasi masa depan</p>
@@ -366,9 +378,10 @@
 
             <div class="relative px-6">
                 {{-- Overflow container --}}
-                <div style="overflow:hidden; width:100%;">
+                <div class="py-4 -my-4" style="overflow:hidden; width:100%;">
                     {{-- Track: wider than container to hold all cards --}}
                     <div id="gs-track"
+                        data-stagger
                          style="display:flex; width:{{ $gsTrackW }}%; transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);">
                         @foreach ($gsItems as $gs)
                         <div style="width:{{ $gsCardW }}%; flex-shrink:0; padding:0 12px;">
@@ -464,7 +477,7 @@
             </div>
 
             <!-- Berita Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" data-stagger>
                 @forelse ($beritas as $berita)
                     <div class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col">
                         <!-- Image -->
@@ -515,7 +528,7 @@
             </div>
 
             <!-- Gallery Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" data-stagger>
                 @forelse ($galeris as $galeri)
                     <div class="card-hover group bg-white rounded-lg border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl">
                         <!-- Image -->

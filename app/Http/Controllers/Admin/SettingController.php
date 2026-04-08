@@ -179,6 +179,16 @@ class SettingController extends Controller
                 'label' => 'Maps Embed URL (Footer)',
                 'group' => 'sekolah',
             ],
+            'sambutan_judul' => [
+                'value' => "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+                'label' => 'Judul Sambutan Kepala Sekolah',
+                'group' => 'sekolah',
+            ],
+            'sambutan_isi' => [
+                'value' => "Dengan penuh rasa syukur, kami menyambut kehadiran Anda di website SD Negeri 3 Krasak Bangsri. Website ini kami hadirkan sebagai media informasi dan komunikasi antara sekolah dengan siswa, orang tua, serta masyarakat.\n\nSD Negeri 3 Krasak Bangsri berkomitmen memberikan pendidikan yang berkualitas. Kami tidak hanya mengembangkan kemampuan akademik siswa, tetapi juga membentuk karakter, kedisiplinan, dan akhlak yang baik sesuai dengan nilai Pancasila dan ajaran agama.\n\nKami percaya pendidikan yang baik lahir dari kerja sama antara sekolah, orang tua, dan masyarakat. Dukungan tersebut membantu menciptakan lingkungan belajar yang nyaman, aktif, dan mendorong siswa untuk berkembang sesuai potensi mereka.\n\nMelalui website ini kami berharap masyarakat dapat mengenal lebih dekat kegiatan, program, serta prestasi yang ada di SD Negeri 3 Krasak Bangsri.\n\nTerima kasih atas kepercayaan dan dukungan yang telah diberikan. Semoga SD Negeri 3 Krasak Bangsri terus berkembang dan mampu mencetak generasi yang berprestasi, berkarakter, dan berakhlak mulia.",
+                'label' => 'Isi Sambutan Kepala Sekolah (pisahkan paragraf dengan baris kosong)',
+                'group' => 'sekolah',
+            ],
         ];
 
         foreach ($defaults as $key => $config) {
