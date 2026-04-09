@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $beritas = \App\Models\Berita::where('status', 'published')->orderBy('tanggal_terbit', 'desc')->limit(3)->get();
     $galeris = \App\Models\Galeri::where('status', 'aktif')->orderBy('tanggal_upload', 'desc')->limit(3)->get();
-    $guruStaffs = \App\Models\GuruStaff::aktif()->where('kategori', '!=', 'kepala_sekolah')->orderBy('urutan')->orderBy('nama')->get();
+    $guruStaffs = \App\Models\GuruStaff::aktif()->where('kategori', '!=', 'kepala_sekolah')->orderedByKategori()->get();
     $programs = \App\Models\Program::orderByDesc('created_at')->limit(3)->get();
     return view('beranda', compact('beritas', 'galeris', 'guruStaffs', 'programs'));
 });
@@ -49,7 +49,7 @@ Route::get('/program/{program}', function (\App\Models\Program $program) {
 })->name('program.show');
 
 Route::get('/guru-staff', function () {
-    $guruStaffs = \App\Models\GuruStaff::aktif()->orderBy('urutan')->orderBy('nama')->get()->groupBy('kategori');
+    $guruStaffs = \App\Models\GuruStaff::aktif()->orderedByKategori()->get()->groupBy('kategori');
     return view('guru-staff', compact('guruStaffs'));
 });
 
@@ -96,12 +96,14 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         
         // Beritas
+        Route::patch('beritas/{berita}/status', [\App\Http\Controllers\Admin\BeritaController::class, 'updateStatus'])->name('beritas.update-status');
         Route::resource('beritas', \App\Http\Controllers\Admin\BeritaController::class);
 
         // Galeris
         Route::resource('galeris', \App\Http\Controllers\Admin\GaleriController::class);
 
         // Guru Staffs
+        Route::patch('guru-staffs/{guruStaff}/status', [GuruStaffController::class, 'updateStatus'])->name('guru-staffs.update-status');
         Route::resource('guru-staffs', GuruStaffController::class);
 
         // Programs

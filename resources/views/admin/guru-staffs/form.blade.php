@@ -9,7 +9,7 @@
             <h2 class="h4 mb-0">{{ isset($guruStaff->id) ? 'Edit' : 'Tambah' }} Guru / Staff</h2>
         </div>
         <div class="text-end">
-            <a href="{{ route('admin.guru-staffs.index') }}" class="btn btn-outline-secondary">
+            <a href="{{ route('admin.guru-staffs.index') }}" class="btn btn-primary">
                 <i class="bi bi-arrow-left me-1"></i> Kembali
             </a>
         </div>
@@ -21,6 +21,13 @@
                   method="POST" enctype="multipart/form-data">
                 @csrf
                 @if (isset($guruStaff->id)) @method('PUT') @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <i class="bi bi-exclamation-triangle me-2"></i>{{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                @endif
 
                 <div class="row g-3">
                     <!-- Foto -->
@@ -50,39 +57,34 @@
                                        value="{{ old('nama', $guruStaff->nama) }}" required>
                                 @error('nama')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
-                            <div class="col-12">
-                                <label class="form-label">Jabatan <span class="text-danger">*</span></label>
-                                <input type="text" name="jabatan" class="form-control @error('jabatan') is-invalid @enderror"
-                                       value="{{ old('jabatan', $guruStaff->jabatan) }}" required placeholder="cth: Guru Kelas I A">
-                                @error('jabatan')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
                             <div class="col-12 col-sm-6">
-                                <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                                <label class="form-label">Jabatan <span class="text-danger">*</span></label>
                                 <select name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
                                     @foreach (\App\Models\GuruStaff::$kategoriLabels as $val => $label)
+                                        @if ($val === 'kepala_sekolah' && ($kepalaSekolahExists ?? false) && ($guruStaff->kategori ?? null) !== 'kepala_sekolah')
+                                            @continue
+                                        @endif
                                         <option value="{{ $val }}" {{ old('kategori', $guruStaff->kategori) == $val ? 'selected' : '' }}>
                                             {{ $label }}
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label">Urutan Tampil</label>
-                                <input type="number" name="urutan" class="form-control"
-                                       value="{{ old('urutan', $guruStaff->urutan ?? 0) }}" min="0">
-                                <small class="text-muted">Angka kecil tampil lebih dulu</small>
+                                @if (($kepalaSekolahExists ?? false) && ($guruStaff->kategori ?? null) !== 'kepala_sekolah')
+                                    <small class="text-muted"></small>
+                                @endif
                             </div>
                             <div class="col-12">
                                 <label class="form-label">Deskripsi Singkat</label>
                                 <textarea name="deskripsi" class="form-control" rows="2"
                                           placeholder="cth: Berpengalaman dalam pembelajaran aktif...">{{ old('deskripsi', $guruStaff->deskripsi) }}</textarea>
                             </div>
-                            <div class="col-12">
-                                <div class="form-check form-switch">
-                                    <input type="checkbox" name="aktif" id="aktif" class="form-check-input" value="1"
-                                           {{ old('aktif', $guruStaff->aktif ?? true) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="aktif">Tampilkan di website</label>
-                                </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label">Status Tampil Website <span class="text-danger">*</span></label>
+                                <select name="aktif" class="form-select @error('aktif') is-invalid @enderror" required>
+                                    <option value="1" {{ (string) old('aktif', (int) ($guruStaff->aktif ?? 1)) === '1' ? 'selected' : '' }}>Aktif</option>
+                                    <option value="0" {{ (string) old('aktif', (int) ($guruStaff->aktif ?? 1)) === '0' ? 'selected' : '' }}>Belum Aktif</option>
+                                </select>
+                                @error('aktif')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>
                     </div>

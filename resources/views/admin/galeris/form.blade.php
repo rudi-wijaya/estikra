@@ -9,7 +9,7 @@
             <h2 class="h4">{{ isset($galeri) ? 'Edit Foto Galeri' : 'Tambah Foto Galeri Baru' }}</h2>
         </div>
         <div class="col-md-4 text-end">
-            <a href="{{ route('admin.galeris.index') }}" class="btn btn-secondary">
+            <a href="{{ route('admin.galeris.index') }}" class="btn btn-primary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
         </div>

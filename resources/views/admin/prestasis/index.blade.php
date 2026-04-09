@@ -18,7 +18,7 @@
             <h2 class="h4">Daftar Prestasi</h2>
         </div>
         <div class="col-4 col-md-6 text-end">
-            <a href="{{ route('admin.settings.tentang.index') }}" class="btn btn-secondary me-2">
+            <a href="{{ route('admin.settings.tentang.index') }}" class="btn btn-primary me-2">
                 <i class="bi bi-arrow-left"></i> <span class="d-none d-sm-inline">Kembali</span>
             </a>
             <a href="{{ route('admin.prestasis.create') }}" class="btn btn-primary">

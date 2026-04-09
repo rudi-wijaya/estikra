@@ -13,7 +13,7 @@
             </h2>
         </div>
         <div class="col-auto">
-            <a href="{{ route('admin.ppdb.index') }}" class="btn btn-outline-secondary">
+            <a href="{{ route('admin.ppdb.index') }}" class="btn btn-primary">
                 <i class="bi bi-arrow-left me-1"></i> Kembali
             </a>
         </div>

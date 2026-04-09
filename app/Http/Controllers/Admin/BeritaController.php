@@ -13,6 +13,12 @@ class BeritaController extends Controller
     public function index(Request $request)
     {
         $search = trim((string) $request->query('q', ''));
+        $status = trim((string) $request->query('status', ''));
+        $allowedStatuses = ['draft', 'published', 'archived'];
+
+        if (! in_array($status, $allowedStatuses, true)) {
+            $status = '';
+        }
 
         $beritas = Berita::query()
             ->when($search !== '', function ($query) use ($search) {
@@ -23,11 +29,14 @@ class BeritaController extends Controller
                         ->orWhereDate('tanggal_terbit', $search);
                 });
             })
+            ->when($status !== '', function ($query) use ($status) {
+                $query->where('status', $status);
+            })
             ->orderBy('created_at')
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.beritas.index', compact('beritas', 'search'));
+        return view('admin.beritas.index', compact('beritas', 'search', 'status'));
     }
 
     public function create()
@@ -133,6 +142,27 @@ class BeritaController extends Controller
         Prestasi::refreshUrutanByTanggalTahun();
 
         return redirect()->route('admin.beritas.index')->with('success', 'Berita berhasil dihapus');
+    }
+
+    public function updateStatus(Request $request, Berita $berita)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:draft,published,archived',
+        ]);
+
+        $berita->update([
+            'status' => $validated['status'],
+        ]);
+
+        $berita->loadMissing('prestasi');
+
+        if ($berita->prestasi) {
+            $berita->prestasi->status = $validated['status'] === 'published' ? 'aktif' : 'nonaktif';
+            $berita->prestasi->save();
+            Prestasi::refreshUrutanByTanggalTahun();
+        }
+
+        return redirect()->back()->with('success', 'Status berita berhasil diperbarui');
     }
 
     private function syncPrestasiFromBerita(Berita $berita, bool $isPrestasi): bool

@@ -29,7 +29,7 @@
                 <h1 class="page-title">{{ isset($user) ? 'Edit User' : 'Tambah User Baru' }}</h1>
                 <p class="page-subtitle">{{ isset($user) ? 'Perbarui informasi user' : 'Isi form di bawah untuk menambah user baru' }}</p>
             </div>
-            <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
+            <a href="{{ route('admin.users.index') }}" class="btn btn-primary">
                 <i class="bi bi-arrow-left me-2"></i>Kembali
             </a>
         </div>

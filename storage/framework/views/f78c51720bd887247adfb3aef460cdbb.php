@@ -9,7 +9,7 @@
             <h2 class="h4 mb-0"><?php echo e(isset($guruStaff->id) ? 'Edit' : 'Tambah'); ?> Guru / Staff</h2>
         </div>
         <div class="text-end">
-            <a href="<?php echo e(route('admin.guru-staffs.index')); ?>" class="btn btn-outline-secondary">
+            <a href="<?php echo e(route('admin.guru-staffs.index')); ?>" class="btn btn-primary">
                 <i class="bi bi-arrow-left me-1"></i> Kembali
             </a>
         </div>
@@ -21,6 +21,14 @@
                   method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <?php if(isset($guruStaff->id)): ?> <?php echo method_field('PUT'); ?> <?php endif; ?>
+
+                <?php if(session('error')): ?>
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <i class="bi bi-exclamation-triangle me-2"></i><?php echo e(session('error')); ?>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <?php endif; ?>
 
                 <div class="row g-3">
                     <!-- Foto -->
@@ -65,28 +73,8 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                            <div class="col-12">
-                                <label class="form-label">Jabatan <span class="text-danger">*</span></label>
-                                <input type="text" name="jabatan" class="form-control <?php $__errorArgs = ['jabatan'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>"
-                                       value="<?php echo e(old('jabatan', $guruStaff->jabatan)); ?>" required placeholder="cth: Guru Kelas I A">
-                                <?php $__errorArgs = ['jabatan'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?><div class="invalid-feedback"><?php echo e($message); ?></div><?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
                             <div class="col-12 col-sm-6">
-                                <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                                <label class="form-label">Jabatan <span class="text-danger">*</span></label>
                                 <select name="kategori" class="form-select <?php $__errorArgs = ['kategori'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -96,30 +84,45 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" required>
                                     <?php $__currentLoopData = \App\Models\GuruStaff::$kategoriLabels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($val === 'kepala_sekolah' && ($kepalaSekolahExists ?? false) && ($guruStaff->kategori ?? null) !== 'kepala_sekolah'): ?>
+                                            <?php continue; ?>
+                                        <?php endif; ?>
                                         <option value="<?php echo e($val); ?>" <?php echo e(old('kategori', $guruStaff->kategori) == $val ? 'selected' : ''); ?>>
                                             <?php echo e($label); ?>
 
                                         </option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label">Urutan Tampil</label>
-                                <input type="number" name="urutan" class="form-control"
-                                       value="<?php echo e(old('urutan', $guruStaff->urutan ?? 0)); ?>" min="0">
-                                <small class="text-muted">Angka kecil tampil lebih dulu</small>
+                                <?php if(($kepalaSekolahExists ?? false) && ($guruStaff->kategori ?? null) !== 'kepala_sekolah'): ?>
+                                    <small class="text-muted"></small>
+                                <?php endif; ?>
                             </div>
                             <div class="col-12">
                                 <label class="form-label">Deskripsi Singkat</label>
                                 <textarea name="deskripsi" class="form-control" rows="2"
                                           placeholder="cth: Berpengalaman dalam pembelajaran aktif..."><?php echo e(old('deskripsi', $guruStaff->deskripsi)); ?></textarea>
                             </div>
-                            <div class="col-12">
-                                <div class="form-check form-switch">
-                                    <input type="checkbox" name="aktif" id="aktif" class="form-check-input" value="1"
-                                           <?php echo e(old('aktif', $guruStaff->aktif ?? true) ? 'checked' : ''); ?>>
-                                    <label class="form-check-label" for="aktif">Tampilkan di website</label>
-                                </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label">Status Tampil Website <span class="text-danger">*</span></label>
+                                <select name="aktif" class="form-select <?php $__errorArgs = ['aktif'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" required>
+                                    <option value="1" <?php echo e((string) old('aktif', (int) ($guruStaff->aktif ?? 1)) === '1' ? 'selected' : ''); ?>>Aktif</option>
+                                    <option value="0" <?php echo e((string) old('aktif', (int) ($guruStaff->aktif ?? 1)) === '0' ? 'selected' : ''); ?>>Belum Aktif</option>
+                                </select>
+                                <?php $__errorArgs = ['aktif'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><div class="invalid-feedback"><?php echo e($message); ?></div><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                     </div>

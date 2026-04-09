@@ -39,4 +39,18 @@ class GuruStaff extends Model
     {
         return $query->where('aktif', true);
     }
+
+    public function scopeOrderedByKategori($query)
+    {
+        return $query
+            ->orderByRaw("CASE kategori
+                WHEN 'kepala_sekolah' THEN 1
+                WHEN 'guru_kelas' THEN 2
+                WHEN 'guru_mapel' THEN 3
+                WHEN 'staff' THEN 4
+                ELSE 5
+            END")
+            ->orderBy('created_at')
+            ->orderBy('nama');
+    }
 }

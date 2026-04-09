@@ -22,14 +22,44 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show">
+            <i class="bi bi-exclamation-triangle me-2"></i>{{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
     @php
         $kategoriLabels = \App\Models\GuruStaff::$kategoriLabels;
         $urutan = ['kepala_sekolah', 'guru_kelas', 'guru_mapel', 'staff'];
+        $kategoriTersedia = collect($urutan)->filter(function ($kat) use ($groupedGuruStaffs) {
+            return isset($groupedGuruStaffs[$kat]) && $groupedGuruStaffs[$kat]->count();
+        });
+        $kategoriAktif = 'semua';
+        $totalData = $kategoriTersedia->sum(function ($kat) use ($groupedGuruStaffs) {
+            return $groupedGuruStaffs[$kat]->count();
+        });
     @endphp
+
+    @if ($kategoriTersedia->count())
+        <div class="admin-top-tabs mb-3" id="guru-staff-kategori-nav" role="tablist" aria-label="Filter kategori guru dan staff" style="overflow-x:auto; white-space:nowrap;">
+            <button type="button" class="tab-link active kategori-filter-btn" data-kategori="semua" aria-pressed="true" style="background:none;border:none;">
+                Semua
+                <span class="text-muted">({{ $totalData }})</span>
+            </button>
+            @foreach ($urutan as $kat)
+                @php $jumlah = isset($groupedGuruStaffs[$kat]) ? $groupedGuruStaffs[$kat]->count() : 0; @endphp
+                <button type="button" class="tab-link kategori-filter-btn" data-kategori="{{ $kat }}" aria-pressed="false" style="background:none;border:none;">
+                    {{ $kategoriLabels[$kat] }}
+                    <span class="text-muted">({{ $jumlah }})</span>
+                </button>
+            @endforeach
+        </div>
+    @endif
 
     @foreach ($urutan as $kat)
         @if (isset($groupedGuruStaffs[$kat]) && $groupedGuruStaffs[$kat]->count())
-            <div class="card mb-4">
+            <div class="card mb-4 kategori-panel" data-kategori="{{ $kat }}">
                 <div class="card-header"><strong>{{ $kategoriLabels[$kat] }}</strong></div>
                 <div class="table-responsive">
                     <table class="table mb-0">
@@ -37,9 +67,8 @@
                             <tr>
                                 <th style="width:50px">Foto</th>
                                 <th>Nama</th>
-                                <th class="d-none d-md-table-cell">Jabatan</th>
-                                <th class="d-none d-sm-table-cell">Urutan</th>
-                                <th style="width:80px">Status</th>
+                                <th style="width:170px">Status</th>
+                                <th class="d-none d-md-table-cell" style="width:180px">Jabatan</th>
                                 <th style="width:110px">Aksi</th>
                             </tr>
                         </thead>
@@ -59,26 +88,35 @@
                                         <strong class="d-block" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;">{{ $gs->nama }}</strong>
                                         <small class="text-muted d-md-none">{{ $gs->jabatan }}</small>
                                     </td>
-                                    <td class="d-none d-md-table-cell">{{ $gs->jabatan }}</td>
-                                    <td class="d-none d-sm-table-cell">{{ $gs->urutan }}</td>
                                     <td>
-                                        @if ($gs->aktif)
-                                            <span class="badge bg-success">Aktif</span>
-                                        @else
-                                            <span class="badge bg-secondary">Nonaktif</span>
-                                        @endif
+                                        <form action="{{ route('admin.guru-staffs.update-status', $gs) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <select
+                                                name="aktif"
+                                                class="form-select form-select-sm"
+                                                aria-label="Ubah status {{ $gs->nama }}"
+                                                onchange="this.form.submit()"
+                                            >
+                                                <option value="1" {{ $gs->aktif ? 'selected' : '' }}>Aktif</option>
+                                                <option value="0" {{ ! $gs->aktif ? 'selected' : '' }}>Belum Aktif</option>
+                                            </select>
+                                        </form>
                                     </td>
+                                    <td class="d-none d-md-table-cell">{{ $gs->jabatan }}</td>
                                     <td>
                                         <div class="d-flex gap-1">
                                             <a href="{{ route('admin.guru-staffs.edit', $gs) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            <form action="{{ route('admin.guru-staffs.destroy', $gs) }}" method="POST" style="display:inline;">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-outline-secondary" title="Hapus" onclick="return confirm('Yakin hapus?')">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
+                                            @if ($gs->kategori !== 'kepala_sekolah')
+                                                <form action="{{ route('admin.guru-staffs.destroy', $gs) }}" method="POST" style="display:inline;">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-secondary" title="Hapus" onclick="return confirm('Yakin hapus?')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -96,10 +134,43 @@
         </div>
     @endif
 
-    @if ($guruStaffs->hasPages())
-        <div class="d-flex justify-content-center mt-4">
-            {{ $guruStaffs->links() }}
-        </div>
-    @endif
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const nav = document.getElementById('guru-staff-kategori-nav');
+
+        if (!nav) {
+            return;
+        }
+
+        const buttons = nav.querySelectorAll('.kategori-filter-btn');
+        const panels = document.querySelectorAll('.kategori-panel');
+
+        const setActiveKategori = function (kategori) {
+            buttons.forEach(function (button) {
+                const isActive = button.dataset.kategori === kategori;
+                button.classList.toggle('active', isActive);
+                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+
+            panels.forEach(function (panel) {
+                if (kategori === 'semua') {
+                    panel.classList.remove('d-none');
+                    return;
+                }
+
+                panel.classList.toggle('d-none', panel.dataset.kategori !== kategori);
+            });
+        };
+
+        setActiveKategori('semua');
+
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                setActiveKategori(button.dataset.kategori);
+            });
+        });
+    });
+</script>
 @endsection

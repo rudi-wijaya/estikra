@@ -12,7 +12,7 @@
             <a href="{{ route('admin.galeris.edit', $galeri) }}" class="btn btn-warning">
                 <i class="bi bi-pencil"></i> Edit
             </a>
-            <a href="{{ route('admin.galeris.index') }}" class="btn btn-secondary">
+            <a href="{{ route('admin.galeris.index') }}" class="btn btn-primary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
         </div>
@@ -70,7 +70,7 @@
                 <a href="{{ route('admin.galeris.edit', $galeri) }}" class="btn btn-warning">
                     <i class="bi bi-pencil"></i> Edit
                 </a>
-                <a href="{{ route('admin.galeris.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.galeris.index') }}" class="btn btn-primary">
                     <i class="bi bi-arrow-left"></i> Kembali
                 </a>
             </div>

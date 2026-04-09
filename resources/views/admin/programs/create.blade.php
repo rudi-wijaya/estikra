@@ -9,7 +9,7 @@
             <h2 class="h4">Tambah Program Unggulan Baru</h2>
         </div>
         <div class="col-md-4 text-end">
-            <a href="{{ route('admin.programs.index') }}" class="btn btn-secondary">
+            <a href="{{ route('admin.programs.index') }}" class="btn btn-primary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
         </div>

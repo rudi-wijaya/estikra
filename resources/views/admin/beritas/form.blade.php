@@ -9,7 +9,7 @@
             <h2 class="h4">{{ isset($berita) ? 'Edit Berita' : 'Tambah Berita Baru' }}</h2>
         </div>
         <div class="col-md-4 text-end">
-            <a href="{{ route('admin.beritas.index') }}" class="btn btn-secondary">
+            <a href="{{ route('admin.beritas.index') }}" class="btn btn-primary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
         </div>

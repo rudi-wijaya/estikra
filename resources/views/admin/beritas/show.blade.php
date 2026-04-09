@@ -12,7 +12,7 @@
             <a href="{{ route('admin.beritas.edit', $berita) }}" class="btn btn-warning">
                 <i class="bi bi-pencil"></i> Edit
             </a>
-            <a href="{{ route('admin.beritas.index') }}" class="btn btn-secondary">
+            <a href="{{ route('admin.beritas.index') }}" class="btn btn-primary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
         </div>
@@ -71,7 +71,7 @@
                 <a href="{{ route('admin.beritas.edit', $berita) }}" class="btn btn-warning">
                     <i class="bi bi-pencil"></i> Edit
                 </a>
-                <a href="{{ route('admin.beritas.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.beritas.index') }}" class="btn btn-primary">
                     <i class="bi bi-arrow-left"></i> Kembali
                 </a>
             </div>
