@@ -1,0 +1,96 @@
+
+
+<?php $__env->startSection('title', 'Berita & Kegiatan - SD Negeri 3 Krasak Bangsri'); ?>
+
+<?php $__env->startSection('content'); ?>
+    <!-- Berita Section -->
+
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
+            <!-- Section Header -->
+            <div class="text-center mb-16 animate-fadeInUp">
+                
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Berita Terkini</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Informasi dan update terbaru seputar kegiatan sekolah kami</p>
+            </div>
+
+            <!-- Berita Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <?php $__empty_1 = true; $__currentLoopData = $beritas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $berita): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                    <div class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col">
+                        <!-- Image -->
+                        <div class="h-64 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 relative flex-shrink-0">
+                            <?php if($berita->gambar): ?>
+                                <img src="<?php echo e(asset('storage/' . $berita->gambar)); ?>" alt="<?php echo e($berita->judul); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                            <?php else: ?>
+                                <div class="w-full h-full flex items-center justify-center text-6xl"></div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-6 flex flex-col flex-1">
+                            <div class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold mb-3 self-start">
+                                <?php echo e($berita->tanggal_terbit->format('d M Y')); ?>
+
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2"><?php echo e($berita->judul); ?></h3>
+                            <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1"><?php echo e(Str::limit(strip_tags($berita->konten), 150)); ?></p>
+                            <a href="<?php echo e(route('berita.show', $berita->slug)); ?>" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300 self-start mt-auto">
+                                Baca Selengkapnya
+                            </a>
+                        </div>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                    <div class="col-span-full text-center py-16">
+                        <p class="text-2xl text-gray-600 font-semibold mb-2">Belum ada berita</p>
+                        <p class="text-gray-500">Berita terbaru akan ditampilkan di sini</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Pagination -->
+            <?php if($beritas->hasPages()): ?>
+                <div class="flex justify-center mt-10">
+                    <nav class="flex items-center gap-2" aria-label="Pagination">
+                        <?php if($beritas->onFirstPage()): ?>
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Previous</span>
+                        <?php else: ?>
+                            <a href="<?php echo e($beritas->previousPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Previous</a>
+                        <?php endif; ?>
+
+                        <?php for($page = 1; $page <= $beritas->lastPage(); $page++): ?>
+                            <?php
+                                $isNearCurrent = abs($page - $beritas->currentPage()) <= 1;
+                                $isEdgePage = in_array($page, [1, $beritas->lastPage()], true);
+                            ?>
+
+                            <?php if(!($isNearCurrent || $isEdgePage)): ?>
+                                <?php continue; ?>
+                            <?php endif; ?>
+
+                            <?php if($page > 1 && !($isNearCurrent || in_array($page - 1, [1, $beritas->lastPage()], true) || abs(($page - 1) - $beritas->currentPage()) <= 1)): ?>
+                                <span class="inline-flex items-center justify-center min-w-10 h-10 text-sm font-semibold text-gray-400">...</span>
+                            <?php endif; ?>
+
+                            <?php if($page == $beritas->currentPage()): ?>
+                                <span class="inline-flex items-center justify-center min-w-10 h-10 rounded-full px-3 text-sm font-bold text-white bg-blue-600"><?php echo e($page); ?></span>
+                            <?php else: ?>
+                                <a href="<?php echo e($beritas->url($page)); ?>" class="inline-flex items-center justify-center min-w-10 h-10 rounded-full px-3 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors"><?php echo e($page); ?></a>
+                            <?php endif; ?>
+                        <?php endfor; ?>
+
+                        <?php if($beritas->hasMorePages()): ?>
+                            <a href="<?php echo e($beritas->nextPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Next</a>
+                        <?php else: ?>
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Next</span>
+                        <?php endif; ?>
+                    </nav>
+                </div>
+            <?php endif; ?>
+
+
+
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\estikra\resources\views/berita.blade.php ENDPATH**/ ?>

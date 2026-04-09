@@ -304,7 +304,18 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger>
                 @forelse ($programs as $program)
-                    <a href="{{ route('program.show', $program) }}" class="card-hover group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl flex flex-col">
+                    <div
+                        class="card-hover group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl flex flex-col cursor-pointer beranda-popup-trigger"
+                        data-popup-title="{{ $program->judul }}"
+                        data-popup-meta="Program Unggulan"
+                        data-popup-description="{{ e(strip_tags($program->deskripsi ?? '')) }}"
+                        data-popup-image="{{ $program->foto ? (str_starts_with($program->foto, 'storage/') ? asset($program->foto) : asset('storage/' . $program->foto)) : '' }}"
+                        data-popup-link="{{ route('program.show', $program) }}"
+                        data-popup-link-label="Lihat Detail Program"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Lihat detail program {{ $program->judul }}"
+                    >
                         <div class="h-44 bg-gradient-to-br from-blue-100 to-blue-200 overflow-hidden">
                             @if ($program->foto)
                                 @php
@@ -322,9 +333,9 @@
                         <div class="p-6 text-center flex flex-col flex-1">
                             <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $program->judul }}</h3>
                             <p class="text-sm text-gray-600 mb-3">{{ \Illuminate\Support\Str::limit($program->deskripsi, 130) }}</p>
-                            <span class="text-blue-600 font-semibold mt-auto">Baca Selengkapnya</span>
+                            <span class="text-blue-600 font-semibold mt-auto">Lihat Detail</span>
                         </div>
-                    </a>
+                    </div>
                 @empty
                     <div class="col-span-full text-center py-12 text-gray-400">
                         <p class="text-lg">Belum ada program unggulan yang ditambahkan.</p>
@@ -479,7 +490,18 @@
             <!-- Berita Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" data-stagger>
                 @forelse ($beritas as $berita)
-                    <div class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col">
+                    <div
+                        class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col cursor-pointer beranda-popup-trigger"
+                        data-popup-title="{{ $berita->judul }}"
+                        data-popup-meta="{{ $berita->tanggal_terbit->format('d M Y') }}"
+                        data-popup-description="{{ e(strip_tags($berita->konten ?? '')) }}"
+                        data-popup-image="{{ $berita->gambar ? asset('storage/' . $berita->gambar) : '' }}"
+                        data-popup-link="{{ route('berita.show', $berita->slug) }}"
+                        data-popup-link-label="Baca Berita"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Lihat detail berita {{ $berita->judul }}"
+                    >
                         <!-- Image -->
                         <div class="h-64 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 relative flex-shrink-0">
                             @if ($berita->gambar)
@@ -496,9 +518,9 @@
                             </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2">{{ $berita->judul }}</h3>
                             <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">{{ Str::limit(strip_tags($berita->konten), 150) }}</p>
-                            <a href="{{ route('berita.show', $berita->slug) }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300 self-start mt-auto">
+                            <span class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full font-semibold self-start mt-auto">
                                 Baca Selengkapnya
-                            </a>
+                            </span>
                         </div>
                     </div>
                 @empty
@@ -530,7 +552,18 @@
             <!-- Gallery Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" data-stagger>
                 @forelse ($galeris as $galeri)
-                    <div class="card-hover group bg-white rounded-lg border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl">
+                    <div
+                        class="card-hover group bg-white rounded-lg border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer beranda-popup-trigger"
+                        data-popup-title="{{ $galeri->judul }}"
+                        data-popup-meta="{{ $galeri->tanggal_upload->format('d M Y') }}"
+                        data-popup-description="{{ e(strip_tags($galeri->deskripsi ?? '')) }}"
+                        data-popup-image="{{ $galeri->gambar ? asset('storage/' . $galeri->gambar) : '' }}"
+                        data-popup-link="/galeri"
+                        data-popup-link-label="Lihat Semua Galeri"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Lihat detail galeri {{ $galeri->judul }}"
+                    >
                         <!-- Image -->
                         <div class="h-64 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 relative">
                             @if ($galeri->gambar)
@@ -565,6 +598,38 @@
                     Lihat Semua Galeri
                 </a>
             </div>
+
+            <div id="beranda-popup-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+                <div class="absolute inset-0 bg-black/70" data-close-beranda-popup></div>
+                <div class="relative w-full max-w-3xl rounded-2xl bg-white shadow-2xl overflow-hidden">
+                    <button
+                        type="button"
+                        class="absolute right-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-gray-700 hover:bg-white"
+                        data-close-beranda-popup
+                        aria-label="Tutup popup"
+                    >
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+
+                    <div class="h-64 sm:h-80 bg-gradient-to-br from-blue-100 to-blue-200">
+                        <img id="beranda-popup-image" src="" alt="" class="hidden w-full h-full object-cover">
+                        <div id="beranda-popup-fallback" class="w-full h-full flex items-center justify-center">
+                            <i class="bi bi-image text-blue-500 text-6xl opacity-70"></i>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="flex items-start justify-between gap-3">
+                            <h3 id="beranda-popup-title" class="text-2xl font-bold text-gray-900"></h3>
+                            <span id="beranda-popup-meta" class="hidden bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full"></span>
+                        </div>
+                        <p id="beranda-popup-description" class="mt-4 text-gray-600 leading-relaxed"></p>
+                        <a id="beranda-popup-link" href="#" class="hidden mt-5 px-4 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300">
+                            Lihat Detail
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -589,6 +654,96 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('beranda-popup-modal');
+            const titleEl = document.getElementById('beranda-popup-title');
+            const metaEl = document.getElementById('beranda-popup-meta');
+            const descriptionEl = document.getElementById('beranda-popup-description');
+            const imageEl = document.getElementById('beranda-popup-image');
+            const fallbackEl = document.getElementById('beranda-popup-fallback');
+            const linkEl = document.getElementById('beranda-popup-link');
+            const triggers = document.querySelectorAll('.beranda-popup-trigger');
+            const closeButtons = document.querySelectorAll('[data-close-beranda-popup]');
+
+            if (!modal || !titleEl || !metaEl || !descriptionEl || !imageEl || !fallbackEl || !linkEl || !triggers.length) {
+                return;
+            }
+
+            const openModal = function (trigger) {
+                const title = trigger.dataset.popupTitle || 'Detail';
+                const meta = trigger.dataset.popupMeta || '';
+                const description = trigger.dataset.popupDescription || 'Tidak ada deskripsi.';
+                const image = trigger.dataset.popupImage || '';
+                const link = trigger.dataset.popupLink || '';
+                const linkLabel = trigger.dataset.popupLinkLabel || 'Lihat Detail';
+
+                titleEl.textContent = title;
+                descriptionEl.textContent = description;
+
+                if (meta !== '') {
+                    metaEl.textContent = meta;
+                    metaEl.classList.remove('hidden');
+                } else {
+                    metaEl.classList.add('hidden');
+                }
+
+                if (image !== '') {
+                    imageEl.src = image;
+                    imageEl.alt = title;
+                    imageEl.classList.remove('hidden');
+                    fallbackEl.classList.add('hidden');
+                } else {
+                    imageEl.src = '';
+                    imageEl.alt = '';
+                    imageEl.classList.add('hidden');
+                    fallbackEl.classList.remove('hidden');
+                }
+
+                if (link !== '') {
+                    linkEl.href = link;
+                    linkEl.textContent = linkLabel;
+                    linkEl.classList.remove('hidden');
+                } else {
+                    linkEl.classList.add('hidden');
+                }
+
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
+            };
+
+            const closeModal = function () {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+            };
+
+            triggers.forEach(function (trigger) {
+                trigger.addEventListener('click', function () {
+                    openModal(trigger);
+                });
+
+                trigger.addEventListener('keydown', function (event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openModal(trigger);
+                    }
+                });
+            });
+
+            closeButtons.forEach(function (button) {
+                button.addEventListener('click', closeModal);
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && modal.classList.contains('flex')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
 
 
 @endsection
