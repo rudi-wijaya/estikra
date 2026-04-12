@@ -47,18 +47,6 @@
                 </div>
             </div>
 
-            @if ($galeri->deskripsi)
-                <hr>
-                <div class="mb-4">
-                    <h5>Deskripsi</h5>
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            {!! nl2br(e($galeri->deskripsi)) !!}
-                        </div>
-                    </div>
-                </div>
-            @endif
-
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <form action="{{ route('admin.galeris.destroy', $galeri) }}" method="POST" style="display: inline;">
                     @csrf

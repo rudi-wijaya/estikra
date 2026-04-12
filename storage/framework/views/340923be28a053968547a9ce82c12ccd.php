@@ -16,6 +16,10 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        html {
+            scrollbar-gutter: stable;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -107,90 +111,108 @@
         }
 
         /* Hamburger animated bars */
+        .hamburger {
+            position: relative;
+            width: 40px;
+            height: 40px;
+        }
+
         .hamburger-bar {
-            display: block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
             width: 22px;
             height: 2px;
             border-radius: 2px;
             background-color: currentColor;
             transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                        opacity 0.25s ease,
-                        width 0.3s ease;
+                        opacity 0.25s ease;
             transform-origin: center;
+        }
+
+        .hamburger .bar-top {
+            transform: translate(-50%, calc(-50% - 7px));
+        }
+
+        .hamburger .bar-mid {
+            transform: translate(-50%, -50%);
+        }
+
+        .hamburger .bar-bot {
+            transform: translate(-50%, calc(-50% + 7px));
         }
 
         /* Open state */
         .hamburger.open .bar-top {
-            transform: translateY(8px) rotate(45deg);
+            transform: translate(-50%, -50%) rotate(45deg);
         }
         .hamburger.open .bar-mid {
             opacity: 0;
-            width: 0;
         }
         .hamburger.open .bar-bot {
-            transform: translateY(-8px) rotate(-45deg);
+            transform: translate(-50%, -50%) rotate(-45deg);
         }
 
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .nav-mobile {
-            animation: slideInDown 0.25s ease-out;
-        }
-
-        /* Mobile nav — default (white navbar / all pages except beranda hero) */
+        /* Mobile nav */
         .mobile-nav-link {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0;
             padding: 14px 18px;
             text-decoration: none;
             font-weight: 500;
             border-radius: 14px;
             transition: all 0.2s ease;
-            background: #f1f3f9;
-            color: #374151;
+            background: transparent;
+            color: #334155;
             border: none;
             text-shadow: none;
             box-shadow: none;
+            font-size: 1.2rem;
+            line-height: 1.2;
+            width: 100%;
         }
 
         .mobile-nav-link:hover {
-            background: #007AFF;
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(0,122,255,0.25);
+            color: #1d4ed8;
         }
 
         .mobile-nav-link.active {
             background: #007AFF;
             color: #ffffff;
-            box-shadow: 0 4px 14px rgba(0,122,255,0.25);
-        }
-
-        /* Mobile nav — beranda hero (transparan, belum scroll) */
-        #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link {
-            background: #f1f3f9;
-            color: #111827;
-            border: none;
+            border-radius: 12px;
+            font-weight: 700;
             text-shadow: none;
         }
 
-        #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link:hover {
-            background: #007AFF;
+        .mobile-nav-link .menu-icon {
+            display: none;
+        }
+
+        .mobile-nav-link.active .menu-icon {
             color: #ffffff;
-            text-shadow: none;
         }
 
-        #navbar-header[data-transparent]:not(.scrolled) .mobile-nav-link.active {
-            background: #007AFF;
-            color: #ffffff;
-            text-shadow: none;
+        .mobile-nav-link::after {
+            display: none;
+        }
+
+        #navbar-backdrop {
+            transition: opacity 0.3s ease;
+        }
+
+        #navbar-panel {
+            transition: transform 0.3s ease;
+        }
+
+        #navbar {
+            pointer-events: none;
+        }
+
+        #navbar-backdrop,
+        #navbar-panel {
+            pointer-events: auto;
         }
 
 
@@ -292,6 +314,32 @@
             max-height: 60px;
         }
 
+        /* Keep mobile menu state consistent regardless of page scroll position */
+        #navbar-header.mobile-menu-open {
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            backdrop-filter: none;
+        }
+
+        #navbar-header.mobile-menu-open .hamburger .hamburger-bar {
+            background-color: #111827 !important;
+        }
+
+        @media (max-width: 1023px) {
+            #navbar-header .top-bar {
+                display: none;
+            }
+        }
+
+        /* Hide top bar on mobile when user scrolls down */
+        #navbar-header.mobile-topbar-hidden .top-bar {
+            opacity: 0;
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            pointer-events: none;
+        }
+
         /* Top bar hanya disembunyikan saat scroll di beranda */
         #navbar-header[data-transparent].scrolled .top-bar {
             opacity: 0;
@@ -335,7 +383,7 @@
         <!-- Main Header/Navigation -->
         <header>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-3">
+            <div id="main-nav-row" class="flex justify-between items-center py-3">
                 <!-- Logo -->
                 <a href="<?php echo e(url('/')); ?>" class="logo-home-link flex items-center gap-3 no-underline">
                     <?php $logoUrl = \App\Models\Setting::get('sekolah_logo'); ?>
@@ -367,7 +415,7 @@
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <button class="hamburger lg:hidden flex flex-col items-center justify-center gap-1.5 bg-transparent border-none cursor-pointer p-2" id="hamburger" aria-label="Toggle menu">
+                <button class="hamburger lg:hidden relative z-[85] bg-transparent border-none cursor-pointer" id="hamburger" aria-label="Toggle menu">
                     <span class="hamburger-bar bar-top"></span>
                     <span class="hamburger-bar bar-mid"></span>
                     <span class="hamburger-bar bar-bot"></span>
@@ -375,18 +423,84 @@
             </div>
 
             <!-- Mobile Navigation -->
-            <nav id="navbar" class="hidden lg:hidden nav-mobile rounded-b-3xl overflow-hidden bg-white shadow-lg">
-                <div class="py-4 px-4 pb-5">
-                    <ul class="flex flex-col gap-2">
-                        <li><a href="/" class="mobile-nav-link <?php if(request()->is('/')): ?> active <?php endif; ?>">Beranda</a></li>
-                        <li><a href="/tentang" class="mobile-nav-link <?php if(request()->is('tentang')): ?> active <?php endif; ?>">Tentang</a></li>
-                        <li><a href="/program" class="mobile-nav-link <?php if(request()->is('program')): ?> active <?php endif; ?>">Program</a></li>
-                        <li><a href="/guru-staff" class="mobile-nav-link <?php if(request()->is('guru-staff')): ?> active <?php endif; ?>">Guru & Staff</a></li>
-                        <li><a href="/berita" class="mobile-nav-link <?php if(request()->is('berita')): ?> active <?php endif; ?>">Berita</a></li>
-                        <li><a href="/galeri" class="mobile-nav-link <?php if(request()->is('galeri')): ?> active <?php endif; ?>">Galeri</a></li>
-                        <li><a href="/ppdb" class="mobile-nav-link <?php if(request()->is('ppdb')): ?> active <?php endif; ?>">PPDB</a></li>
-                        <li><a href="/kontak" class="mobile-nav-link <?php if(request()->is('kontak')): ?> active <?php endif; ?>">Kontak</a></li>
+            <nav id="navbar" class="hidden lg:hidden fixed inset-0 z-[45]" aria-label="Mobile Navigation">
+                <div id="navbar-backdrop" class="absolute inset-x-0 bottom-0 bg-slate-900/20 opacity-0" style="top: var(--mobile-menu-offset, 0px);"></div>
+                <div id="navbar-panel" class="absolute right-0 overflow-y-auto bg-white px-4 pb-5 pt-3 shadow-xl border-l border-slate-100 translate-x-full rounded-bl-2xl" style="top: var(--mobile-menu-offset, 0px); width: min(82vw, 320px); max-height: calc(100vh - var(--mobile-menu-offset, 0px));">
+                    <div class="pt-0">
+
+                    <ul class="flex flex-col items-stretch gap-3">
+                        <li>
+                            <a href="/" class="mobile-nav-link <?php if(request()->is('/')): ?> active <?php endif; ?>">
+                                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75V19.5A2.25 2.25 0 0 0 6.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25V9.75" />
+                                </svg>
+                                <span>Beranda</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/tentang" class="mobile-nav-link <?php if(request()->is('tentang')): ?> active <?php endif; ?>">
+                                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.852l.041-.02M12 6.75h.008v.008H12V6.75Z" />
+                                    <circle cx="12" cy="12" r="9" />
+                                </svg>
+                                <span>Tentang</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/program" class="mobile-nav-link <?php if(request()->is('program')): ?> active <?php endif; ?>">
+                                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.272 0-2.5.266-3.615.745a.75.75 0 0 0-.385.695v12.62a.75.75 0 0 0 1.04.695A8.964 8.964 0 0 1 6 18.75c2.015 0 3.87.664 5.365 1.785a.75.75 0 0 0 .27.135V6.042Zm0 0A8.967 8.967 0 0 1 18 3.75c1.272 0 2.5.266 3.615.745a.75.75 0 0 1 .385.695v12.62a.75.75 0 0 1-1.04.695A8.964 8.964 0 0 0 18 18.75a8.966 8.966 0 0 0-5.365 1.785.75.75 0 0 1-.27.135V6.042Z" />
+                                </svg>
+                                <span>Program</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/guru-staff" class="mobile-nav-link <?php if(request()->is('guru-staff')): ?> active <?php endif; ?>">
+                                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.742-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.035.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.206-.576-5.965-1.584A6.062 6.062 0 0 1 6 18.75v-.031m12 0A5.971 5.971 0 0 0 15 15.75m3 2.969A5.971 5.971 0 0 1 15 15.75m0 0a3 3 0 1 0-6 0m6 0a3 3 0 1 1-6 0m6 0H9" />
+                                </svg>
+                                <span>Guru &amp; Staff</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/berita" class="mobile-nav-link <?php if(request()->is('berita')): ?> active <?php endif; ?>">
+                                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 6h-15A1.5 1.5 0 0 0 3 7.5v9A1.5 1.5 0 0 0 4.5 18h15a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 19.5 6Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 9.75h4.5m-4.5 3h10.5m-10.5 3h7.5" />
+                                </svg>
+                                <span>Berita</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/galeri" class="mobile-nav-link <?php if(request()->is('galeri')): ?> active <?php endif; ?>">
+                                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5h10.5A2.25 2.25 0 0 1 19.5 9.75v7.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 17.25v-7.5A2.25 2.25 0 0 1 6.75 7.5Z" />
+                                    <circle cx="15.75" cy="11.25" r="1.125" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 17.25 4.5-4.5 2.625 2.625 1.875-1.875 4.5 4.5" />
+                                </svg>
+                                <span>Galeri</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/ppdb" class="mobile-nav-link <?php if(request()->is('ppdb')): ?> active <?php endif; ?>">
+                                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5.25A2.25 2.25 0 0 1 11.25 3h1.5A2.25 2.25 0 0 1 15 5.25V6h2.25A2.25 2.25 0 0 1 19.5 8.25v10.5A2.25 2.25 0 0 1 17.25 21H6.75A2.25 2.25 0 0 1 4.5 18.75V8.25A2.25 2.25 0 0 1 6.75 6H9v-.75Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 11.25h6m-6 3h4.5" />
+                                </svg>
+                                <span>PPDB</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/kontak" class="mobile-nav-link <?php if(request()->is('kontak')): ?> active <?php endif; ?>">
+                                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75A2.25 2.25 0 0 1 4.5 4.5h15A2.25 2.25 0 0 1 21.75 6.75v10.5A2.25 2.25 0 0 1 19.5 19.5h-15a2.25 2.25 0 0 1-2.25-2.25V6.75Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 7.5 8.25 6 8.25-6" />
+                                </svg>
+                                <span>Kontak</span>
+                            </a>
+                        </li>
                     </ul>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -394,7 +508,7 @@
     </div><!-- end #navbar-header -->
 
     <!-- Main Content -->
-    <main class="min-h-screen <?php if(!request()->is('/')): ?> pt-32 <?php endif; ?>">
+    <main class="min-h-screen <?php if(!request()->is('/')): ?> pt-20 md:pt-32 <?php endif; ?>">
         <?php echo $__env->yieldContent('content'); ?>
     </main>
 
@@ -490,7 +604,7 @@
 
             <!-- Footer Bottom -->
             <div class="flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-3 pt-6">
-                <p>&copy; <?php echo e(date('Y')); ?> <?php echo e(\App\Models\Setting::get('sekolah_nama', 'SD Negeri 3 Krasak Bangsri')); ?>, All Right Reserved. dikembangkan oleh <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 underline">M. Rudi Wijaya</a></p>
+                <p>&copy; <?php echo e(date('Y')); ?> <?php echo e(\App\Models\Setting::get('sekolah_nama', 'SD Negeri 3 Krasak Bangsri')); ?>, All Right Reserved. dikembangkan oleh <a href="https://www.instagram.com/deekund?igsh=YW5qOThzN25oYW11" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 underline">M. Rudi Wijaya</a></p>
             </div>
         </div>
     </footer>
@@ -526,19 +640,105 @@
             navbarHeader.classList.add('scrolled');
         }
 
+        // Mobile top bar hide/show on scroll (all pages)
+        let lastScrollY = window.scrollY;
+
+        function updateMobileMenuOffset() {
+            const mobileNavbar = document.getElementById('navbar');
+            const mainNavRow = document.getElementById('main-nav-row');
+            if (!mobileNavbar) return;
+
+            let menuOffset = Math.round(navbarHeader.getBoundingClientRect().height);
+            if (mainNavRow) {
+                menuOffset = Math.max(0, Math.ceil(mainNavRow.getBoundingClientRect().bottom) - 1);
+            }
+
+            mobileNavbar.style.setProperty('--mobile-menu-offset', `${menuOffset}px`);
+        }
+
+        function handleMobileTopBarVisibility() {
+            const isMobileViewport = window.innerWidth < 1024;
+            const currentScrollY = window.scrollY;
+
+            if (navbarHeader.classList.contains('mobile-menu-open')) {
+                lastScrollY = currentScrollY;
+                updateMobileMenuOffset();
+                return;
+            }
+
+            if (!isMobileViewport) {
+                navbarHeader.classList.remove('mobile-topbar-hidden');
+                lastScrollY = currentScrollY;
+                updateMobileMenuOffset();
+                return;
+            }
+
+            if (currentScrollY <= 10) {
+                navbarHeader.classList.remove('mobile-topbar-hidden');
+                lastScrollY = currentScrollY;
+                updateMobileMenuOffset();
+                return;
+            }
+
+            if (currentScrollY > lastScrollY && currentScrollY > 40) {
+                navbarHeader.classList.add('mobile-topbar-hidden');
+            } else if (currentScrollY < lastScrollY) {
+                navbarHeader.classList.remove('mobile-topbar-hidden');
+            }
+
+            lastScrollY = currentScrollY;
+            updateMobileMenuOffset();
+        }
+
+        window.addEventListener('scroll', handleMobileTopBarVisibility, { passive: true });
+        window.addEventListener('resize', handleMobileTopBarVisibility);
+        handleMobileTopBarVisibility();
+        updateMobileMenuOffset();
+
         // Hamburger menu
         const hamburger = document.getElementById('hamburger');
         const navbar = document.getElementById('navbar');
+        const navbarBackdrop = document.getElementById('navbar-backdrop');
+        const navbarPanel = document.getElementById('navbar-panel');
         const navLinks = navbar.querySelectorAll('a');
+
+        function lockBodyScroll() {
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function unlockBodyScroll() {
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+        }
 
         function openMenu() {
             navbar.classList.remove('hidden');
             hamburger.classList.add('open');
+            navbarHeader.classList.add('mobile-menu-open');
+            updateMobileMenuOffset();
+            lockBodyScroll();
+
+            requestAnimationFrame(() => {
+                updateMobileMenuOffset();
+                navbarBackdrop.classList.remove('opacity-0');
+                navbarBackdrop.classList.add('opacity-100');
+                navbarPanel.classList.remove('translate-x-full');
+            });
         }
 
         function closeMenu() {
-            navbar.classList.add('hidden');
+            navbarBackdrop.classList.remove('opacity-100');
+            navbarBackdrop.classList.add('opacity-0');
+            navbarPanel.classList.add('translate-x-full');
+
+            window.setTimeout(() => {
+                navbar.classList.add('hidden');
+            }, 300);
+
             hamburger.classList.remove('open');
+            navbarHeader.classList.remove('mobile-menu-open');
+            unlockBodyScroll();
         }
 
         hamburger.addEventListener('click', (e) => {
@@ -551,9 +751,13 @@
             link.addEventListener('click', () => closeMenu());
         });
 
+        if (navbarBackdrop) {
+            navbarBackdrop.addEventListener('click', closeMenu);
+        }
+
         // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('header')) closeMenu();
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !navbar.classList.contains('hidden')) closeMenu();
         });
 
         // Smooth scroll for anchor links

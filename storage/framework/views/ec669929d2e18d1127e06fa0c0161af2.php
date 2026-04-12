@@ -1,8 +1,8 @@
-@extends('layouts.admin')
 
-@section('page_title', 'Kelola Prestasi')
 
-@section('content')
+<?php $__env->startSection('page_title', 'Kelola Prestasi'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .prestasi-header-row {
         display: flex;
@@ -38,10 +38,10 @@
 </style>
 <div class="container-fluid">
     <div class="admin-top-tabs">
-        <a class="tab-link" href="{{ route('admin.settings.tentang.index') }}">
+        <a class="tab-link" href="<?php echo e(route('admin.settings.tentang.index')); ?>">
             <i class="bi bi-info-circle"></i>Konten Tentang
         </a>
-        <a class="tab-link active" href="{{ route('admin.prestasis.index') }}">
+        <a class="tab-link active" href="<?php echo e(route('admin.prestasis.index')); ?>">
             <i class="bi bi-trophy"></i>Data Prestasi
         </a>
     </div>
@@ -52,26 +52,27 @@
         </div>
         <div>
             <div class="prestasi-header-actions">
-                <a href="{{ route('admin.settings.tentang.index') }}" class="btn btn-primary prestasi-header-action">
+                <a href="<?php echo e(route('admin.settings.tentang.index')); ?>" class="btn btn-primary prestasi-header-action">
                     <i class="bi bi-arrow-left"></i> <span class="d-none d-sm-inline ms-1">Kembali</span>
                 </a>
-                <a href="{{ route('admin.prestasis.create') }}" class="btn btn-primary prestasi-header-action">
+                <a href="<?php echo e(route('admin.prestasis.create')); ?>" class="btn btn-primary prestasi-header-action">
                     <i class="bi bi-plus-lg"></i> <span class="d-none d-sm-inline ms-1">Tambah Prestasi</span>
                 </a>
             </div>
         </div>
     </div>
 
-    @if ($message = Session::get('success'))
+    <?php if($message = Session::get('success')): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ $message }}
+            <?php echo e($message); ?>
+
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-    @endif
+    <?php endif; ?>
 
     <div class="card mb-3">
         <div class="card-body">
-            <form id="prestasi-search-form" method="GET" action="{{ route('admin.prestasis.index') }}" class="row g-2 align-items-center">
+            <form id="prestasi-search-form" method="GET" action="<?php echo e(route('admin.prestasis.index')); ?>" class="row g-2 align-items-center">
                 <div class="col-12 col-md-8 col-lg-9">
                     <label for="q" class="form-label mb-1">Pencarian Prestasi</label>
                     <input
@@ -81,14 +82,14 @@
                         class="form-control"
                         placeholder="Cari judul, keterangan, tahun, atau status..."
                         autocomplete="off"
-                        value="{{ $search ?? '' }}"
+                        value="<?php echo e($search ?? ''); ?>"
                     >
                 </div>
                 <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 mt-md-4">
                     <button type="submit" class="btn btn-primary flex-grow-1">
                         <i class="bi bi-search me-1"></i>Cari
                     </button>
-                    <a id="prestasi-search-reset" href="{{ route('admin.prestasis.index') }}" class="btn btn-outline-secondary {{ empty($search) ? 'd-none' : '' }}">Reset</a>
+                    <a id="prestasi-search-reset" href="<?php echo e(route('admin.prestasis.index')); ?>" class="btn btn-outline-secondary <?php echo e(empty($search) ? 'd-none' : ''); ?>">Reset</a>
                 </div>
             </form>
         </div>
@@ -108,30 +109,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($prestasis as $prestasi)
+                    <?php $__empty_1 = true; $__currentLoopData = $prestasis; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prestasi): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr>
-                            <td class="d-none d-md-table-cell">{{ $prestasi->id }}</td>
+                            <td class="d-none d-md-table-cell"><?php echo e($prestasi->id); ?></td>
                             <td>
-                                <strong class="d-block" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;">{{ $prestasi->judul }}</strong>
-                                <small class="text-muted d-none d-md-block">{{ \Illuminate\Support\Str::limit($prestasi->keterangan, 80) }}</small>
+                                <strong class="d-block" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;"><?php echo e($prestasi->judul); ?></strong>
+                                <small class="text-muted d-none d-md-block"><?php echo e(\Illuminate\Support\Str::limit($prestasi->keterangan, 80)); ?></small>
                             </td>
-                            <td class="d-none d-sm-table-cell">{{ $prestasi->tahun ?: '-' }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $prestasi->urutan }}</td>
+                            <td class="d-none d-sm-table-cell"><?php echo e($prestasi->tahun ?: '-'); ?></td>
+                            <td class="d-none d-sm-table-cell"><?php echo e($prestasi->urutan); ?></td>
                             <td>
-                                @if ($prestasi->status === 'aktif')
+                                <?php if($prestasi->status === 'aktif'): ?>
                                     <span class="badge bg-success">Aktif</span>
-                                @else
+                                <?php else: ?>
                                     <span class="badge bg-secondary">Nonaktif</span>
-                                @endif
+                                <?php endif; ?>
                             </td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <a href="{{ route('admin.prestasis.edit', $prestasi) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                    <a href="<?php echo e(route('admin.prestasis.edit', $prestasi)); ?>" class="btn btn-sm btn-outline-secondary" title="Edit">
                                         <i class="bi bi-pencil"></i>
                                     </a>
-                                    <form action="{{ route('admin.prestasis.destroy', $prestasi) }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
+                                    <form action="<?php echo e(route('admin.prestasis.destroy', $prestasi)); ?>" method="POST" style="display: inline;">
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="btn btn-sm btn-outline-secondary" title="Hapus" onclick="return confirm('Yakin hapus prestasi ini?')">
                                             <i class="bi bi-trash"></i>
                                         </button>
@@ -139,22 +140,24 @@
                                 </div>
                             </td>
                         </tr>
-                    @empty
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <tr>
                             <td colspan="6" class="text-center py-4">
-                                {{ !empty($search) ? 'Data prestasi tidak ditemukan untuk kata kunci tersebut' : 'Belum ada data prestasi' }}
+                                <?php echo e(!empty($search) ? 'Data prestasi tidak ditemukan untuk kata kunci tersebut' : 'Belum ada data prestasi'); ?>
+
                             </td>
                         </tr>
-                    @endforelse
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 
     <div id="prestasi-pagination" class="d-flex justify-content-center mt-4">
-        @if ($prestasis->hasPages())
-            {{ $prestasis->links() }}
-        @endif
+        <?php if($prestasis->hasPages()): ?>
+            <?php echo e($prestasis->links()); ?>
+
+        <?php endif; ?>
     </div>
 </div>
 
@@ -286,4 +289,6 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\estikra\resources\views/admin/prestasis/index.blade.php ENDPATH**/ ?>

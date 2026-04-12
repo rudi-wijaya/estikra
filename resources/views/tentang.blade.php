@@ -38,26 +38,31 @@
                             'label' => \App\Models\Setting::get('tentang_label_status', 'Status'),
                             'value' => \App\Models\Setting::get('sekolah_status', 'Sekolah Negeri'),
                             'span' => '',
+                            'is_email' => false,
                         ],
                         [
                             'label' => \App\Models\Setting::get('tentang_label_npsn', 'NPSN'),
                             'value' => \App\Models\Setting::get('npsn', '20318102'),
                             'span' => '',
+                            'is_email' => false,
                         ],
                         [
                             'label' => \App\Models\Setting::get('tentang_label_akreditasi', 'Akreditasi'),
                             'value' => \App\Models\Setting::get('akreditasi', 'A'),
                             'span' => '',
+                            'is_email' => false,
                         ],
                         [
                             'label' => \App\Models\Setting::get('tentang_label_email', 'Email'),
                             'value' => \App\Models\Setting::get('sekolah_email', 'sdn3krasakbangsri@gmail.com'),
                             'span' => '',
+                            'is_email' => true,
                         ],
                         [
                             'label' => \App\Models\Setting::get('tentang_label_alamat', 'Alamat'),
                             'value' => \App\Models\Setting::get('sekolah_alamat', 'Jl. Raya Krasak No. 45, Desa Krasak, Kec. Bangsri, Kabupaten Jepara, Jawa Tengah 59453'),
                             'span' => 'md:col-span-2',
+                            'is_email' => false,
                         ],
                     ];
                 @endphp
@@ -66,7 +71,7 @@
                     @foreach ($profilItems as $item)
                         <div class="rounded-xl border border-blue-100 bg-blue-50/40 p-4 {{ $item['span'] }}">
                             <p class="text-sm font-semibold text-gray-900 mb-1">{{ $item['label'] }}</p>
-                            <p class="text-gray-700 leading-relaxed">{{ $item['value'] }}</p>
+                            <p class="text-gray-700 leading-relaxed {{ $item['is_email'] ? '[overflow-wrap:anywhere]' : '' }}">{{ $item['value'] }}</p>
                         </div>
                     @endforeach
                 </div>

@@ -45,15 +45,6 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="deskripsi" class="form-label">Deskripsi</label>
-                    <textarea class="form-control @error('deskripsi') is-invalid @enderror" 
-                              id="deskripsi" name="deskripsi" rows="4">{{ old('deskripsi', $galeri->deskripsi ?? '') }}</textarea>
-                    @error('deskripsi')
-                        <span class="invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
-
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -83,7 +74,9 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="gambar" class="form-label">Gambar {{ isset($galeri) ? '' : '<span class="text-danger">*</span>' }}</label>
+                    <label for="gambar" class="form-label">
+                        Gambar @if (!isset($galeri))<span class="text-danger">*</span>@endif
+                    </label>
                     @if (isset($galeri) && $galeri->gambar)
                         <div class="mb-2">
                             <img src="{{ asset('storage/' . $galeri->gambar) }}" alt="{{ $galeri->judul }}" class="img-thumbnail" style="max-width: 300px; max-height: 300px;">

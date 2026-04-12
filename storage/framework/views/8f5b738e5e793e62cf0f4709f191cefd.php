@@ -549,7 +549,6 @@
             <div class="text-center mb-8 animate-fadeInUp">
                 
                 <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Galeri Foto Kami</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Dokumentasi kegiatan dan momen berharga di sekolah kami</p>
             </div>
 
             <!-- Gallery Grid -->
@@ -579,9 +578,6 @@
                         <!-- Content -->
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2"><?php echo e($galeri->judul); ?></h3>
-                            <?php if($galeri->deskripsi): ?>
-                                <p class="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-3"><?php echo e(Str::limit($galeri->deskripsi, 100)); ?></p>
-                            <?php endif; ?>
                             <div class="flex items-center text-gray-500 text-sm">
                                 <i class="bi bi-calendar-event mr-2"></i>
                                 <?php echo e($galeri->tanggal_upload->format('d M Y')); ?>
@@ -598,14 +594,14 @@
             </div>
 
             <div class="text-center">
-                <a href="/galeri" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors duration-300">
+                <a href="/galeri" class="inline-flex items-center justify-center px-4 py-2 text-sm bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors duration-300 relative z-10">
                     Lihat Semua Galeri
                 </a>
             </div>
 
             <div id="beranda-popup-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
                 <div class="absolute inset-0 bg-black/70" data-close-beranda-popup></div>
-                <div class="relative w-full max-w-3xl rounded-2xl bg-white shadow-2xl overflow-hidden">
+                <div class="relative z-10 w-full max-w-3xl rounded-2xl bg-white shadow-2xl overflow-hidden">
                     <button
                         type="button"
                         class="absolute right-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-gray-700 hover:bg-white"
@@ -627,10 +623,10 @@
                             <h3 id="beranda-popup-title" class="text-2xl font-bold text-gray-900"></h3>
                             <span id="beranda-popup-meta" class="hidden bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full"></span>
                         </div>
-                        <p id="beranda-popup-description" class="mt-4 text-gray-600 leading-relaxed"></p>
-                        <a id="beranda-popup-link" href="#" class="hidden mt-5 px-4 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300">
+                        <p id="beranda-popup-description" class="mt-4 text-gray-600 leading-relaxed hidden"></p>
+                        <button id="beranda-popup-link" type="button" class="hidden mt-5 items-center justify-center px-3.5 py-1.5 text-sm bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300 relative z-10 cursor-pointer" data-href="">
                             Lihat Detail
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -678,13 +674,19 @@
             const openModal = function (trigger) {
                 const title = trigger.dataset.popupTitle || 'Detail';
                 const meta = trigger.dataset.popupMeta || '';
-                const description = trigger.dataset.popupDescription || 'Tidak ada deskripsi.';
+                const description = (trigger.dataset.popupDescription ?? '').trim();
                 const image = trigger.dataset.popupImage || '';
                 const link = trigger.dataset.popupLink || '';
                 const linkLabel = trigger.dataset.popupLinkLabel || 'Lihat Detail';
 
                 titleEl.textContent = title;
-                descriptionEl.textContent = description;
+                if (description !== '') {
+                    descriptionEl.textContent = description;
+                    descriptionEl.classList.remove('hidden');
+                } else {
+                    descriptionEl.textContent = '';
+                    descriptionEl.classList.add('hidden');
+                }
 
                 if (meta !== '') {
                     metaEl.textContent = meta;
@@ -706,10 +708,13 @@
                 }
 
                 if (link !== '') {
-                    linkEl.href = link;
+                    linkEl.dataset.href = link;
                     linkEl.textContent = linkLabel;
                     linkEl.classList.remove('hidden');
+                    linkEl.classList.add('inline-flex');
                 } else {
+                    linkEl.dataset.href = '';
+                    linkEl.classList.remove('inline-flex');
                     linkEl.classList.add('hidden');
                 }
 
@@ -739,6 +744,14 @@
 
             closeButtons.forEach(function (button) {
                 button.addEventListener('click', closeModal);
+            });
+
+            linkEl.addEventListener('click', function (event) {
+                event.stopPropagation();
+                const targetUrl = linkEl.dataset.href || '';
+                if (targetUrl !== '') {
+                    window.location.href = targetUrl;
+                }
             });
 
             document.addEventListener('keydown', function (event) {
