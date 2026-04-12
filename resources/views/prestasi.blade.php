@@ -6,7 +6,15 @@
     <section class="py-20 bg-gradient-to-b from-slate-50 to-white">
         <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16">
             <div class="text-center mb-12 animate-fadeInUp">
-                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Prestasi Sekolah</h2>
+                <div class="relative mb-4">
+                    <a href="{{ url('/tentang') }}" class="absolute left-0 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-9 h-9 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-300 md:w-auto md:h-auto md:px-4 md:py-2 md:gap-2" aria-label="Kembali ke Tentang">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        <span class="hidden md:inline">Kembali</span>
+                    </a>
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900">Prestasi Sekolah</h2>
+                </div>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Kumpulan pencapaian siswa dan sekolah kami.</p>
             </div>
 

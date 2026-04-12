@@ -335,7 +335,7 @@
                         <div class="p-6 text-center flex flex-col flex-1">
                             <h3 class="text-lg font-bold text-gray-900 mb-2"><?php echo e($program->judul); ?></h3>
                             <p class="text-sm text-gray-600 mb-3"><?php echo e(\Illuminate\Support\Str::limit($program->deskripsi, 130)); ?></p>
-                            <span class="text-blue-600 font-semibold mt-auto">Lihat Detail</span>
+                            <a href="<?php echo e(route('program.show', $program)); ?>" data-direct-link="true" class="text-blue-600 font-semibold mt-auto hover:text-blue-700 transition-colors duration-300">Lihat Detail</a>
                         </div>
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -521,9 +521,9 @@
                             </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2"><?php echo e($berita->judul); ?></h3>
                             <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1"><?php echo e(Str::limit(strip_tags($berita->konten), 150)); ?></p>
-                            <span class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full font-semibold self-start mt-auto">
+                            <a href="<?php echo e(route('berita.show', $berita->slug)); ?>" data-direct-link="true" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full font-semibold self-start mt-auto hover:bg-blue-700 transition-colors duration-300">
                                 Baca Selengkapnya
-                            </span>
+                            </a>
                         </div>
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -730,7 +730,11 @@
             };
 
             triggers.forEach(function (trigger) {
-                trigger.addEventListener('click', function () {
+                trigger.addEventListener('click', function (event) {
+                    if (event.target.closest('[data-direct-link="true"]')) {
+                        return;
+                    }
+
                     openModal(trigger);
                 });
 
