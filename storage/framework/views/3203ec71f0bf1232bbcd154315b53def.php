@@ -3,16 +3,23 @@
 <?php $__env->startSection('title', $program->judul . ' - SD Negeri 3 Krasak Bangsri'); ?>
 
 <?php $__env->startSection('content'); ?>
+    <?php
+        $fromBeranda = request()->query('from') === 'beranda';
+        $programBackUrl = $fromBeranda ? url('/') : url('/program');
+        $programBackLabel = $fromBeranda ? 'Kembali ke Beranda' : 'Kembali ke Program';
+    ?>
+
     <section class="py-10 bg-gradient-to-b from-slate-50 to-white">
         <div class="max-w-5xl mx-auto px-8 sm:px-12 lg:px-16">
 
             <!-- Back link -->
             <div class="mb-8">
-                <a href="<?php echo e(url('/program')); ?>" class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300">
+                <a href="<?php echo e($programBackUrl); ?>" class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                     </svg>
-                    Kembali ke Program
+                    <?php echo e($programBackLabel); ?>
+
                 </a>
             </div>
 

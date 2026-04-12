@@ -604,7 +604,7 @@
 
             <!-- Footer Bottom -->
             <div class="flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-3 pt-6">
-                <p>&copy; <?php echo e(date('Y')); ?> <?php echo e(\App\Models\Setting::get('sekolah_nama', 'SD Negeri 3 Krasak Bangsri')); ?>, All Right Reserved. dikembangkan oleh <a href="https://www.instagram.com/deekund?igsh=YW5qOThzN25oYW11" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 underline">M. Rudi Wijaya</a></p>
+                <p>&copy; <?php echo e(date('Y')); ?> <?php echo e(\App\Models\Setting::get('sekolah_nama', 'SD Negeri 3 Krasak Bangsri')); ?>, All Right Reserved. dikembangkan oleh <a href="https://www.instagram.com/deekund" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition-colors duration-300 underline">M. Rudi Wijaya</a></p>
             </div>
         </div>
     </footer>
@@ -799,6 +799,27 @@
                 }
             });
         }, observerOptions);
+
+        // Auto-apply reveal animation to pages that don't explicitly define data-animate/data-stagger
+        const mainContent = document.querySelector('main');
+        if (mainContent) {
+            mainContent.querySelectorAll(':scope > *').forEach((el) => {
+                if (!el.hasAttribute('data-animate') && !el.hasAttribute('data-stagger')) {
+                    el.setAttribute('data-animate', '');
+                }
+            });
+
+            // Auto stagger for grid-based content blocks (cards/lists) across public pages
+            mainContent.querySelectorAll('.grid').forEach((grid) => {
+                if (grid.hasAttribute('data-animate') || grid.hasAttribute('data-stagger')) {
+                    return;
+                }
+
+                if (grid.children.length >= 2) {
+                    grid.setAttribute('data-stagger', '');
+                }
+            });
+        }
 
         document.querySelectorAll('[data-animate], [data-stagger]').forEach(el => {
             // Prevent initial load animation; only animate when element enters viewport

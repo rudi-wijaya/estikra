@@ -55,9 +55,9 @@
                 <div class="flex justify-center mt-10">
                     <nav class="flex items-center gap-2" aria-label="Pagination">
                         <?php if($galeris->onFirstPage()): ?>
-                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Previous</span>
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Sebelumnya</span>
                         <?php else: ?>
-                            <a href="<?php echo e($galeris->previousPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Previous</a>
+                            <a href="<?php echo e($galeris->previousPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Sebelumnya</a>
                         <?php endif; ?>
 
                         <?php for($page = 1; $page <= $galeris->lastPage(); $page++): ?>
@@ -82,9 +82,9 @@
                         <?php endfor; ?>
 
                         <?php if($galeris->hasMorePages()): ?>
-                            <a href="<?php echo e($galeris->nextPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Next</a>
+                            <a href="<?php echo e($galeris->nextPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Berikutnya</a>
                         <?php else: ?>
-                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Next</span>
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Berikutnya</span>
                         <?php endif; ?>
                     </nav>
                 </div>

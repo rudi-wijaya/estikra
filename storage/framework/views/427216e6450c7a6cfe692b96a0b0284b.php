@@ -5,16 +5,16 @@
 <?php $__env->startSection('content'); ?>
     <!-- Berita Section -->
 
-        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12">
+        <div class="max-w-6xl mx-auto px-8 sm:px-12 lg:px-16 p-12" data-animate>
             <!-- Section Header -->
-            <div class="text-center mb-16 animate-fadeInUp">
+            <div class="text-center mb-16" data-animate>
                 
                 <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Berita Terkini</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Informasi dan update terbaru seputar kegiatan sekolah kami</p>
             </div>
 
             <!-- Berita Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" data-stagger>
                 <?php $__empty_1 = true; $__currentLoopData = $beritas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $berita): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <div class="card-hover group bg-white rounded-2xl border-2 border-gray-200 hover:border-blue-400 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col">
                         <!-- Image -->
@@ -49,12 +49,12 @@
 
             <!-- Pagination -->
             <?php if($beritas->hasPages()): ?>
-                <div class="flex justify-center mt-10">
+                <div class="flex justify-center mt-10" data-animate>
                     <nav class="flex items-center gap-2" aria-label="Pagination">
                         <?php if($beritas->onFirstPage()): ?>
-                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Previous</span>
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Sebelumnya</span>
                         <?php else: ?>
-                            <a href="<?php echo e($beritas->previousPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Previous</a>
+                            <a href="<?php echo e($beritas->previousPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Sebelumnya</a>
                         <?php endif; ?>
 
                         <?php for($page = 1; $page <= $beritas->lastPage(); $page++): ?>
@@ -79,9 +79,9 @@
                         <?php endfor; ?>
 
                         <?php if($beritas->hasMorePages()): ?>
-                            <a href="<?php echo e($beritas->nextPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Next</a>
+                            <a href="<?php echo e($beritas->nextPageUrl()); ?>" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">Berikutnya</a>
                         <?php else: ?>
-                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Next</span>
+                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-100 cursor-not-allowed">Berikutnya</span>
                         <?php endif; ?>
                     </nav>
                 </div>

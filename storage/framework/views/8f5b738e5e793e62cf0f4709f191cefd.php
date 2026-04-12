@@ -312,7 +312,7 @@
                         data-popup-meta="Program Unggulan"
                         data-popup-description="<?php echo e(e(strip_tags($program->deskripsi ?? ''))); ?>"
                         data-popup-image="<?php echo e($program->foto ? (str_starts_with($program->foto, 'storage/') ? asset($program->foto) : asset('storage/' . $program->foto)) : ''); ?>"
-                        data-popup-link="<?php echo e(route('program.show', $program)); ?>"
+                        data-popup-link="<?php echo e(route('program.show', ['program' => $program->getRouteKey(), 'from' => 'beranda'])); ?>"
                         data-popup-link-label="Lihat Detail Program"
                         role="button"
                         tabindex="0"
@@ -335,7 +335,7 @@
                         <div class="p-6 text-center flex flex-col flex-1">
                             <h3 class="text-lg font-bold text-gray-900 mb-2"><?php echo e($program->judul); ?></h3>
                             <p class="text-sm text-gray-600 mb-3"><?php echo e(\Illuminate\Support\Str::limit($program->deskripsi, 130)); ?></p>
-                            <a href="<?php echo e(route('program.show', $program)); ?>" data-direct-link="true" class="text-blue-600 font-semibold mt-auto hover:text-blue-700 transition-colors duration-300">Lihat Detail</a>
+                            <span class="text-blue-600 font-semibold mt-auto">Lihat Detail</span>
                         </div>
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -498,7 +498,7 @@
                         data-popup-meta="<?php echo e($berita->tanggal_terbit->format('d M Y')); ?>"
                         data-popup-description="<?php echo e(e(strip_tags($berita->konten ?? ''))); ?>"
                         data-popup-image="<?php echo e($berita->gambar ? asset('storage/' . $berita->gambar) : ''); ?>"
-                        data-popup-link="<?php echo e(route('berita.show', $berita->slug)); ?>"
+                        data-popup-link="<?php echo e(route('berita.show', ['berita' => $berita->slug, 'from' => 'beranda'])); ?>"
                         data-popup-link-label="Baca Berita"
                         role="button"
                         tabindex="0"
@@ -521,9 +521,9 @@
                             </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2"><?php echo e($berita->judul); ?></h3>
                             <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1"><?php echo e(Str::limit(strip_tags($berita->konten), 150)); ?></p>
-                            <a href="<?php echo e(route('berita.show', $berita->slug)); ?>" data-direct-link="true" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full font-semibold self-start mt-auto hover:bg-blue-700 transition-colors duration-300">
+                            <span class="inline-block px-4 py-2 bg-blue-600 text-white rounded-full font-semibold self-start mt-auto">
                                 Baca Selengkapnya
-                            </a>
+                            </span>
                         </div>
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -656,7 +656,7 @@
     </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        function initBerandaPopup() {
             const modal = document.getElementById('beranda-popup-modal');
             const titleEl = document.getElementById('beranda-popup-title');
             const metaEl = document.getElementById('beranda-popup-meta');
@@ -670,6 +670,16 @@
             if (!modal || !titleEl || !metaEl || !descriptionEl || !imageEl || !fallbackEl || !linkEl || !triggers.length) {
                 return;
             }
+
+            // Keep modal at <body> level so fixed overlay is not trapped by transformed section containers.
+            if (modal.parentElement !== document.body) {
+                document.body.appendChild(modal);
+            }
+
+            if (modal.dataset.popupBound === '1') {
+                return;
+            }
+            modal.dataset.popupBound = '1';
 
             const openModal = function (trigger) {
                 const title = trigger.dataset.popupTitle || 'Detail';
@@ -731,10 +741,6 @@
 
             triggers.forEach(function (trigger) {
                 trigger.addEventListener('click', function (event) {
-                    if (event.target.closest('[data-direct-link="true"]')) {
-                        return;
-                    }
-
                     openModal(trigger);
                 });
 
@@ -763,7 +769,15 @@
                     closeModal();
                 }
             });
-        });
+
+            // Ensure scroll lock is reset on fresh load/reload
+            document.body.classList.remove('overflow-hidden');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        initBerandaPopup();
+        document.addEventListener('DOMContentLoaded', initBerandaPopup);
     </script>
 
 
